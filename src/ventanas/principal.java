@@ -32,6 +32,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
@@ -103,14 +104,23 @@ public class principal extends JFrame {
 	public principal() {
 		setType(Type.UTILITY);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 700);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(72, 61, 139));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setTitle("Sistema de busqueda de codigos de matricula. IDO 2020");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/iconos/logo_ido.png")));
 		contentPane.setLayout(null);
+
+		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent evt) {
+				close();
+			}
+		});
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -120,7 +130,7 @@ public class principal extends JFrame {
 
 		JLabel lblBuscarInformacionDe = new JLabel("Buscar informaci\u00F3n de la matr\u00EDcula del alumno :");
 		lblBuscarInformacionDe.setHorizontalAlignment(SwingConstants.LEFT);
-		lblBuscarInformacionDe.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
+		lblBuscarInformacionDe.setFont(new Font("Cambria Math", Font.BOLD, 15));
 		lblBuscarInformacionDe.setBounds(23, 48, 644, 30);
 		panel.add(lblBuscarInformacionDe);
 
@@ -236,7 +246,7 @@ public class principal extends JFrame {
 
 		mensaje = new JLabel("");
 		mensaje.setHorizontalAlignment(SwingConstants.CENTER);
-		mensaje.setFont(new Font("Calibri", Font.BOLD, 12));
+		mensaje.setFont(new Font("Calibri", Font.ITALIC, 12));
 		mensaje.setBounds(23, 133, 498, 21);
 		panel.add(mensaje);
 
@@ -244,7 +254,7 @@ public class principal extends JFrame {
 				"Bienvenido al sistema de b\u00FAsqueda de c\u00F3digos de matr\u00EDcula IDO 2020.");
 		label_1.setForeground(Color.BLACK);
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 22));
+		label_1.setFont(new Font("Cambria Math", Font.BOLD, 18));
 		label_1.setBounds(10, 0, 654, 44);
 		panel.add(label_1);
 
@@ -434,7 +444,7 @@ public class principal extends JFrame {
 		JLabel label_3 = new JLabel("Informaci\u00F3n del alumno :");
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setForeground(Color.BLACK);
-		label_3.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
+		label_3.setFont(new Font("Cambria Math", Font.BOLD, 15));
 		label_3.setBounds(50, 228, 201, 30);
 		panelInformacion.add(label_3);
 
@@ -473,7 +483,7 @@ public class principal extends JFrame {
 		JLabel lblMenDeOpciones = new JLabel("Men\u00FA de opciones :");
 		lblMenDeOpciones.setForeground(Color.BLACK);
 		lblMenDeOpciones.setHorizontalAlignment(SwingConstants.LEFT);
-		lblMenDeOpciones.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
+		lblMenDeOpciones.setFont(new Font("Cambria Math", Font.BOLD, 15));
 		lblMenDeOpciones.setBounds(47, 2, 169, 23);
 		panel_1.add(lblMenDeOpciones);
 
@@ -655,5 +665,11 @@ public class principal extends JFrame {
 		Date fecha = cal.getTime();
 		DateFormat formatter = DateFormat.getTimeInstance();
 		detalle_comprobante_prematricula.lblHora.setText(formatter.format(fecha));
+	}
+
+	private void close() {
+		if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente salir del sistema?", "Salir del sistema",
+				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+			System.exit(0);
 	}
 }

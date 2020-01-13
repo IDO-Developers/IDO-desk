@@ -280,8 +280,7 @@ public class tabla_alumnos extends JFrame {
 
 					String encabezado = "Reporte de alumnos registrados en la prematricula ";
 
-					utilJTablePrint(tablaProductos, encabezado,
-							"Pagina {0} de " + i + "          Impreso por Administrador          " + fecha, true);
+					utilJTablePrint(tablaProductos, encabezado, "Pagina {0} de " + i + "          Matricula IDO 2020          " + fecha, true);
 
 				}
 			}
@@ -443,10 +442,10 @@ public class tabla_alumnos extends JFrame {
 		conexion objCon = new conexion();
 		Connection conn = objCon.getConexion();
 		try {
-			PreparedStatement stmtr = conn.prepareStatement("SELECT * FROM productos ORDER BY id_producto DESC");
+			PreparedStatement stmtr = conn.prepareStatement("SELECT * FROM Reg_Alumno ORDER BY id DESC");
 			ResultSet rsr = stmtr.executeQuery();
 			if (rsr.next()) {
-				totalDatos = rsr.getString("id_producto");
+				totalDatos = rsr.getString("id");
 			}
 			;
 			stmtr.close();

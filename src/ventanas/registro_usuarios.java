@@ -73,6 +73,7 @@ public class registro_usuarios extends JFrame {
 	public static String nombreEmpresa = null;
 	public static String totalDatos = null;
 	public static String identidad = null;
+	public static String userRepetido = null;
 
 	public static String ruta;
 	public static String usuario;
@@ -182,26 +183,33 @@ public class registro_usuarios extends JFrame {
 								"Alerta!\n" + "Nota: Solo debe de haber 1 usuario por identidad",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						usuarios clase = new usuarios();
-						consultas_usuario consulta = new consultas_usuario();
-						clase.setNombre_Usuario(txtUsuario.getText().toString());
-						clase.setRol(cbxTipoUsuario.getSelectedItem().toString());
-						clase.setContraseña_Usuario(txtContraseña.getText().toString());
-						clase.setRNE_Administradores(txtIdentidad.getText().toString());
-						if (consulta.insertar(clase)) {
-							JOptionPane.showMessageDialog(null, "Usuario registrado!");
-							txtIdentidad.setText("");
-							txtUsuario.setText("");
-							txtContraseña.setText("");
-							construirTabla();
-							obtenerUltimoId();
+						if (txtUsuario.getText().toString().equals(userRepetido)) {
+							JOptionPane.showMessageDialog(null,
+									"Se encontrado un registro con esta Usuario : " + userRepetido,
+									"Alerta!\n" + "Nota: Solo debe de haber 1 usuario con este nombre",
+									JOptionPane.INFORMATION_MESSAGE);
 						} else {
-							JOptionPane.showMessageDialog(null, "Error! Usuario no registrado");
-							txtIdentidad.setText("");
-							txtUsuario.setText("");
-							txtContraseña.setText("");
-							construirTabla();
-							obtenerUltimoId();
+							usuarios clase = new usuarios();
+							consultas_usuario consulta = new consultas_usuario();
+							clase.setNombre_Usuario(txtUsuario.getText().toString());
+							clase.setRol(cbxTipoUsuario.getSelectedItem().toString());
+							clase.setContraseña_Usuario(txtContraseña.getText().toString());
+							clase.setRNE_Empleado(txtIdentidad.getText().toString());
+							if (consulta.insertar(clase)) {
+								JOptionPane.showMessageDialog(null, "Usuario registrado!");
+								txtIdentidad.setText("");
+								txtUsuario.setText("");
+								txtContraseña.setText("");
+								construirTabla();
+								obtenerUltimoId();
+							} else {
+								JOptionPane.showMessageDialog(null, "Error! Usuario no registrado");
+								txtIdentidad.setText("");
+								txtUsuario.setText("");
+								txtContraseña.setText("");
+								construirTabla();
+								obtenerUltimoId();
+							}
 						}
 
 					}
@@ -237,7 +245,7 @@ public class registro_usuarios extends JFrame {
 					clase.setNombre_Usuario(txtUsuario.getText().toString());
 					clase.setRol(cbxTipoUsuario.getSelectedItem().toString());
 					clase.setContraseña_Usuario(txtContraseña.getText().toString());
-					clase.setRNE_Administradores(txtIdentidad.getText().toString());
+					clase.setRNE_Empleado(txtIdentidad.getText().toString());
 					clase.setId(Integer.parseInt(txtCodigo.getText().toString()));
 
 					if (consulta.actualizar(clase)) {
@@ -516,12 +524,12 @@ public class registro_usuarios extends JFrame {
 						txtContraseña.setText(contraseña);
 						txtIdentidad.setText(identidad);
 						cbxTipoUsuario.setSelectedItem(rol);
-						
+
 						txtUsuario.setEditable(true);
 						txtContraseña.setEditable(true);
 						txtIdentidad.setEditable(true);
 						cbxTipoUsuario.setEditable(true);
-						
+
 						btnNuevo.setVisible(true);
 						btnGuardar.setVisible(false);
 						btnActualizar.setVisible(true);
@@ -568,7 +576,7 @@ public class registro_usuarios extends JFrame {
 						txtContraseña.setEditable(false);
 						txtIdentidad.setEditable(false);
 						cbxTipoUsuario.setEditable(false);
-						
+
 						btnActualizar.setVisible(false);
 						btnGuardar.setVisible(false);
 						btnBorrar.setVisible(false);
@@ -600,7 +608,6 @@ public class registro_usuarios extends JFrame {
 					Calendar cal = new GregorianCalendar();
 					ampm = cal.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
 					String fecha = getFechaYHora() + ampm;
-					nombreEmpresa = login.nombre.toString();
 					int total = Integer.valueOf(totalDatos);
 					String i = null;
 					if (total <= 46) {
@@ -648,10 +655,9 @@ public class registro_usuarios extends JFrame {
 						}
 					}
 
-					String encabezado = "Reporte de usuarios de " + login.nombre.toString();
+					String encabezado = "Reporte de usuarios registrados";
 
-					utilJTablePrint(tabla, encabezado, "Pagina {0} de " + i + "          Impreso por: "
-							+ login.nombreCompletoUsuario.toString() + "          " + fecha, true);
+					utilJTablePrint(tabla, encabezado, "Pagina {0} de " + i + "          Matricula IDO 2020          " + fecha, true);
 
 				}
 			}
@@ -702,7 +708,7 @@ public class registro_usuarios extends JFrame {
 				usuarios.setId(Integer.parseInt(rs.getString("id")));
 				usuarios.setNombre_Usuario(rs.getString("Nombre_Usuario"));
 				usuarios.setContraseña_Usuario(rs.getString("Contraseña_Usuario"));
-				usuarios.setRNE_Administradores(rs.getString("RNE_Administradores"));
+				usuarios.setRNE_Empleado(rs.getString("RNE_Empleado"));
 				usuarios.setRol(rs.getString("Rol"));
 				miLista.add(usuarios);
 			}
@@ -725,7 +731,7 @@ public class registro_usuarios extends JFrame {
 			matrizInfo[i][0] = miLista.get(i).getId() + "";
 			matrizInfo[i][1] = miLista.get(i).getNombre_Usuario() + "";
 			matrizInfo[i][2] = miLista.get(i).getContraseña_Usuario() + "";
-			matrizInfo[i][3] = miLista.get(i).getRNE_Administradores() + "";
+			matrizInfo[i][3] = miLista.get(i).getRNE_Empleado() + "";
 			matrizInfo[i][4] = miLista.get(i).getRol() + "";
 		}
 		return matrizInfo;
@@ -772,8 +778,7 @@ public class registro_usuarios extends JFrame {
 		conexion objCon = new conexion();
 		Connection conn = objCon.getConexion();
 		try {
-			PreparedStatement stmtr = conn
-					.prepareStatement("SELECT * FROM dbo.Usuario ORDER BY id DESC");
+			PreparedStatement stmtr = conn.prepareStatement("SELECT * FROM dbo.Usuario ORDER BY id DESC");
 			ResultSet rsr = stmtr.executeQuery();
 			if (rsr.next()) {
 				ultimoValor = rsr.getString("id");
@@ -790,15 +795,15 @@ public class registro_usuarios extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void obtenerTotalDatosReporte() {
 		conexion objCon = new conexion();
 		Connection conn = objCon.getConexion();
 		try {
-			PreparedStatement stmtr = conn.prepareStatement("SELECT * FROM usuario ORDER BY id_usuario DESC");
+			PreparedStatement stmtr = conn.prepareStatement("SELECT * FROM dbo.Usuario ORDER BY id DESC");
 			ResultSet rsr = stmtr.executeQuery();
 			if (rsr.next()) {
-				totalDatos = rsr.getString("id_usuario");
+				totalDatos = rsr.getString("id");
 			}
 			;
 			stmtr.close();
@@ -813,12 +818,12 @@ public class registro_usuarios extends JFrame {
 		conexion conex = new conexion();
 		try {
 			Statement estatuto = conex.getConexion().createStatement();
-			ResultSet rs = estatuto
-					.executeQuery("SELECT RNE_Administradores FROM dbo.Usuario where RNE_Administradores = '"
-							+ registro_usuarios.txtIdentidad.getText().toString() + "'");
+			ResultSet rs = estatuto.executeQuery("SELECT RNE_Empleado, Nombre_Usuario FROM dbo.Usuario where RNE_Empleado = '"
+					+ registro_usuarios.txtIdentidad.getText().toString() + "'");
 
 			if (rs.next()) {
-				identidad = (rs.getString("RNE_Administradores"));
+				identidad = (rs.getString("RNE_Empleado"));
+				userRepetido = (rs.getString("Nombre_Usuario"));
 			}
 
 			rs.close();

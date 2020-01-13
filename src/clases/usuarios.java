@@ -6,7 +6,7 @@ public class usuarios {
 	String Nombre_Usuario;
 	String Contraseña_Usuario;
 	String Rol;
-	String RNE_Administradores;
+	String RNE_Empleado;
 
 	public int getId() {
 		return id;
@@ -40,12 +40,12 @@ public class usuarios {
 		Rol = rol;
 	}
 
-	public String getRNE_Administradores() {
-		return RNE_Administradores;
+	public String getRNE_Empleado() {
+		return RNE_Empleado;
 	}
 
-	public void setRNE_Administradores(String rNE_Administradores) {
-		RNE_Administradores = rNE_Administradores;
+	public void setRNE_Empleado(String rNE_Empleado) {
+		RNE_Empleado = rNE_Empleado;
 	}
 
 }

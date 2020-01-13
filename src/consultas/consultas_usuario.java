@@ -11,13 +11,13 @@ public class consultas_usuario extends conexion {
 	public boolean insertar(usuarios usuario) {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
-		String sql = "INSERT INTO dbo.Usuario (Nombre_Usuario, Rol, Contraseña_Usuario, RNE_Administradores) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO dbo.Usuario (Nombre_Usuario, Rol, Contraseña_Usuario, RNE_Empleado) VALUES(?,?,?,?)";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, usuario.getNombre_Usuario());
 			ps.setString(2, usuario.getRol());
 			ps.setString(3, usuario.getContraseña_Usuario());
-			ps.setString(4, usuario.getRNE_Administradores());
+			ps.setString(4, usuario.getRNE_Empleado());
 			
 			ps.execute();
 			return true;
@@ -37,14 +37,14 @@ public class consultas_usuario extends conexion {
 		PreparedStatement ps = null;
 		Connection con = getConexion();
 
-		String sql = "UPDATE dbo.Usuario SET Nombre_Usuario=?, Rol=?, Contraseña_Usuario=?, RNE_Administradores=? WHERE id=? ";
+		String sql = "UPDATE dbo.Usuario SET Nombre_Usuario=?, Rol=?, Contraseña_Usuario=?, RNE_Empleado=? WHERE id=? ";
 
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, usuario.getNombre_Usuario());
 			ps.setString(2, usuario.getRol());
 			ps.setString(3, usuario.getContraseña_Usuario());
-			ps.setString(4, usuario.getRNE_Administradores());
+			ps.setString(4, usuario.getRNE_Empleado());
 			ps.setInt(5, usuario.getId());
 			ps.execute();
 
@@ -78,7 +78,7 @@ public class consultas_usuario extends conexion {
 			if (rs.next()) {
 				usuario.setNombre_Usuario(rs.getString("Nombre_Usuario"));
 				usuario.setContraseña_Usuario(rs.getString("Contraseña_Usuario"));
-				usuario.setRNE_Administradores(rs.getString("RNE_Administradores"));
+				usuario.setRNE_Empleado(rs.getString("RNE_Empleado"));
 				usuario.setRol(rs.getString("Rol"));
 				return true;
 			}
