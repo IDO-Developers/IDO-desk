@@ -72,12 +72,12 @@ public class detalle_comprobante_prematricula extends JFrame implements Printabl
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel label = new JLabel("Instituto Departamental de Oriente, \r\nPre-Matricula 2020.\r\n");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setForeground(Color.BLACK);
-		label.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
-		label.setBounds(10, 25, 464, 28);
-		contentPane.add(label);
+		JLabel lblInstitutoDepartamentalDe = new JLabel("Instituto Departamental de Oriente, \r\nMatricula 2020.\r\n");
+		lblInstitutoDepartamentalDe.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInstitutoDepartamentalDe.setForeground(Color.BLACK);
+		lblInstitutoDepartamentalDe.setFont(new Font("Franklin Gothic Medium", Font.BOLD | Font.ITALIC, 15));
+		lblInstitutoDepartamentalDe.setBounds(10, 25, 464, 28);
+		contentPane.add(lblInstitutoDepartamentalDe);
 
 		JLabel label_1 = new JLabel("");
 		label_1.setBounds(136, 21, 216, 212);
@@ -101,96 +101,96 @@ public class detalle_comprobante_prematricula extends JFrame implements Printabl
 
 		JLabel label_2 = new JLabel("Informaci\u00F3n del alumno :");
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setForeground(new Color(72, 61, 139));
-		label_2.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
+		label_2.setForeground(new Color(0, 0, 128));
+		label_2.setFont(new Font("Franklin Gothic Medium", Font.BOLD | Font.ITALIC, 17));
 		label_2.setBounds(25, 231, 428, 28);
 		contentPane.add(label_2);
 
 		JLabel label_3 = new JLabel("Nombre completo del alumno :");
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
+		label_3.setFont(new Font("Franklin Gothic Medium", Font.BOLD | Font.ITALIC, 15));
 		label_3.setBounds(127, 274, 225, 21);
 		contentPane.add(label_3);
 
 		JLabel label_4 = new JLabel("Identidad del alumno :");
 		label_4.setHorizontalAlignment(SwingConstants.CENTER);
-		label_4.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
+		label_4.setFont(new Font("Franklin Gothic Medium", Font.BOLD | Font.ITALIC, 15));
 		label_4.setBounds(127, 328, 225, 21);
 		contentPane.add(label_4);
 
 		JLabel label_5 = new JLabel("Modalidad :");
 		label_5.setHorizontalAlignment(SwingConstants.CENTER);
-		label_5.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
+		label_5.setFont(new Font("Franklin Gothic Medium", Font.BOLD | Font.ITALIC, 15));
 		label_5.setBounds(127, 379, 225, 21);
 		contentPane.add(label_5);
 
 		JLabel label_6 = new JLabel("Codigo :");
 		label_6.setHorizontalAlignment(SwingConstants.CENTER);
-		label_6.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
+		label_6.setFont(new Font("Franklin Gothic Medium", Font.BOLD | Font.ITALIC, 15));
 		label_6.setBounds(127, 431, 225, 21);
 		contentPane.add(label_6);
 
 		JLabel label_8 = new JLabel("Hora :");
 		label_8.setHorizontalAlignment(SwingConstants.LEFT);
 		label_8.setForeground(Color.BLACK);
-		label_8.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
+		label_8.setFont(new Font("Franklin Gothic Medium", Font.BOLD | Font.ITALIC, 15));
 		label_8.setBounds(21, 501, 60, 28);
 		contentPane.add(label_8);
 
 		lblHora = new JLabel("Dato");
-		lblHora.setForeground(new Color(72, 61, 139));
+		lblHora.setForeground(new Color(0, 0, 128));
 		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHora.setFont(new Font("Bodoni MT", Font.BOLD | Font.ITALIC, 15));
+		lblHora.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		lblHora.setBounds(53, 501, 137, 31);
 		contentPane.add(lblHora);
 
 		JLabel label_10 = new JLabel("Fecha :");
 		label_10.setHorizontalAlignment(SwingConstants.LEFT);
 		label_10.setForeground(Color.BLACK);
-		label_10.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
+		label_10.setFont(new Font("Franklin Gothic Medium", Font.BOLD | Font.ITALIC, 15));
 		label_10.setBounds(188, 501, 71, 28);
 		contentPane.add(label_10);
 
 		lblFecha = new JLabel();
-		lblFecha.setForeground(new Color(72, 61, 139));
+		lblFecha.setForeground(new Color(0, 0, 128));
 		lblFecha.setText("Dato");
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFecha.setFont(new Font("Bodoni MT", Font.BOLD | Font.ITALIC, 15));
+		lblFecha.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		lblFecha.setBounds(214, 500, 278, 32);
 		contentPane.add(lblFecha);
 
-		JLabel lblComprobanteDePrematicula = new JLabel("Comprobante de Pre-Matricula IDO 2020.");
+		JLabel lblComprobanteDePrematicula = new JLabel("Comprobante de Matricula IDO 2020.");
 		lblComprobanteDePrematicula.setHorizontalAlignment(SwingConstants.CENTER);
 		lblComprobanteDePrematicula.setForeground(Color.BLACK);
-		lblComprobanteDePrematicula.setFont(new Font("Bodoni MT Condensed", Font.BOLD | Font.ITALIC, 18));
+		lblComprobanteDePrematicula.setFont(new Font("Franklin Gothic Medium", Font.BOLD | Font.ITALIC, 15));
 		lblComprobanteDePrematicula.setBounds(10, 191, 464, 42);
 		contentPane.add(lblComprobanteDePrematicula);
 
 		lblNombre = new JLabel("Dato");
-		lblNombre.setForeground(new Color(72, 61, 139));
+		lblNombre.setForeground(new Color(0, 0, 128));
 		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombre.setFont(new Font("Perpetua Titling MT", Font.BOLD, 15));
+		lblNombre.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		lblNombre.setBounds(25, 298, 433, 21);
 		contentPane.add(lblNombre);
 
 		lblIdentidad = new JLabel("Dato");
-		lblIdentidad.setForeground(new Color(72, 61, 139));
+		lblIdentidad.setForeground(new Color(0, 0, 128));
 		lblIdentidad.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIdentidad.setFont(new Font("Perpetua Titling MT", Font.BOLD, 15));
+		lblIdentidad.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		lblIdentidad.setBounds(25, 352, 433, 21);
 		contentPane.add(lblIdentidad);
 
 		lblModalidad = new JLabel("Dato");
-		lblModalidad.setForeground(new Color(72, 61, 139));
+		lblModalidad.setForeground(new Color(0, 0, 128));
 		lblModalidad.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModalidad.setFont(new Font("Perpetua Titling MT", Font.BOLD, 15));
+		lblModalidad.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		lblModalidad.setBounds(25, 403, 433, 21);
 		contentPane.add(lblModalidad);
 
 		lblCodigo = new JLabel("Dato");
-		lblCodigo.setForeground(new Color(72, 61, 139));
+		lblCodigo.setForeground(new Color(0, 0, 128));
 		lblCodigo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCodigo.setFont(new Font("Perpetua Titling MT", Font.BOLD, 15));
+		lblCodigo.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
 		lblCodigo.setBounds(25, 455, 433, 21);
 		contentPane.add(lblCodigo);
 	}

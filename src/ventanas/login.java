@@ -298,6 +298,7 @@ public class login extends JFrame {
 					if (consulta.buscarUsuario(clase)) {
 						principal.setLocationRelativeTo(null);
 						principal.setVisible(true);
+						principal.construirTabla();
 						Timer time = new Timer();
 						time.schedule(principal.tarea, 0, 1000);
 						dispose();

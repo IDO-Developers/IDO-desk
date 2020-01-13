@@ -65,7 +65,7 @@ public class acerca_de extends JFrame {
 		txtrTodosLosDerechos.setText(
 				"          Todos los derechos reservados a.\r\n            Programadores y Dise\u00F1adores:\r\n   Licenciados en Inform\u00E1tica Administrativa.\r\n        Abd\u00EDas Ismael Vel\u00E1squez Gonzalez\r\n        Justin Mois\u00E9s Chac\u00F3n Ferrari\r\n        Cristian Emmanuel D\u00EDaz Rodr\u00EDguez\r\n      Contacto: krizemandiaz11@gmail.com\r\n UNAH-Tec Danl\u00ED, El Para\u00EDso Honduras 2020\r\n");
 		txtrTodosLosDerechos.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
-		txtrTodosLosDerechos.setBounds(41, 311, 291, 129);
+		txtrTodosLosDerechos.setBounds(59, 311, 291, 129);
 		txtrTodosLosDerechos.setEditable(false);
 		contentPane.add(txtrTodosLosDerechos);
 

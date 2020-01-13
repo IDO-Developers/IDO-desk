@@ -78,7 +78,7 @@ public class tabla_alumnos extends JFrame {
 		setDefaultCloseOperation(0);
 		setBounds(100, 100, 700, 550);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(72, 61, 139));
+		contentPane.setBackground(new Color(0, 0, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
