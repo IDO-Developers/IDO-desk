@@ -388,11 +388,11 @@ public class registro_usuarios extends JFrame {
 		txtCodigo.setEditable(false);
 		txtCodigo.setHorizontalAlignment(SwingConstants.CENTER);
 		txtCodigo.setColumns(10);
-		txtCodigo.setBounds(158, 16, 43, 44);
+		txtCodigo.setBounds(158, 16, 30, 27);
 		panelRegistro.add(txtCodigo);
 
 		label = new JLabel();
-		label.setBounds(356, 11, 81, 83);
+		label.setBounds(375, 11, 62, 56);
 		panelRegistro.add(label);
 		final ImageIcon iconouser = new ImageIcon(
 				usuarioLogo.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
