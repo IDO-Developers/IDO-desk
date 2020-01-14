@@ -2,11 +2,9 @@ package consultas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import clases.alumnos;
-import clases.usuarios;
 import conexion.conexion;
 
 public class consultas_pago_alumnos extends conexion {
@@ -48,7 +46,7 @@ public class consultas_pago_alumnos extends conexion {
 			ps.setString(2, alumnos.getNumero_Recibo());
 			ps.setString(3, alumnos.getRNE_Alumno());
 			ps.execute();
-			//Logs(nombreMetodo)
+			// Logs(nombreMetodo)
 			return true;
 		} catch (SQLException e) {
 			System.err.println(e);

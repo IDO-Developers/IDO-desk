@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.RowFilter;
 import javax.swing.ScrollPaneConstants;
@@ -49,7 +48,6 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.MaskFormatter;
 
-import clases.alumnos;
 import clases.usuarios;
 import conexion.conexion;
 import consultas.consultas_usuario;
@@ -58,7 +56,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JRadioButton;
-import java.awt.Window.Type;
 
 public class registro_usuarios extends JFrame {
 	public JScrollPane scrollFunciones;
@@ -94,6 +91,7 @@ public class registro_usuarios extends JFrame {
 	final ImageIcon logo = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
 	final ImageIcon ver = new ImageIcon(getClass().getResource("/iconos/ver.png"));
 	final ImageIcon ocultar = new ImageIcon(getClass().getResource("/iconos/ocultar.png"));
+	final ImageIcon usuarioLogo = new ImageIcon(getClass().getResource("/iconos/usuario.png"));
 
 	public JButton btnAtras;
 	public JButton button;
@@ -106,7 +104,8 @@ public class registro_usuarios extends JFrame {
 	public JPasswordField txtContraseña;
 	private JRadioButton radioButton;
 	private JLabel label_3;
-	private JTextField txtCodigo;;
+	private JTextField txtCodigo;
+	private JLabel label;;
 
 	public registro_usuarios() {
 		setType(Type.UTILITY);
@@ -121,7 +120,7 @@ public class registro_usuarios extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/iconos/logo_ido.png")));
 
 		btnAtras = new JButton("Regresar");
-		btnAtras.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		btnAtras.setFont(new Font("Cambria", Font.BOLD, 12));
 		btnAtras.setBackground(new Color(255, 127, 80));
 		btnAtras.setBounds(355, 11, 102, 23);
 		contentPane.add(btnAtras);
@@ -134,6 +133,7 @@ public class registro_usuarios extends JFrame {
 				principal.setTitle("Sistema de busqueda de codigos de matricula. IDO 2020");
 				Timer time = new Timer();
 				time.schedule(principal.tarea, 0, 1000);
+				principal.construirTabla();
 				dispose();
 			}
 		});
@@ -148,6 +148,7 @@ public class registro_usuarios extends JFrame {
 
 		btnNuevo = new JButton("Nuevo");
 		btnNuevo.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				btnNuevo.setVisible(true);
 				btnGuardar.setVisible(true);
@@ -164,13 +165,14 @@ public class registro_usuarios extends JFrame {
 				obtenerUltimoId();
 			}
 		});
-		btnNuevo.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		btnNuevo.setFont(new Font("Cambria", Font.BOLD, 12));
 		btnNuevo.setBounds(28, 197, 91, 23);
 		panelRegistro.add(btnNuevo);
 		btnNuevo.setBackground(new Color(255, 255, 255));
 
 		btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				validarUsuarioPorIdentidad();
 				if (txtIdentidad.getText().isEmpty() || txtUsuario.getText().isEmpty()
@@ -217,23 +219,24 @@ public class registro_usuarios extends JFrame {
 			}
 
 		});
-		btnGuardar.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		btnGuardar.setFont(new Font("Cambria", Font.BOLD, 12));
 		btnGuardar.setBounds(312, 197, 99, 23);
 		panelRegistro.add(btnGuardar);
 		btnGuardar.setBackground(new Color(60, 179, 113));
 
 		JLabel lblTipo = new JLabel("1. N\u00B0 de identidad :");
-		lblTipo.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
-		lblTipo.setBounds(28, 48, 120, 23);
+		lblTipo.setFont(new Font("Cambria", Font.BOLD, 12));
+		lblTipo.setBounds(28, 52, 120, 23);
 		panelRegistro.add(lblTipo);
 
 		JLabel lblRegistroCargos = new JLabel("Datos del registro:");
-		lblRegistroCargos.setBounds(28, 11, 174, 32);
+		lblRegistroCargos.setBounds(28, 11, 143, 32);
 		panelRegistro.add(lblRegistroCargos);
-		lblRegistroCargos.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
+		lblRegistroCargos.setFont(new Font("Cambria", Font.BOLD, 12));
 
 		btnActualizar = new JButton("Actualizar");
 		btnActualizar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (txtIdentidad.getText().isEmpty() || txtUsuario.getText().isEmpty()
 						|| txtContraseña.getText().isEmpty()) {
@@ -268,7 +271,7 @@ public class registro_usuarios extends JFrame {
 
 			}
 		});
-		btnActualizar.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		btnActualizar.setFont(new Font("Cambria", Font.BOLD, 12));
 		btnActualizar.setBackground(new Color(60, 179, 113));
 		btnActualizar.setBounds(312, 197, 99, 23);
 		panelRegistro.add(btnActualizar);
@@ -287,15 +290,15 @@ public class registro_usuarios extends JFrame {
 			e1.printStackTrace();
 		}
 		JLabel lblCantidad = new JLabel("4. Rol :");
-		lblCantidad.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
-		lblCantidad.setBounds(28, 152, 136, 22);
+		lblCantidad.setFont(new Font("Cambria", Font.BOLD, 12));
+		lblCantidad.setBounds(28, 154, 136, 20);
 		panelRegistro.add(lblCantidad);
 		final ImageIcon iconoFoto = new ImageIcon(getClass().getResource("/iconos/usuario.png"));
 
 		cbxTipoUsuario = new JComboBox();
-		cbxTipoUsuario.setFont(new Font("Tw Cen MT Condensed", Font.BOLD, 15));
+		cbxTipoUsuario.setFont(new Font("Cambria", Font.BOLD, 12));
 		cbxTipoUsuario.setModel(new DefaultComboBoxModel(new String[] { "Administrador", "Docente" }));
-		cbxTipoUsuario.setBounds(199, 150, 212, 26);
+		cbxTipoUsuario.setBounds(158, 154, 174, 22);
 		panelRegistro.add(cbxTipoUsuario);
 
 		MaskFormatter formatter11 = null;
@@ -319,36 +322,39 @@ public class registro_usuarios extends JFrame {
 			e1.printStackTrace();
 		}
 		txtIdentidad = new JFormattedTextField(formato1);
+		txtIdentidad.setFont(new Font("Cambria", Font.BOLD, 12));
 		txtIdentidad.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIdentidad.setColumns(10);
-		txtIdentidad.setBounds(199, 48, 212, 23);
+		txtIdentidad.setBounds(158, 52, 174, 23);
 		panelRegistro.add(txtIdentidad);
 
 		lblUsuario = new JLabel("2. Usuario :");
-		lblUsuario.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
-		lblUsuario.setBounds(28, 83, 99, 22);
+		lblUsuario.setFont(new Font("Cambria", Font.BOLD, 12));
+		lblUsuario.setBounds(28, 86, 99, 22);
 		panelRegistro.add(lblUsuario);
 
 		txtUsuario = new JTextField();
+		txtUsuario.setFont(new Font("Cambria", Font.BOLD, 12));
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUsuario.setColumns(10);
-		txtUsuario.setBounds(199, 82, 160, 23);
+		txtUsuario.setBounds(158, 86, 174, 23);
 		panelRegistro.add(txtUsuario);
 
 		lblContrasea = new JLabel("3. Contrase\u00F1a :");
-		lblContrasea.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
-		lblContrasea.setBounds(28, 119, 99, 22);
+		lblContrasea.setFont(new Font("Cambria", Font.BOLD, 12));
+		lblContrasea.setBounds(28, 121, 136, 22);
 		panelRegistro.add(lblContrasea);
 
 		txtContraseña = new JPasswordField();
+		txtContraseña.setFont(new Font("Cambria", Font.BOLD, 12));
 		txtContraseña.setHorizontalAlignment(SwingConstants.CENTER);
 		txtContraseña.setColumns(10);
-		txtContraseña.setBounds(199, 116, 160, 23);
+		txtContraseña.setBounds(158, 120, 174, 23);
 		panelRegistro.add(txtContraseña);
 
 		radioButton = new JRadioButton("");
 		radioButton.setBackground(Color.WHITE);
-		radioButton.setBounds(365, 119, 21, 20);
+		radioButton.setBounds(342, 123, 21, 20);
 		panelRegistro.add(radioButton);
 		radioButton.addActionListener(new ActionListener() {
 
@@ -370,18 +376,27 @@ public class registro_usuarios extends JFrame {
 		});
 
 		label_3 = new JLabel("");
-		label_3.setBounds(390, 119, 21, 20);
+		label_3.setBounds(367, 123, 21, 20);
 		panelRegistro.add(label_3);
 		final ImageIcon iconoocultar = new ImageIcon(
 				ocultar.getImage().getScaledInstance(label_3.getWidth(), label_3.getHeight(), Image.SCALE_DEFAULT));
 		label_3.setIcon(iconoocultar);
+		
 
 		txtCodigo = new JTextField();
+		txtCodigo.setFont(new Font("Cambria", Font.BOLD, 12));
 		txtCodigo.setEditable(false);
 		txtCodigo.setHorizontalAlignment(SwingConstants.CENTER);
 		txtCodigo.setColumns(10);
-		txtCodigo.setBounds(199, 18, 26, 23);
+		txtCodigo.setBounds(158, 16, 43, 44);
 		panelRegistro.add(txtCodigo);
+
+		label = new JLabel();
+		label.setBounds(356, 11, 81, 83);
+		panelRegistro.add(label);
+		final ImageIcon iconouser = new ImageIcon(
+				usuarioLogo.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
+		label.setIcon(iconouser);
 
 		InputMap map22 = txtIdentidad.getInputMap(JComponent.WHEN_FOCUSED);
 		map22.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
@@ -423,13 +438,13 @@ public class registro_usuarios extends JFrame {
 		panelTablaCargos.add(lblCargosRegistrados);
 
 		JLabel lblBuscar = new JLabel("Buscar Usuario :");
-		lblBuscar.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		lblBuscar.setFont(new Font("Cambria", Font.BOLD, 12));
 		lblBuscar.setBounds(10, 33, 119, 22);
 		panelTablaCargos.add(lblBuscar);
 
 		txtBusquedaDato = new JTextField();
 		txtBusquedaDato.setHorizontalAlignment(SwingConstants.CENTER);
-		txtBusquedaDato.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		txtBusquedaDato.setFont(new Font("Cambria", Font.BOLD, 12));
 		txtBusquedaDato.setColumns(10);
 		txtBusquedaDato.setBounds(118, 34, 257, 21);
 		panelTablaCargos.add(txtBusquedaDato);
@@ -458,6 +473,7 @@ public class registro_usuarios extends JFrame {
 
 		btnBorrar = new JButton("Borrar");
 		btnBorrar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				PreparedStatement ps = null;
 				int filaseleccionada;
@@ -487,7 +503,7 @@ public class registro_usuarios extends JFrame {
 				}
 			}
 		});
-		btnBorrar.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		btnBorrar.setFont(new Font("Cambria", Font.BOLD, 12));
 		btnBorrar.setBackground(new Color(220, 20, 60));
 		btnBorrar.setBounds(10, 270, 99, 23);
 		panelTablaCargos.add(btnBorrar);
@@ -506,6 +522,7 @@ public class registro_usuarios extends JFrame {
 
 		btnActualizarDatos = new JButton("Actualizar Datos");
 		btnActualizarDatos.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				int filaseleccionada;
 				try {
@@ -546,13 +563,14 @@ public class registro_usuarios extends JFrame {
 
 			}
 		});
-		btnActualizarDatos.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		btnActualizarDatos.setFont(new Font("Cambria", Font.BOLD, 12));
 		btnActualizarDatos.setBackground(new Color(60, 179, 113));
 		btnActualizarDatos.setBounds(299, 270, 137, 23);
 		panelTablaCargos.add(btnActualizarDatos);
 
 		btnVer = new JButton("Ver detalles");
 		btnVer.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				int filaseleccionada;
 				try {
@@ -591,7 +609,7 @@ public class registro_usuarios extends JFrame {
 			}
 
 		});
-		btnVer.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		btnVer.setFont(new Font("Cambria", Font.BOLD, 12));
 		btnVer.setBackground(new Color(0, 206, 209));
 		btnVer.setBounds(181, 270, 108, 23);
 		panelTablaCargos.add(btnVer);
@@ -657,12 +675,13 @@ public class registro_usuarios extends JFrame {
 
 					String encabezado = "Reporte de usuarios registrados";
 
-					utilJTablePrint(tabla, encabezado, "Pagina {0} de " + i + "          Matricula IDO 2020          " + fecha, true);
+					utilJTablePrint(tabla, encabezado,
+							"Pagina {0} de " + i + "          Matricula IDO 2020          " + fecha, true);
 
 				}
 			}
 		});
-		button.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		button.setFont(new Font("Cambria", Font.BOLD, 12));
 		button.setBackground(new Color(60, 179, 113));
 		button.setBounds(238, 11, 137, 19);
 		panelTablaCargos.add(button);
@@ -676,7 +695,7 @@ public class registro_usuarios extends JFrame {
 
 		lblRegistroDeUsuarios = new JLabel("Registro de Usuarios.");
 		lblRegistroDeUsuarios.setForeground(Color.WHITE);
-		lblRegistroDeUsuarios.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
+		lblRegistroDeUsuarios.setFont(new Font("Cambria", Font.BOLD, 12));
 		lblRegistroDeUsuarios.setBounds(10, 6, 249, 32);
 		contentPane.add(lblRegistroDeUsuarios);
 
@@ -818,8 +837,9 @@ public class registro_usuarios extends JFrame {
 		conexion conex = new conexion();
 		try {
 			Statement estatuto = conex.getConexion().createStatement();
-			ResultSet rs = estatuto.executeQuery("SELECT RNE_Empleado, Nombre_Usuario FROM dbo.Usuario where RNE_Empleado = '"
-					+ registro_usuarios.txtIdentidad.getText().toString() + "'");
+			ResultSet rs = estatuto
+					.executeQuery("SELECT RNE_Empleado, Nombre_Usuario FROM dbo.Usuario where RNE_Empleado = '"
+							+ registro_usuarios.txtIdentidad.getText().toString() + "'");
 
 			if (rs.next()) {
 				identidad = (rs.getString("RNE_Empleado"));

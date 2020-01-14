@@ -8,14 +8,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import clases.alumnos;
-import clases.usuarios;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,44 +20,28 @@ import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.Color;
-import java.awt.Event;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.HeadlessException;
 import java.awt.Image;
-import java.awt.ScrollPane;
 import java.awt.Toolkit;
 
 import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 import javax.swing.RowFilter;
-import javax.swing.InputMap;
 import javax.swing.JButton;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import java.awt.print.Printable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import conexion.conexion;
-import consultas.consultas_usuario;
-import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.TableModel;
@@ -71,15 +49,14 @@ import javax.swing.table.TableRowSorter;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import java.awt.Component;
 import javax.swing.ScrollPaneConstants;
 
 public class principal extends JFrame {
 
 	private JPanel contentPane;
-	public JTextField txtNombre_Alumno;
-	public JTextField txtIdentidad_Alumno;
-	public JTextField txtCodigo_Matricula;
+	public static JTextField txtNombre_Alumno;
+	public static JTextField txtIdentidad_Alumno;
+	public static JTextField txtCodigo_Matricula;
 	public JButton btnBuscar;
 	public JPanel panelInformacion;
 
@@ -91,13 +68,14 @@ public class principal extends JFrame {
 	public static String pago = null;
 	public static String recibo = null;
 
-	public JTextField txtBuscar;
-	public JTextField txtModalidad;
-	public JTextField txtVerificacion;
-	public JTextField txtRecibo;
+	public static JTextField txtBuscar;
+	public static JTextField txtGrado;
+	public static JTextField txtModalidad;
+	public static JTextField txtVerificacion;
+	public static JTextField txtRecibo;
 	public static JLabel lblHoraSistema;
 	public static JLabel lblFecha;
-	
+
 	public JScrollPane barraAlumno;
 	public JTable tablaAlumno;
 	public TableRowSorter<TableModel> trsfiltroCodigo;
@@ -111,8 +89,13 @@ public class principal extends JFrame {
 			@Override
 			public void run() {
 				try {
-					principal frame = new principal();
-					frame.setVisible(true);
+					principal principal = new principal();
+					principal.setVisible(true);
+					principal.setLocationRelativeTo(null);
+					principal.setVisible(true);
+					principal.construirTabla();
+					Timer time = new Timer();
+					time.schedule(principal.tarea, 0, 1000);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -171,19 +154,19 @@ public class principal extends JFrame {
 		label_1.setFont(new Font("Lucida Bright", Font.BOLD, 18));
 		label_1.setBounds(10, 0, 654, 44);
 		panel.add(label_1);
-		
+
 		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(null);
 		panel_3.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
 		panel_3.setBackground(Color.WHITE);
 		panel_3.setBounds(10, 55, 654, 243);
 		panel.add(panel_3);
-		
+
 		JLabel label_3 = new JLabel("Buscar Alumno :");
 		label_3.setFont(new Font("Cambria", Font.BOLD, 14));
 		label_3.setBounds(10, 11, 119, 22);
 		panel_3.add(label_3);
-		
+
 		txtBuscar = new JTextField();
 		txtBuscar.setHorizontalAlignment(SwingConstants.CENTER);
 		txtBuscar.setFont(new Font("Cambria", Font.BOLD, 14));
@@ -204,14 +187,13 @@ public class principal extends JFrame {
 
 			@Override
 			public void keyReleased(KeyEvent ke) {
-				String cadena = (txtBuscar.getText().toString());
+				String cadena = (txtBuscar.getText());
 				txtBuscar.setText(cadena);
 				repaint();
 				filtro();
 			}
 		});
-		
-		
+
 		barraAlumno = new JScrollPane(tablaAlumno, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		panel_3.add(barraAlumno);
@@ -219,11 +201,11 @@ public class principal extends JFrame {
 
 		tablaAlumno = new JTable();
 		barraAlumno.setViewportView(tablaAlumno);
-		
+
 		JLabel label_4 = new JLabel();
 		label_4.setBounds(355, 41, 49, 44);
 		panel_3.add(label_4);
-		
+
 		JButton button_3 = new JButton("Seleccionar Alumno");
 		button_3.setFont(new Font("Cambria", Font.BOLD, 14));
 		button_3.setBackground(new Color(60, 179, 113));
@@ -243,36 +225,33 @@ public class principal extends JFrame {
 						String identidad = tablaAlumno.getValueAt(filaseleccionada, 2).toString();
 						String codigo = tablaAlumno.getValueAt(filaseleccionada, 3).toString();
 						String modalidad = tablaAlumno.getValueAt(filaseleccionada, 4).toString();
-						String pago = tablaAlumno.getValueAt(filaseleccionada, 5).toString();
-						String recibo = tablaAlumno.getValueAt(filaseleccionada, 6).toString();
+						String grado = tablaAlumno.getValueAt(filaseleccionada, 5).toString();
+						String pago = tablaAlumno.getValueAt(filaseleccionada, 6).toString();
+						String recibo = tablaAlumno.getValueAt(filaseleccionada, 7).toString();
 
-						principal formulario = new principal();
-						formulario.setVisible(true);
-						formulario.setLocationRelativeTo(null);
-						formulario.txtNombre_Alumno.setText(nombres + " " + apellidos);
-						formulario.txtIdentidad_Alumno.setText(identidad);
-						formulario.txtModalidad.setText(modalidad);
+						txtNombre_Alumno.setText(nombres + " " + apellidos);
+						txtIdentidad_Alumno.setText(identidad);
+						txtModalidad.setText(modalidad);
+						txtGrado.setText(grado);
 
 						if (codigo.equals("null")) {
-							formulario.txtCodigo_Matricula.setText("Comprobar");
+							txtCodigo_Matricula.setText("Comprobar");
 						} else {
-							formulario.txtCodigo_Matricula.setText(codigo);
+							txtCodigo_Matricula.setText(codigo);
 						}
 
 						if (pago.equals("0")) {
-							formulario.txtVerificacion.setText("Comprobar");
+							txtVerificacion.setText("Comprobar");
 
 						} else {
-							formulario.txtVerificacion.setText(pago);
+							txtVerificacion.setText(pago);
 						}
 
 						if (recibo.equals("0000")) {
-							formulario.txtRecibo.setText("Comprobar");
+							txtRecibo.setText("Comprobar");
 						} else {
-							formulario.txtRecibo.setText(recibo);
+							txtRecibo.setText(recibo);
 						}
-
-						dispose();
 
 					}
 
@@ -303,7 +282,7 @@ public class principal extends JFrame {
 
 		JLabel lblIdentidadDelAlumno = new JLabel("Identidad del alumno :");
 		lblIdentidadDelAlumno.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblIdentidadDelAlumno.setBounds(46, 164, 225, 21);
+		lblIdentidadDelAlumno.setBounds(46, 196, 225, 21);
 		panelInformacion.add(lblIdentidadDelAlumno);
 
 		JLabel lblCodigoDelAlumno = new JLabel("Codigo :");
@@ -324,7 +303,7 @@ public class principal extends JFrame {
 		txtIdentidad_Alumno.setEditable(false);
 		txtIdentidad_Alumno.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIdentidad_Alumno.setColumns(10);
-		txtIdentidad_Alumno.setBounds(254, 164, 369, 20);
+		txtIdentidad_Alumno.setBounds(254, 196, 172, 20);
 		panelInformacion.add(txtIdentidad_Alumno);
 
 		txtCodigo_Matricula = new JTextField();
@@ -337,7 +316,7 @@ public class principal extends JFrame {
 
 		JLabel lblCompro = new JLabel("Modalidad :");
 		lblCompro.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblCompro.setBounds(46, 196, 225, 21);
+		lblCompro.setBounds(46, 164, 225, 21);
 		panelInformacion.add(lblCompro);
 
 		txtModalidad = new JTextField();
@@ -345,7 +324,7 @@ public class principal extends JFrame {
 		txtModalidad.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtModalidad.setEditable(false);
 		txtModalidad.setColumns(10);
-		txtModalidad.setBounds(254, 196, 369, 20);
+		txtModalidad.setBounds(254, 164, 369, 20);
 		panelInformacion.add(txtModalidad);
 
 		JLabel lblInstitutoDepartamentalDe = new JLabel("Instituto Departamental de Oriente\r\n");
@@ -389,11 +368,11 @@ public class principal extends JFrame {
 						detalle_comprobante_prematricula detalle = new detalle_comprobante_prematricula();
 						detalle.setVisible(true);
 						detalle.setLocationRelativeTo(null);
-						detalle.lblNombre.setText(txtNombre_Alumno.getText().toString());
-						detalle.lblIdentidad.setText(txtIdentidad_Alumno.getText().toString());
-						detalle.lblModalidad.setText(txtModalidad.getText().toString());
-						detalle.lblCodigo.setText(txtCodigo_Matricula.getText().toString());
-						detalle.lblFecha.setText(lblFecha.getText().toString());
+						detalle_comprobante_prematricula.lblNombre.setText(txtNombre_Alumno.getText().toString());
+						detalle_comprobante_prematricula.lblIdentidad.setText(txtIdentidad_Alumno.getText().toString());
+						detalle_comprobante_prematricula.lblModalidad.setText(txtModalidad.getText().toString());
+						detalle_comprobante_prematricula.lblCodigo.setText(txtCodigo_Matricula.getText().toString());
+						detalle_comprobante_prematricula.lblFecha.setText(lblFecha.getText().toString());
 						getHora();
 					}
 				}
@@ -433,7 +412,7 @@ public class principal extends JFrame {
 		JLabel lblNDeRecibo = new JLabel("N\u00B0 de recibo.");
 		lblNDeRecibo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNDeRecibo.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblNDeRecibo.setBounds(451, 228, 172, 21);
+		lblNDeRecibo.setBounds(451, 240, 172, 21);
 		panelInformacion.add(lblNDeRecibo);
 
 		txtRecibo = new JTextField();
@@ -454,20 +433,23 @@ public class principal extends JFrame {
 
 		JButton btnComprobarInformacin = new JButton("Comprobar informaci\u00F3n de pago del estudiante");
 		btnComprobarInformacin.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (txtNombre_Alumno.getText().toString().equals("")
 						&& txtIdentidad_Alumno.getText().toString().equals("")
 						&& txtCodigo_Matricula.getText().toString().equals("")
 						&& txtModalidad.getText().toString().equals("") && txtRecibo.getText().toString().equals("")
-						&& txtVerificacion.getText().toString().equals("")) {
+						&& txtVerificacion.getText().toString().equals("")
+						&& txtGrado.getText().toString().equals("")) {
 					JOptionPane.showMessageDialog(null, "No hay datos que comprobar, haga la busqueda antes.");
 
 				} else {
 					verificacion_recibo recibo = new verificacion_recibo();
 					recibo.setVisible(true);
 					recibo.setLocationRelativeTo(null);
-					recibo.lblIdentidad.setText(txtIdentidad_Alumno.getText().toString());
-					recibo.lblNombre.setText(txtNombre_Alumno.getText().toString());
+					verificacion_recibo.lblIdentidad.setText(txtIdentidad_Alumno.getText().toString());
+					verificacion_recibo.lblNombre.setText(txtNombre_Alumno.getText().toString());
+					verificacion_recibo.lblGrado.setText(txtGrado.getText().toString());
 					dispose();
 				}
 
@@ -477,20 +459,34 @@ public class principal extends JFrame {
 		btnComprobarInformacin.setBackground(new Color(60, 179, 113));
 		btnComprobarInformacin.setBounds(46, 292, 340, 21);
 		panelInformacion.add(btnComprobarInformacin);
-		
+
 		JLabel lblMatricula = new JLabel("Matricula 2020.\r\n");
 		lblMatricula.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMatricula.setForeground(Color.BLACK);
 		lblMatricula.setFont(new Font("Serif", Font.BOLD, 18));
 		lblMatricula.setBounds(20, 28, 628, 21);
 		panelInformacion.add(lblMatricula);
-		
+
 		JLabel lblComprobanteDeMatrcula = new JLabel("Comprobante de matr\u00EDcula IDO 2020. ");
 		lblComprobanteDeMatrcula.setHorizontalAlignment(SwingConstants.CENTER);
 		lblComprobanteDeMatrcula.setForeground(Color.BLACK);
 		lblComprobanteDeMatrcula.setFont(new Font("Serif", Font.BOLD, 14));
 		lblComprobanteDeMatrcula.setBounds(20, 78, 654, 21);
 		panelInformacion.add(lblComprobanteDeMatrcula);
+
+		JLabel lblGrado = new JLabel("Grado.");
+		lblGrado.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGrado.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblGrado.setBounds(451, 196, 172, 18);
+		panelInformacion.add(lblGrado);
+
+		txtGrado = new JTextField();
+		txtGrado.setHorizontalAlignment(SwingConstants.CENTER);
+		txtGrado.setFont(new Font("Cambria", Font.BOLD, 14));
+		txtGrado.setEditable(false);
+		txtGrado.setColumns(10);
+		txtGrado.setBounds(451, 215, 172, 20);
+		panelInformacion.add(txtGrado);
 		final ImageIcon logo1 = new ImageIcon(getClass().getResource("/iconos/prueba.png"));
 		final ImageIcon logo221 = new ImageIcon(getClass().getResource("/iconos/estudiante.png"));
 		final ImageIcon logo222 = new ImageIcon(getClass().getResource("/iconos/escribir.png"));
@@ -510,6 +506,7 @@ public class principal extends JFrame {
 		button.setBounds(10, 157, 85, 67);
 		panel_2.add(button);
 		button.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				registro_usuarios usuarios = new registro_usuarios();
 				usuarios.setVisible(true);
@@ -537,6 +534,7 @@ public class principal extends JFrame {
 		button_1.setBounds(10, 265, 85, 67);
 		panel_2.add(button_1);
 		button_1.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				tabla_alumnos tabla = new tabla_alumnos();
 				tabla.setVisible(true);
@@ -561,6 +559,7 @@ public class principal extends JFrame {
 		button_2.setBounds(10, 571, 82, 67);
 		panel_2.add(button_2);
 		button_2.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				acerca_de tabla = new acerca_de();
 				tabla.setVisible(true);
@@ -572,47 +571,47 @@ public class principal extends JFrame {
 		final ImageIcon icono222 = new ImageIcon(
 				logo222.getImage().getScaledInstance(button_2.getWidth(), button_2.getHeight(), Image.SCALE_DEFAULT));
 		button_2.setIcon(icono222);
-		
-				JLabel lblHora = new JLabel("Hora");
-				lblHora.setBounds(10, 0, 85, 28);
-				panel_2.add(lblHora);
-				lblHora.setHorizontalAlignment(SwingConstants.CENTER);
-				lblHora.setForeground(Color.BLACK);
-				lblHora.setFont(new Font("Serif", Font.BOLD, 18));
-				
-				JLabel lblMen = new JLabel("Men\u00FA ");
-				lblMen.setHorizontalAlignment(SwingConstants.CENTER);
-				lblMen.setForeground(Color.BLACK);
-				lblMen.setFont(new Font("Serif", Font.BOLD, 18));
-				lblMen.setBounds(10, 64, 85, 28);
-				panel_2.add(lblMen);
-				
-				JLabel lblDe = new JLabel("de");
-				lblDe.setHorizontalAlignment(SwingConstants.CENTER);
-				lblDe.setForeground(Color.BLACK);
-				lblDe.setFont(new Font("Serif", Font.BOLD, 18));
-				lblDe.setBounds(10, 87, 85, 21);
-				panel_2.add(lblDe);
-				
-				JLabel lblOpciones = new JLabel("opciones :");
-				lblOpciones.setHorizontalAlignment(SwingConstants.CENTER);
-				lblOpciones.setForeground(Color.BLACK);
-				lblOpciones.setFont(new Font("Serif", Font.BOLD, 18));
-				lblOpciones.setBounds(10, 97, 85, 34);
-				panel_2.add(lblOpciones);
-				
-				JPanel panel_1 = new JPanel();
-				panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-				panel_1.setBounds(10, 26, 85, 28);
-				panel_2.add(panel_1);
-				panel_1.setLayout(null);
-				
-						lblHoraSistema = new JLabel("");
-						lblHoraSistema.setBounds(0, 0, 85, 28);
-						panel_1.add(lblHoraSistema);
-						lblHoraSistema.setForeground(new Color(0, 0, 128));
-						lblHoraSistema.setHorizontalAlignment(SwingConstants.CENTER);
-						lblHoraSistema.setFont(new Font("Dialog", Font.BOLD, 15));
+
+		JLabel lblHora = new JLabel("Hora");
+		lblHora.setBounds(10, 0, 85, 28);
+		panel_2.add(lblHora);
+		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHora.setForeground(Color.BLACK);
+		lblHora.setFont(new Font("Serif", Font.BOLD, 18));
+
+		JLabel lblMen = new JLabel("Men\u00FA ");
+		lblMen.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMen.setForeground(Color.BLACK);
+		lblMen.setFont(new Font("Serif", Font.BOLD, 18));
+		lblMen.setBounds(10, 64, 85, 28);
+		panel_2.add(lblMen);
+
+		JLabel lblDe = new JLabel("de");
+		lblDe.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDe.setForeground(Color.BLACK);
+		lblDe.setFont(new Font("Serif", Font.BOLD, 18));
+		lblDe.setBounds(10, 87, 85, 21);
+		panel_2.add(lblDe);
+
+		JLabel lblOpciones = new JLabel("opciones :");
+		lblOpciones.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOpciones.setForeground(Color.BLACK);
+		lblOpciones.setFont(new Font("Serif", Font.BOLD, 18));
+		lblOpciones.setBounds(10, 97, 85, 34);
+		panel_2.add(lblOpciones);
+
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_1.setBounds(10, 26, 85, 28);
+		panel_2.add(panel_1);
+		panel_1.setLayout(null);
+
+		lblHoraSistema = new JLabel("");
+		lblHoraSistema.setBounds(0, 0, 85, 28);
+		panel_1.add(lblHoraSistema);
+		lblHoraSistema.setForeground(new Color(0, 0, 128));
+		lblHoraSistema.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHoraSistema.setFont(new Font("Dialog", Font.BOLD, 15));
 
 	}
 
@@ -649,7 +648,6 @@ public class principal extends JFrame {
 		}
 	};
 
-
 	public static String getFecha() {
 		Date date = new Date();
 		Calendar cal = Calendar.getInstance();
@@ -671,9 +669,9 @@ public class principal extends JFrame {
 				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 			System.exit(0);
 	}
-	
+
 	public void construirTabla() {
-		String titulos[] = { "Nombres", "Apellidos", "Identidad", "Codigo", "Modalidad", "Estado del pago",
+		String titulos[] = { "Nombres", "Apellidos", "Identidad", "Codigo", "Modalidad", "Grado", "Estado del pago",
 				"Numero de recibo" };
 		String informacion[][] = obtenerMatriz();
 		tablaAlumno = new JTable(informacion, titulos);
@@ -702,6 +700,7 @@ public class principal extends JFrame {
 				alumno.setRNE_Alumno(rs.getString("RNE_Alumno"));
 				alumno.setCodigo(rs.getString("Codigo"));
 				alumno.setModalidad(rs.getString("Modalidad"));
+				alumno.setGrado(rs.getString("Grado"));
 				alumno.setEstado_Pago(rs.getString("Estado_Pago"));
 				alumno.setNumero_Recibo(rs.getString("Numero_Recibo"));
 				miLista.add(alumno);
@@ -720,23 +719,22 @@ public class principal extends JFrame {
 
 	public static String[][] obtenerMatriz() {
 		ArrayList<alumnos> miLista = buscarUsuariosConMatriz();
-		String matrizInfo[][] = new String[miLista.size()][7];
+		String matrizInfo[][] = new String[miLista.size()][8];
 		for (int i = 0; i < miLista.size(); i++) {
 			matrizInfo[i][0] = miLista.get(i).getNombres() + "";
 			matrizInfo[i][1] = miLista.get(i).getApellidos() + "";
 			matrizInfo[i][2] = miLista.get(i).getRNE_Alumno() + "";
 			matrizInfo[i][3] = miLista.get(i).getCodigo() + "";
 			matrizInfo[i][4] = miLista.get(i).getModalidad() + "";
-			matrizInfo[i][5] = miLista.get(i).getEstado_Pago() + "";
-			matrizInfo[i][6] = miLista.get(i).getNumero_Recibo() + "";
+			matrizInfo[i][5] = miLista.get(i).getGrado() + "";
+			matrizInfo[i][6] = miLista.get(i).getEstado_Pago() + "";
+			matrizInfo[i][7] = miLista.get(i).getNumero_Recibo() + "";
 		}
 		return matrizInfo;
 	}
 
 	public void filtro() {
 		filtroCodigo = txtBuscar.getText();
-		trsfiltroCodigo
-				.setRowFilter(RowFilter.regexFilter(txtBuscar.getText(), 0, 1, 2, 3, 4, 5, 6));
+		trsfiltroCodigo.setRowFilter(RowFilter.regexFilter(txtBuscar.getText(), 0, 1, 2, 3, 4, 5, 6, 7));
 	}
-
 }

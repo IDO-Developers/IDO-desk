@@ -18,7 +18,7 @@ public class consultas_usuario extends conexion {
 			ps.setString(2, usuario.getRol());
 			ps.setString(3, usuario.getContraseña_Usuario());
 			ps.setString(4, usuario.getRNE_Empleado());
-			
+
 			ps.execute();
 			return true;
 		} catch (SQLException e) {

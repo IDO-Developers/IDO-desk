@@ -9,7 +9,6 @@ import java.awt.Event;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import conexion.conexion;
 import consultas.consultas_usuario;
 
 import java.awt.Font;
@@ -24,24 +23,13 @@ import javax.swing.KeyStroke;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Timer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
-import javax.swing.JToggleButton;
-import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 
@@ -153,9 +141,9 @@ public class login extends JFrame {
 			public void keyTyped(KeyEvent ke) {
 				if (txtUsuario.getText().length() == 15)
 					ke.consume();
-				
-				if(txtUsuario.getText().toString().equals(" ")){
-					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");	
+
+				if (txtUsuario.getText().toString().equals(" ")) {
+					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
 					txtUsuario.setText("");
 				}
 			}
@@ -171,6 +159,7 @@ public class login extends JFrame {
 
 		btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				iniciarSesion();
 			}
@@ -193,9 +182,9 @@ public class login extends JFrame {
 			public void keyTyped(KeyEvent e) {
 				if (txtContraseña.getText().length() == 15)
 					e.consume();
-				
-				if(txtContraseña.getText().toString().equals(" ")){
-					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");	
+
+				if (txtContraseña.getText().toString().equals(" ")) {
+					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
 					txtContraseña.setText("");
 				}
 			}
@@ -271,8 +260,6 @@ public class login extends JFrame {
 		contentPane.add(lblLoginSistemaAdministrativo);
 
 	}
-
-
 
 	@SuppressWarnings("unlikely-arg-type")
 	public void iniciarSesion() {

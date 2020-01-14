@@ -32,5 +32,4 @@ public class conexion {
 		con = null;
 	}
 
-
 }

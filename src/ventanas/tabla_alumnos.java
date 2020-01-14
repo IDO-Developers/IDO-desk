@@ -97,6 +97,7 @@ public class tabla_alumnos extends JFrame {
 				principal.setTitle("Sistema de busqueda de codigos de matricula. IDO 2020");
 				Timer time = new Timer();
 				time.schedule(principal.tarea, 0, 1000);
+				principal.construirTabla();
 				dispose();
 			}
 		});
@@ -280,7 +281,8 @@ public class tabla_alumnos extends JFrame {
 
 					String encabezado = "Reporte de alumnos registrados en la prematricula ";
 
-					utilJTablePrint(tablaProductos, encabezado, "Pagina {0} de " + i + "          Matricula IDO 2020          " + fecha, true);
+					utilJTablePrint(tablaProductos, encabezado,
+							"Pagina {0} de " + i + "          Matricula IDO 2020          " + fecha, true);
 
 				}
 			}

@@ -9,6 +9,7 @@ public class alumnos {
 	String Modalidad;
 	String Estado_Pago;
 	String Numero_Recibo;
+	String Grado;
 
 	public String getRNE_Alumno() {
 		return RNE_Alumno;
@@ -64,6 +65,14 @@ public class alumnos {
 
 	public void setNumero_Recibo(String numero_Recibo) {
 		Numero_Recibo = numero_Recibo;
+	}
+
+	public String getGrado() {
+		return Grado;
+	}
+
+	public void setGrado(String grado) {
+		Grado = grado;
 	}
 
 }
