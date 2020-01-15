@@ -170,8 +170,6 @@ public class verificacion_recibo extends JFrame {
 					principal.setVisible(true);
 					Timer time = new Timer();
 					time.schedule(principal.tarea, 0, 1000);
-					
-					
 
 					if (consulta.actualizarCodigo(clase) && consulta2.actualizarPago_y_Recibo(clase2)) {
 						JOptionPane.showMessageDialog(null, "Datos comprobados!");
@@ -250,11 +248,13 @@ public class verificacion_recibo extends JFrame {
 			}
 
 		}
-		Random aleatorio = new Random();
-		int numero;
-		numero = (int) (aleatorio.nextDouble() * 999 + 100);
-		String NumGenerado = String.valueOf(numero);
+
+		String NumGenerado = String.valueOf(genererNumero());
 		cadena = valorGrado + NumGenerado;
+	}
+
+	public static int genererNumero() {
+		return (int) (1000 * Math.random());
 	}
 
 	public void establecerDatosAlumno() {
@@ -277,7 +277,6 @@ public class verificacion_recibo extends JFrame {
 				recibo = rsr.getString("Numero_Recibo");
 				grado = rsr.getString("Grado");
 
-				
 				principal.txtNombre_Alumno.setText(nombres + " " + apellidos);
 				principal.txtIdentidad_Alumno.setText(identidad);
 				principal.txtCodigo_Matricula.setText(codigo);

@@ -171,7 +171,7 @@ public class principal extends JFrame {
 		txtBuscar.setHorizontalAlignment(SwingConstants.CENTER);
 		txtBuscar.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtBuscar.setColumns(10);
-		txtBuscar.setBounds(114, 14, 354, 19);
+		txtBuscar.setBounds(121, 14, 347, 19);
 		panel_3.add(txtBuscar);
 		txtBuscar.addKeyListener(new KeyListener() {
 			@Override
@@ -365,14 +365,14 @@ public class principal extends JFrame {
 
 					} else {
 
-						detalle_comprobante_prematricula detalle = new detalle_comprobante_prematricula();
+						detalle_comprobante detalle = new detalle_comprobante();
 						detalle.setVisible(true);
 						detalle.setLocationRelativeTo(null);
-						detalle_comprobante_prematricula.lblNombre.setText(txtNombre_Alumno.getText().toString());
-						detalle_comprobante_prematricula.lblIdentidad.setText(txtIdentidad_Alumno.getText().toString());
-						detalle_comprobante_prematricula.lblModalidad.setText(txtModalidad.getText().toString());
-						detalle_comprobante_prematricula.lblCodigo.setText(txtCodigo_Matricula.getText().toString());
-						detalle_comprobante_prematricula.lblFecha.setText(lblFecha.getText().toString());
+						detalle_comprobante.lblNombre.setText(txtNombre_Alumno.getText().toString());
+						detalle_comprobante.lblIdentidad.setText(txtIdentidad_Alumno.getText().toString());
+						detalle_comprobante.lblModalidad.setText(txtModalidad.getText().toString());
+						detalle_comprobante.lblCodigo.setText(txtCodigo_Matricula.getText().toString());
+						detalle_comprobante.lblFecha.setText(lblFecha.getText().toString());
 						getHora();
 					}
 				}
@@ -385,7 +385,7 @@ public class principal extends JFrame {
 		lblFecha.setForeground(new Color(0, 0, 128));
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFecha.setFont(new Font("Serif", Font.BOLD, 14));
-		lblFecha.setBounds(211, 41, 294, 32);
+		lblFecha.setBounds(221, 43, 294, 32);
 		panelInformacion.add(lblFecha);
 		lblFecha.setText(getFecha());
 
@@ -393,7 +393,7 @@ public class principal extends JFrame {
 		lblFecha_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFecha_1.setForeground(Color.BLACK);
 		lblFecha_1.setFont(new Font("Serif", Font.BOLD, 14));
-		lblFecha_1.setBounds(211, 43, 143, 28);
+		lblFecha_1.setBounds(207, 45, 143, 28);
 		panelInformacion.add(lblFecha_1);
 
 		JLabel lblVerificacionDePago = new JLabel("Verificacion de pago :");
@@ -661,7 +661,7 @@ public class principal extends JFrame {
 		Calendar cal = Calendar.getInstance();
 		Date fecha = cal.getTime();
 		DateFormat formatter = DateFormat.getTimeInstance();
-		detalle_comprobante_prematricula.lblHora.setText(formatter.format(fecha));
+		detalle_comprobante.lblHora.setText(formatter.format(fecha));
 	}
 
 	private void close() {
