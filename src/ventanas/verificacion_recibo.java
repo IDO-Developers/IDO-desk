@@ -216,6 +216,7 @@ public class verificacion_recibo extends JFrame {
 							dispose();
 							principal.construirTabla();
 							establecerDatosAlumno();
+							principal.comboBox.setSelectedIndex(0);
 						} else {
 							JOptionPane.showMessageDialog(null, "Error! No Comprobado");
 						}
@@ -246,6 +247,7 @@ public class verificacion_recibo extends JFrame {
 							dispose();
 							principal.construirTabla2();
 							establecerDatosAlumnos2();
+							principal.comboBox.setSelectedIndex(1);
 						} else {
 							JOptionPane.showMessageDialog(null, "Error! No Comprobado");
 						}
