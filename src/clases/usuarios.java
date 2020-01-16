@@ -5,7 +5,7 @@ public class usuarios {
 	int id;
 	String Nombre_Usuario;
 	String Contraseña_Usuario;
-	String Rol;
+	String id_Rol;
 	String RNE_Empleado;
 
 	public int getId() {
@@ -32,12 +32,12 @@ public class usuarios {
 		Contraseña_Usuario = contraseña_Usuario;
 	}
 
-	public String getRol() {
-		return Rol;
+	public String getId_Rol() {
+		return id_Rol;
 	}
 
-	public void setRol(String rol) {
-		Rol = rol;
+	public void setId_Rol(String id_Rol) {
+		this.id_Rol = id_Rol;
 	}
 
 	public String getRNE_Empleado() {

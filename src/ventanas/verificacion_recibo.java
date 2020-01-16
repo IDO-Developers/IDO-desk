@@ -10,6 +10,8 @@ import clases.alumnos;
 import conexion.conexion;
 import consultas.consultas_pago_alumnos;
 import java.awt.Color;
+import java.awt.Event;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -17,8 +19,11 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +31,9 @@ import java.util.Random;
 import java.util.Timer;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.InputMap;
 
 public class verificacion_recibo extends JFrame {
 
@@ -135,6 +142,33 @@ public class verificacion_recibo extends JFrame {
 		txtRecibo.setBounds(133, 245, 166, 20);
 		contentPane.add(txtRecibo);
 		txtRecibo.setColumns(10);
+		InputMap map4 = txtRecibo.getInputMap(JComponent.WHEN_FOCUSED);
+		map4.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
+		txtRecibo.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent ke) {
+				if (txtRecibo.getText().length() == 15)
+					ke.consume();
+
+				if (txtRecibo.getText().toString().equals(" ")) {
+					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
+					txtRecibo.setText("");
+				}
+				
+				char c = ke.getKeyChar();
+				if ((c < '0' || c > '9'))
+					ke.consume();
+			}
+
+			@Override
+			public void keyPressed(KeyEvent ke) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent ke) {
+				
+			}
+		});
 
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {

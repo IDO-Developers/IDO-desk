@@ -109,13 +109,13 @@ public class login extends JFrame {
 
 		JLabel lblUsuario = new JLabel("Usuario :");
 		lblUsuario.setForeground(new Color(0, 0, 0));
-		lblUsuario.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 12));
+		lblUsuario.setFont(new Font("Cambria", Font.BOLD, 15));
 		lblUsuario.setBounds(136, 165, 108, 20);
 		panel.add(lblUsuario);
 
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a :");
 		lblContrasea.setForeground(new Color(0, 0, 0));
-		lblContrasea.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 12));
+		lblContrasea.setFont(new Font("Cambria", Font.BOLD, 15));
 		lblContrasea.setBounds(125, 204, 98, 20);
 		panel.add(lblContrasea);
 
@@ -130,7 +130,7 @@ public class login extends JFrame {
 
 		txtUsuario = new JTextField();
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		txtUsuario.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		txtUsuario.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtUsuario.setBounds(74, 185, 181, 20);
 		panel.add(txtUsuario);
 		txtUsuario.setColumns(10);
@@ -165,14 +165,14 @@ public class login extends JFrame {
 			}
 		});
 		btnIngresar.setForeground(new Color(0, 0, 0));
-		btnIngresar.setFont(new Font("Franklin Gothic Heavy", Font.PLAIN, 14));
+		btnIngresar.setFont(new Font("Cambria", Font.BOLD, 15));
 		btnIngresar.setBackground(new Color(60, 179, 113));
 		btnIngresar.setBounds(110, 257, 113, 25);
 		panel.add(btnIngresar);
 
 		txtContraseña = new JPasswordField();
 		txtContraseña.setHorizontalAlignment(SwingConstants.CENTER);
-		txtContraseña.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		txtContraseña.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtContraseña.setBounds(74, 225, 181, 20);
 		panel.add(txtContraseña);
 		InputMap map5 = txtContraseña.getInputMap(JComponent.WHEN_FOCUSED);
@@ -210,7 +210,7 @@ public class login extends JFrame {
 
 		lblNombreEmpresa = new JLabel("Instituto Departamental de Oriente.");
 		lblNombreEmpresa.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombreEmpresa.setFont(new Font("Franklin Gothic Heavy", Font.PLAIN, 15));
+		lblNombreEmpresa.setFont(new Font("Cambria", Font.BOLD, 15));
 		lblNombreEmpresa.setBounds(10, 0, 303, 33);
 		panel.add(lblNombreEmpresa);
 
@@ -255,7 +255,7 @@ public class login extends JFrame {
 		lblLoginSistemaAdministrativo.setForeground(Color.WHITE);
 		lblLoginSistemaAdministrativo.setBackground(Color.WHITE);
 		lblLoginSistemaAdministrativo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLoginSistemaAdministrativo.setFont(new Font("Franklin Gothic Heavy", Font.PLAIN, 15));
+		lblLoginSistemaAdministrativo.setFont(new Font("Cambria", Font.BOLD, 15));
 		lblLoginSistemaAdministrativo.setBounds(10, 0, 370, 30);
 		contentPane.add(lblLoginSistemaAdministrativo);
 
@@ -288,6 +288,9 @@ public class login extends JFrame {
 						principal.construirTabla();
 						Timer time = new Timer();
 						time.schedule(principal.tarea, 0, 1000);
+						if(consultas_usuario.rol.equals("1")) {
+							
+						}
 						dispose();
 					} else {
 						lblAlerta.setText("El usuario y contraseña son incorrectas");

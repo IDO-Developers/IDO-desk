@@ -42,6 +42,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.TableModel;
@@ -71,10 +73,13 @@ public class registro_usuarios extends JFrame {
 	public static String totalDatos = null;
 	public static String identidad = null;
 	public static String userRepetido = null;
+	public static String id_rol = null;
+	public static String nombre_rol = null;
 
 	public static String ruta;
 	public static String usuario;
 	public static ImageIcon imagen;
+	public static DefaultComboBoxModel modelo;
 
 	public JPanel contentPane;
 	public JTextField txtBusquedaDato;
@@ -84,7 +89,7 @@ public class registro_usuarios extends JFrame {
 	public static String ruta_logo;
 	public static JLabel label_2;
 
-	public JComboBox<?> cbxTipoUsuario;
+	public static JComboBox<?> cbxTipoUsuario;
 
 	public TableRowSorter<TableModel> trsfiltroCodigo;
 	String filtroCodigo;
@@ -105,7 +110,9 @@ public class registro_usuarios extends JFrame {
 	private JRadioButton radioButton;
 	private JLabel label_3;
 	private JTextField txtCodigo;
-	private JLabel label;;
+	private JLabel label;
+	private JLabel lblDatos;
+	private JLabel lblUsuario_1;;
 
 	public registro_usuarios() {
 		setType(Type.UTILITY);
@@ -118,6 +125,7 @@ public class registro_usuarios extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/iconos/logo_ido.png")));
+		modelo = new DefaultComboBoxModel();
 
 		btnAtras = new JButton("Regresar");
 		btnAtras.setFont(new Font("Cambria", Font.BOLD, 12));
@@ -150,19 +158,16 @@ public class registro_usuarios extends JFrame {
 		btnNuevo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				btnNuevo.setVisible(true);
-				btnGuardar.setVisible(true);
-				btnActualizar.setVisible(false);
-				btnActualizarDatos.setVisible(true);
-				btnVer.setVisible(true);
-				btnBorrar.setVisible(false);
-				txtIdentidad.setText("");
-				txtUsuario.setText("");
-				txtContraseña.setText("");
-				txtIdentidad.setEditable(true);
-				txtUsuario.setEditable(true);
-				txtContraseña.setEditable(true);
-				obtenerUltimoId();
+				dispose();
+				registro_usuarios usuarios = new registro_usuarios();
+				usuarios.setVisible(true);
+				usuarios.setLocationRelativeTo(null);
+				usuarios.construirTabla();
+				usuarios.obtenerUltimoId();
+				usuarios.btnBorrar.setVisible(false);
+				usuarios.btnActualizar.setVisible(false);
+				registro_usuarios.llena_combo();
+				usuarios.cargarIdRol();
 			}
 		});
 		btnNuevo.setFont(new Font("Cambria", Font.BOLD, 12));
@@ -194,7 +199,7 @@ public class registro_usuarios extends JFrame {
 							usuarios clase = new usuarios();
 							consultas_usuario consulta = new consultas_usuario();
 							clase.setNombre_Usuario(txtUsuario.getText().toString());
-							clase.setRol(cbxTipoUsuario.getSelectedItem().toString());
+							clase.setId_Rol(id_rol);
 							clase.setContraseña_Usuario(txtContraseña.getText().toString());
 							clase.setRNE_Empleado(txtIdentidad.getText().toString());
 							if (consulta.insertar(clase)) {
@@ -246,7 +251,7 @@ public class registro_usuarios extends JFrame {
 					consultas_usuario consulta = new consultas_usuario();
 
 					clase.setNombre_Usuario(txtUsuario.getText().toString());
-					clase.setRol(cbxTipoUsuario.getSelectedItem().toString());
+					clase.setId_Rol(id_rol);
 					clase.setContraseña_Usuario(txtContraseña.getText().toString());
 					clase.setRNE_Empleado(txtIdentidad.getText().toString());
 					clase.setId(Integer.parseInt(txtCodigo.getText().toString()));
@@ -296,8 +301,12 @@ public class registro_usuarios extends JFrame {
 		final ImageIcon iconoFoto = new ImageIcon(getClass().getResource("/iconos/usuario.png"));
 
 		cbxTipoUsuario = new JComboBox();
+		cbxTipoUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cargarIdRol();
+			}
+		});
 		cbxTipoUsuario.setFont(new Font("Cambria", Font.BOLD, 12));
-		cbxTipoUsuario.setModel(new DefaultComboBoxModel(new String[] { "Administrador", "Docente" }));
 		cbxTipoUsuario.setBounds(158, 154, 174, 22);
 		panelRegistro.add(cbxTipoUsuario);
 
@@ -327,6 +336,28 @@ public class registro_usuarios extends JFrame {
 		txtIdentidad.setColumns(10);
 		txtIdentidad.setBounds(158, 52, 174, 23);
 		panelRegistro.add(txtIdentidad);
+		InputMap map4 = txtIdentidad.getInputMap(JComponent.WHEN_FOCUSED);
+		map4.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
+		txtIdentidad.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent ke) {
+				if (txtIdentidad.getText().length() == 15)
+					ke.consume();
+
+				if (txtIdentidad.getText().toString().equals(" ")) {
+					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
+					txtIdentidad.setText("");
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent ke) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent ke) {
+			}
+		});
 
 		lblUsuario = new JLabel("2. Usuario :");
 		lblUsuario.setFont(new Font("Cambria", Font.BOLD, 12));
@@ -339,6 +370,8 @@ public class registro_usuarios extends JFrame {
 		txtUsuario.setColumns(10);
 		txtUsuario.setBounds(158, 86, 174, 23);
 		panelRegistro.add(txtUsuario);
+		InputMap map41 = txtUsuario.getInputMap(JComponent.WHEN_FOCUSED);
+		map41.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
 
 		lblContrasea = new JLabel("3. Contrase\u00F1a :");
 		lblContrasea.setFont(new Font("Cambria", Font.BOLD, 12));
@@ -351,6 +384,28 @@ public class registro_usuarios extends JFrame {
 		txtContraseña.setColumns(10);
 		txtContraseña.setBounds(158, 120, 174, 23);
 		panelRegistro.add(txtContraseña);
+		InputMap map411 = txtContraseña.getInputMap(JComponent.WHEN_FOCUSED);
+		map411.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
+		txtContraseña.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent ke) {
+				if (txtContraseña.getText().length() == 15)
+					ke.consume();
+
+				if (txtContraseña.getText().toString().equals(" ")) {
+					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
+					txtContraseña.setText("");
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent ke) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent ke) {
+			}
+		});
 
 		radioButton = new JRadioButton("");
 		radioButton.setBackground(Color.WHITE);
@@ -381,7 +436,6 @@ public class registro_usuarios extends JFrame {
 		final ImageIcon iconoocultar = new ImageIcon(
 				ocultar.getImage().getScaledInstance(label_3.getWidth(), label_3.getHeight(), Image.SCALE_DEFAULT));
 		label_3.setIcon(iconoocultar);
-		
 
 		txtCodigo = new JTextField();
 		txtCodigo.setFont(new Font("Cambria", Font.BOLD, 12));
@@ -392,11 +446,23 @@ public class registro_usuarios extends JFrame {
 		panelRegistro.add(txtCodigo);
 
 		label = new JLabel();
-		label.setBounds(375, 11, 62, 56);
+		label.setBounds(361, 11, 62, 56);
 		panelRegistro.add(label);
 		final ImageIcon iconouser = new ImageIcon(
 				usuarioLogo.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
 		label.setIcon(iconouser);
+
+		lblDatos = new JLabel("Datos");
+		lblDatos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDatos.setFont(new Font("Cambria", Font.BOLD, 12));
+		lblDatos.setBounds(342, 67, 99, 22);
+		panelRegistro.add(lblDatos);
+
+		lblUsuario_1 = new JLabel("Usuario");
+		lblUsuario_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUsuario_1.setFont(new Font("Cambria", Font.BOLD, 12));
+		lblUsuario_1.setBounds(342, 83, 99, 22);
+		panelRegistro.add(lblUsuario_1);
 
 		InputMap map22 = txtIdentidad.getInputMap(JComponent.WHEN_FOCUSED);
 		map22.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
@@ -455,6 +521,14 @@ public class registro_usuarios extends JFrame {
 			public void keyTyped(KeyEvent ke) {
 				trsfiltroCodigo = new TableRowSorter(tabla.getModel());
 				tabla.setRowSorter(trsfiltroCodigo);
+				
+				if (txtUsuario.getText().length() == 25)
+					ke.consume();
+
+				if (txtUsuario.getText().toString().equals(" ")) {
+					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
+					txtUsuario.setText("");
+				}
 			}
 
 			@Override
@@ -464,12 +538,14 @@ public class registro_usuarios extends JFrame {
 
 			@Override
 			public void keyReleased(KeyEvent ke) {
-				String cadena = (txtBusquedaDato.getText());
+				String cadena = (txtBusquedaDato.getText().toString());
 				txtBusquedaDato.setText(cadena);
 				repaint();
 				filtro();
 			}
 		});
+		
+		
 
 		btnBorrar = new JButton("Borrar");
 		btnBorrar.addActionListener(new ActionListener() {
@@ -540,12 +616,26 @@ public class registro_usuarios extends JFrame {
 						txtUsuario.setText(usuario);
 						txtContraseña.setText(contraseña);
 						txtIdentidad.setText(identidad);
-						cbxTipoUsuario.setSelectedItem(rol);
+
+						conexion conex = new conexion();
+						try {
+
+							Statement estatuto = conex.getConexion().createStatement();
+							ResultSet rs = estatuto
+									.executeQuery("Select Nombre_Rol from Roles where id_Rol='" + rol + "'");
+							while (rs.next()) {
+								nombre_rol = rs.getString("Nombre_Rol");
+							}
+						} catch (SQLException ex) {
+							Logger.getLogger(registro_usuarios.class.getName()).log(Level.SEVERE, null, ex);
+							JOptionPane.showMessageDialog(null, ex);
+						}
+
+						cbxTipoUsuario.setSelectedItem(nombre_rol);
 
 						txtUsuario.setEditable(true);
 						txtContraseña.setEditable(true);
 						txtIdentidad.setEditable(true);
-						cbxTipoUsuario.setEditable(true);
 
 						btnNuevo.setVisible(true);
 						btnGuardar.setVisible(false);
@@ -584,16 +674,29 @@ public class registro_usuarios extends JFrame {
 						String identidad = tabla.getValueAt(filaseleccionada, 3).toString();
 						String rol = tabla.getValueAt(filaseleccionada, 4).toString();
 
+						conexion conex = new conexion();
+						try {
+
+							Statement estatuto = conex.getConexion().createStatement();
+							ResultSet rs = estatuto
+									.executeQuery("Select Nombre_Rol from Roles where id_Rol='" + rol + "'");
+							while (rs.next()) {
+								nombre_rol = rs.getString("Nombre_Rol");
+							}
+						} catch (SQLException ex) {
+							Logger.getLogger(registro_usuarios.class.getName()).log(Level.SEVERE, null, ex);
+							JOptionPane.showMessageDialog(null, ex);
+						}
+
 						txtCodigo.setText(id);
 						txtUsuario.setText(usuario);
 						txtContraseña.setText(contraseña);
 						txtIdentidad.setText(identidad);
-						cbxTipoUsuario.setSelectedItem(rol);
+						cbxTipoUsuario.setSelectedItem(nombre_rol);
 
 						txtUsuario.setEditable(false);
 						txtContraseña.setEditable(false);
 						txtIdentidad.setEditable(false);
-						cbxTipoUsuario.setEditable(false);
 
 						btnActualizar.setVisible(false);
 						btnGuardar.setVisible(false);
@@ -728,7 +831,7 @@ public class registro_usuarios extends JFrame {
 				usuarios.setNombre_Usuario(rs.getString("Nombre_Usuario"));
 				usuarios.setContraseña_Usuario(rs.getString("Contraseña_Usuario"));
 				usuarios.setRNE_Empleado(rs.getString("RNE_Empleado"));
-				usuarios.setRol(rs.getString("Rol"));
+				usuarios.setId_Rol(rs.getString("id_Rol"));
 				miLista.add(usuarios);
 			}
 			rs.close();
@@ -751,14 +854,14 @@ public class registro_usuarios extends JFrame {
 			matrizInfo[i][1] = miLista.get(i).getNombre_Usuario() + "";
 			matrizInfo[i][2] = miLista.get(i).getContraseña_Usuario() + "";
 			matrizInfo[i][3] = miLista.get(i).getRNE_Empleado() + "";
-			matrizInfo[i][4] = miLista.get(i).getRol() + "";
+			matrizInfo[i][4] = miLista.get(i).getId_Rol() + "";
 		}
 		return matrizInfo;
 	}
 
 	public void filtro() {
-		filtroCodigo = txtBusquedaDato.getText();
-		trsfiltroCodigo.setRowFilter(RowFilter.regexFilter(txtBusquedaDato.getText(), 0, 1, 2, 3, 4, 5, 6));
+		filtroCodigo = txtBusquedaDato.getText().toString();
+		trsfiltroCodigo.setRowFilter(RowFilter.regexFilter("(?i)"+txtBusquedaDato.getText().toString(), 0, 1, 2, 3, 4));
 	}
 
 	public void utilJTablePrint(JTable jTable, String header, String footer, boolean showPrintDialog) {
@@ -857,4 +960,39 @@ public class registro_usuarios extends JFrame {
 		}
 
 	}
+
+	@SuppressWarnings("unchecked")
+	public static void llena_combo() {
+		conexion conex = new conexion();
+		try {
+			modelo.removeAllElements();
+			Statement estatuto = conex.getConexion().createStatement();
+			ResultSet rs = estatuto.executeQuery("Select * from Roles");
+
+			while (rs.next()) {
+				modelo.addElement(rs.getString("Nombre_Rol"));
+			}
+			cbxTipoUsuario.setModel(modelo);
+		} catch (SQLException ex) {
+			Logger.getLogger(registro_usuarios.class.getName()).log(Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(null, ex);
+		}
+	}
+
+	public void cargarIdRol() {
+		conexion conex = new conexion();
+		try {
+
+			Statement estatuto = conex.getConexion().createStatement();
+			ResultSet rs = estatuto.executeQuery(
+					"Select id_Rol from Roles where Nombre_Rol='" + cbxTipoUsuario.getSelectedItem().toString() + "'");
+			while (rs.next()) {
+				id_rol = rs.getString("id_Rol");
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(registro_usuarios.class.getName()).log(Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(null, ex);
+		}
+	}
+
 }

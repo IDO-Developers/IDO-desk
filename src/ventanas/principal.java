@@ -20,6 +20,8 @@ import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.Color;
+import java.awt.Event;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -30,9 +32,12 @@ import java.awt.Toolkit;
 
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.RowFilter;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -173,11 +178,21 @@ public class principal extends JFrame {
 		txtBuscar.setColumns(10);
 		txtBuscar.setBounds(121, 14, 347, 19);
 		panel_3.add(txtBuscar);
+		InputMap map433 = txtBuscar.getInputMap(JComponent.WHEN_FOCUSED);
+		map433.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
 		txtBuscar.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent ke) {
-				trsfiltroCodigo = new TableRowSorter(tablaAlumno.getModel());
+				trsfiltroCodigo = new TableRowSorter<>(tablaAlumno.getModel());
 				tablaAlumno.setRowSorter(trsfiltroCodigo);
+
+				if (txtBuscar.getText().length() == 30)
+					ke.consume();
+
+				if (txtBuscar.getText().toString().equals(" ")) {
+					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
+					txtBuscar.setText("");
+				}
 			}
 
 			@Override
@@ -207,7 +222,7 @@ public class principal extends JFrame {
 		panel_3.add(label_4);
 
 		JButton button_3 = new JButton("Seleccionar Alumno");
-		button_3.setFont(new Font("Cambria", Font.BOLD, 14));
+		button_3.setFont(new Font("Cambria", Font.BOLD, 13));
 		button_3.setBackground(new Color(60, 179, 113));
 		button_3.setBounds(478, 15, 166, 19);
 		panel_3.add(button_3);
@@ -345,7 +360,7 @@ public class principal extends JFrame {
 		JButton btnImprimir = new JButton("Imprimir informaci\u00F3n");
 		btnImprimir.setBounds(451, 291, 171, 21);
 		panelInformacion.add(btnImprimir);
-		btnImprimir.setFont(new Font("Cambria", Font.BOLD, 14));
+		btnImprimir.setFont(new Font("Cambria", Font.BOLD, 13));
 		btnImprimir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -373,7 +388,8 @@ public class principal extends JFrame {
 						detalle_comprobante.lblModalidad.setText(txtModalidad.getText().toString());
 						detalle_comprobante.lblCodigo.setText(txtCodigo_Matricula.getText().toString());
 						detalle_comprobante.lblFecha.setText(lblFecha.getText().toString());
-						getHora();
+						detalle_comprobante.lblHora.setText(lblHoraSistema.getText().toString());
+
 					}
 				}
 
@@ -385,7 +401,7 @@ public class principal extends JFrame {
 		lblFecha.setForeground(new Color(0, 0, 128));
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFecha.setFont(new Font("Serif", Font.BOLD, 14));
-		lblFecha.setBounds(221, 43, 294, 32);
+		lblFecha.setBounds(217, 52, 298, 21);
 		panelInformacion.add(lblFecha);
 		lblFecha.setText(getFecha());
 
@@ -393,7 +409,7 @@ public class principal extends JFrame {
 		lblFecha_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFecha_1.setForeground(Color.BLACK);
 		lblFecha_1.setFont(new Font("Serif", Font.BOLD, 14));
-		lblFecha_1.setBounds(207, 45, 143, 28);
+		lblFecha_1.setBounds(207, 52, 143, 21);
 		panelInformacion.add(lblFecha_1);
 
 		JLabel lblVerificacionDePago = new JLabel("Verificacion de pago :");
@@ -431,7 +447,7 @@ public class principal extends JFrame {
 				logo22.getImage().getScaledInstance(label_2.getWidth(), label_2.getHeight(), Image.SCALE_DEFAULT));
 		label_2.setIcon(icono22);
 
-		JButton btnComprobarInformacin = new JButton("Comprobar informaci\u00F3n de pago del estudiante");
+		JButton btnComprobarInformacin = new JButton("Comprobar informaci\u00F3n");
 		btnComprobarInformacin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -455,9 +471,9 @@ public class principal extends JFrame {
 
 			}
 		});
-		btnComprobarInformacin.setFont(new Font("Cambria", Font.BOLD, 14));
+		btnComprobarInformacin.setFont(new Font("Cambria", Font.BOLD, 12));
 		btnComprobarInformacin.setBackground(new Color(60, 179, 113));
-		btnComprobarInformacin.setBounds(46, 292, 340, 21);
+		btnComprobarInformacin.setBounds(254, 291, 172, 21);
 		panelInformacion.add(btnComprobarInformacin);
 
 		JLabel lblMatricula = new JLabel("Matricula 2020.\r\n");
@@ -500,12 +516,12 @@ public class principal extends JFrame {
 		lblRegistroDeUsuarios.setBounds(10, 135, 85, 21);
 		panel_2.add(lblRegistroDeUsuarios);
 		lblRegistroDeUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRegistroDeUsuarios.setFont(new Font("Serif", Font.BOLD, 16));
+		lblRegistroDeUsuarios.setFont(new Font("Cambria", Font.BOLD, 14));
 
-		JButton button = new JButton("");
-		button.setBounds(10, 157, 85, 67);
-		panel_2.add(button);
-		button.addActionListener(new ActionListener() {
+		JButton btnUsuarios = new JButton("");
+		btnUsuarios.setBounds(10, 157, 85, 67);
+		panel_2.add(btnUsuarios);
+		btnUsuarios.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				registro_usuarios usuarios = new registro_usuarios();
@@ -515,25 +531,27 @@ public class principal extends JFrame {
 				usuarios.obtenerUltimoId();
 				usuarios.btnBorrar.setVisible(false);
 				usuarios.btnActualizar.setVisible(false);
+				registro_usuarios.llena_combo();
+				usuarios.cargarIdRol();
 				dispose();
 			}
 		});
-		button.setFont(new Font("Calibri", Font.BOLD, 14));
-		button.setBackground(Color.WHITE);
+		btnUsuarios.setFont(new Font("Calibri", Font.BOLD, 14));
+		btnUsuarios.setBackground(Color.WHITE);
 		final ImageIcon icono1 = new ImageIcon(
-				logo1.getImage().getScaledInstance(button.getWidth(), button.getHeight(), Image.SCALE_DEFAULT));
-		button.setIcon(icono1);
+				logo1.getImage().getScaledInstance(btnUsuarios.getWidth(), btnUsuarios.getHeight(), Image.SCALE_DEFAULT));
+		btnUsuarios.setIcon(icono1);
 
 		JLabel lblAlumnos = new JLabel("Alumnos");
-		lblAlumnos.setBounds(10, 241, 85, 21);
+		lblAlumnos.setBounds(10, 235, 85, 21);
 		panel_2.add(lblAlumnos);
 		lblAlumnos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAlumnos.setFont(new Font("Serif", Font.BOLD, 16));
+		lblAlumnos.setFont(new Font("Cambria", Font.BOLD, 14));
 
-		JButton button_1 = new JButton("");
-		button_1.setBounds(10, 265, 85, 67);
-		panel_2.add(button_1);
-		button_1.addActionListener(new ActionListener() {
+		JButton btnAlumnos = new JButton("");
+		btnAlumnos.setBounds(10, 259, 85, 67);
+		panel_2.add(btnAlumnos);
+		btnAlumnos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				tabla_alumnos tabla = new tabla_alumnos();
@@ -543,20 +561,20 @@ public class principal extends JFrame {
 				dispose();
 			}
 		});
-		button_1.setFont(new Font("Calibri", Font.BOLD, 14));
-		button_1.setBackground(Color.WHITE);
+		btnAlumnos.setFont(new Font("Calibri", Font.BOLD, 14));
+		btnAlumnos.setBackground(Color.WHITE);
 		final ImageIcon icono221 = new ImageIcon(
-				logo221.getImage().getScaledInstance(button_1.getWidth(), button_1.getHeight(), Image.SCALE_DEFAULT));
-		button_1.setIcon(icono221);
+				logo221.getImage().getScaledInstance(btnAlumnos.getWidth(), btnAlumnos.getHeight(), Image.SCALE_DEFAULT));
+		btnAlumnos.setIcon(icono221);
 
 		JLabel lblAcercaDe = new JLabel("Acerca de.");
-		lblAcercaDe.setBounds(10, 549, 85, 21);
+		lblAcercaDe.setBounds(10, 539, 85, 21);
 		panel_2.add(lblAcercaDe);
 		lblAcercaDe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAcercaDe.setFont(new Font("Serif", Font.BOLD, 16));
+		lblAcercaDe.setFont(new Font("Cambria", Font.BOLD, 14));
 
 		JButton button_2 = new JButton("");
-		button_2.setBounds(10, 571, 82, 67);
+		button_2.setBounds(10, 561, 82, 67);
 		panel_2.add(button_2);
 		button_2.addActionListener(new ActionListener() {
 			@Override
@@ -612,6 +630,38 @@ public class principal extends JFrame {
 		lblHoraSistema.setForeground(new Color(0, 0, 128));
 		lblHoraSistema.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHoraSistema.setFont(new Font("Dialog", Font.BOLD, 15));
+		
+		JLabel lblPre = new JLabel("Pre-Matricula");
+		lblPre.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPre.setFont(new Font("Cambria", Font.BOLD, 12));
+		lblPre.setBounds(10, 337, 85, 21);
+		panel_2.add(lblPre);
+		
+		JButton btnPrematricula = new JButton("");
+		btnPrematricula.setFont(new Font("Calibri", Font.BOLD, 14));
+		btnPrematricula.setBackground(Color.WHITE);
+		btnPrematricula.setBounds(10, 359, 85, 67);
+		panel_2.add(btnPrematricula);
+		final ImageIcon logo2211 = new ImageIcon(getClass().getResource("/iconos/pre_matricula.png"));
+		final ImageIcon icono2211 = new ImageIcon(
+				logo2211.getImage().getScaledInstance(btnPrematricula.getWidth(), btnPrematricula.getHeight(), Image.SCALE_DEFAULT));
+		btnPrematricula.setIcon(icono2211);
+		
+		JLabel lblMatricula_1 = new JLabel("Matricula");
+		lblMatricula_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMatricula_1.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblMatricula_1.setBounds(10, 437, 85, 21);
+		panel_2.add(lblMatricula_1);
+		
+		JButton btnMatricula = new JButton("");
+		btnMatricula.setFont(new Font("Calibri", Font.BOLD, 14));
+		btnMatricula.setBackground(Color.WHITE);
+		btnMatricula.setBounds(10, 461, 85, 67);
+		panel_2.add(btnMatricula);
+		final ImageIcon logo22112 = new ImageIcon(getClass().getResource("/iconos/matricula.png"));
+		final ImageIcon icono22112 = new ImageIcon(
+				logo22112.getImage().getScaledInstance(btnMatricula.getWidth(), btnMatricula.getHeight(), Image.SCALE_DEFAULT));
+		btnMatricula.setIcon(icono22112);
 
 	}
 
@@ -652,7 +702,7 @@ public class principal extends JFrame {
 		Date date = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		SimpleDateFormat df = new SimpleDateFormat("'Dia' EEEEEEEEE dd 'de' MMMMM 'del' yyyy");
+		SimpleDateFormat df = new SimpleDateFormat("EEEEEEEEE dd 'de' MMMMM 'del' yyyy");
 		date = cal.getTime();
 		return df.format(date);
 	}
@@ -734,7 +784,8 @@ public class principal extends JFrame {
 	}
 
 	public void filtro() {
-		filtroCodigo = txtBuscar.getText();
-		trsfiltroCodigo.setRowFilter(RowFilter.regexFilter(txtBuscar.getText(), 0, 1, 2, 3, 4, 5, 6, 7));
+		filtroCodigo = txtBuscar.getText().toString();
+		trsfiltroCodigo
+				.setRowFilter(RowFilter.regexFilter("(?i)" + txtBuscar.getText().toString(), 0, 1, 2, 3, 4, 5, 6, 7));
 	}
 }

@@ -22,6 +22,7 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
 
 public class detalle_comprobante extends JFrame implements Printable {
 
@@ -59,7 +60,7 @@ public class detalle_comprobante extends JFrame implements Printable {
 		setType(Type.UTILITY);
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 500, 600);
+		setBounds(100, 100, 491, 675);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,12 +70,12 @@ public class detalle_comprobante extends JFrame implements Printable {
 		JLabel lblInstitutoDepartamentalDe = new JLabel("Instituto Departamental de Oriente, \r\nMatricula 2020.\r\n");
 		lblInstitutoDepartamentalDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInstitutoDepartamentalDe.setForeground(Color.BLACK);
-		lblInstitutoDepartamentalDe.setFont(new Font("Cambria Math", Font.BOLD, 16));
-		lblInstitutoDepartamentalDe.setBounds(10, 25, 464, 28);
+		lblInstitutoDepartamentalDe.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 18));
+		lblInstitutoDepartamentalDe.setBounds(0, 25, 474, 28);
 		contentPane.add(lblInstitutoDepartamentalDe);
 
 		JLabel label_1 = new JLabel("");
-		label_1.setBounds(136, 21, 216, 212);
+		label_1.setBounds(148, 38, 184, 175);
 		contentPane.add(label_1);
 		final ImageIcon logo = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
 		final ImageIcon icono = new ImageIcon(
@@ -92,103 +93,131 @@ public class detalle_comprobante extends JFrame implements Printable {
 		});
 		btnImprimir.setFont(new Font("Calibri", Font.BOLD, 14));
 		btnImprimir.setBackground(new Color(102, 205, 170));
-		btnImprimir.setBounds(197, 0, 99, 21);
+		btnImprimir.setBounds(196, 6, 99, 21);
 		contentPane.add(btnImprimir);
 
 		JLabel label_2 = new JLabel("Informaci\u00F3n del alumno :");
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setForeground(new Color(0, 0, 128));
-		label_2.setFont(new Font("Cambria", Font.BOLD, 16));
-		label_2.setBounds(25, 231, 428, 28);
+		label_2.setFont(new Font("Cambria", Font.BOLD, 17));
+		label_2.setBounds(0, 231, 474, 28);
 		contentPane.add(label_2);
 
 		JLabel label_3 = new JLabel("Nombre completo del alumno :");
 		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		label_3.setFont(new Font("Cambria Math", Font.BOLD, 16));
-		label_3.setBounds(35, 274, 418, 21);
+		label_3.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 16));
+		label_3.setBounds(0, 274, 474, 21);
 		contentPane.add(label_3);
 
 		JLabel label_4 = new JLabel("Identidad del alumno :");
 		label_4.setHorizontalAlignment(SwingConstants.CENTER);
-		label_4.setFont(new Font("Cambria Math", Font.BOLD, 16));
-		label_4.setBounds(127, 328, 225, 21);
+		label_4.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 16));
+		label_4.setBounds(0, 328, 474, 21);
 		contentPane.add(label_4);
 
 		JLabel label_5 = new JLabel("Modalidad :");
 		label_5.setHorizontalAlignment(SwingConstants.CENTER);
-		label_5.setFont(new Font("Cambria Math", Font.BOLD, 16));
-		label_5.setBounds(127, 379, 225, 21);
+		label_5.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 16));
+		label_5.setBounds(0, 379, 474, 21);
 		contentPane.add(label_5);
 
 		JLabel lblCdigo = new JLabel("C\u00F3digo : ");
 		lblCdigo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCdigo.setFont(new Font("Cambria Math", Font.BOLD, 16));
-		lblCdigo.setBounds(25, 431, 428, 21);
+		lblCdigo.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 16));
+		lblCdigo.setBounds(0, 431, 474, 21);
 		contentPane.add(lblCdigo);
 
 		JLabel label_8 = new JLabel("Hora :");
-		label_8.setHorizontalAlignment(SwingConstants.LEFT);
+		label_8.setHorizontalAlignment(SwingConstants.CENTER);
 		label_8.setForeground(Color.BLACK);
-		label_8.setFont(new Font("Cambria Math", Font.BOLD, 16));
-		label_8.setBounds(32, 500, 60, 32);
+		label_8.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 16));
+		label_8.setBounds(0, 488, 82, 21);
 		contentPane.add(label_8);
 
 		lblHora = new JLabel("Dato");
 		lblHora.setForeground(new Color(0, 0, 128));
 		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHora.setFont(new Font("Cambria", Font.BOLD, 16));
-		lblHora.setBounds(58, 500, 137, 32);
+		lblHora.setFont(new Font("Cambria", Font.BOLD, 15));
+		lblHora.setBounds(55, 488, 122, 21);
 		contentPane.add(lblHora);
 
 		JLabel label_10 = new JLabel("Fecha :");
 		label_10.setHorizontalAlignment(SwingConstants.LEFT);
 		label_10.setForeground(Color.BLACK);
-		label_10.setFont(new Font("Cambria Math", Font.BOLD, 16));
-		label_10.setBounds(181, 499, 71, 32);
+		label_10.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 16));
+		label_10.setBounds(169, 488, 71, 21);
 		contentPane.add(label_10);
 
 		lblFecha = new JLabel();
 		lblFecha.setForeground(new Color(0, 0, 128));
 		lblFecha.setText("Dato");
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFecha.setFont(new Font("Cambria", Font.BOLD, 16));
-		lblFecha.setBounds(231, 499, 243, 33);
+		lblFecha.setFont(new Font("Cambria", Font.BOLD, 15));
+		lblFecha.setBounds(203, 487, 271, 21);
 		contentPane.add(lblFecha);
 
 		JLabel lblComprobanteDePrematicula = new JLabel("Comprobante de Matricula IDO 2020.");
 		lblComprobanteDePrematicula.setHorizontalAlignment(SwingConstants.CENTER);
 		lblComprobanteDePrematicula.setForeground(Color.BLACK);
-		lblComprobanteDePrematicula.setFont(new Font("Cambria Math", Font.BOLD, 16));
-		lblComprobanteDePrematicula.setBounds(10, 191, 464, 42);
+		lblComprobanteDePrematicula.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 16));
+		lblComprobanteDePrematicula.setBounds(0, 191, 474, 42);
 		contentPane.add(lblComprobanteDePrematicula);
 
 		lblNombre = new JLabel("Dato");
 		lblNombre.setForeground(new Color(0, 0, 128));
 		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombre.setFont(new Font("Cambria", Font.BOLD, 16));
-		lblNombre.setBounds(25, 298, 433, 21);
+		lblNombre.setFont(new Font("Cambria", Font.BOLD, 15));
+		lblNombre.setBounds(0, 298, 474, 21);
 		contentPane.add(lblNombre);
 
 		lblIdentidad = new JLabel("Dato");
 		lblIdentidad.setForeground(new Color(0, 0, 128));
 		lblIdentidad.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIdentidad.setFont(new Font("Cambria", Font.BOLD, 16));
-		lblIdentidad.setBounds(25, 352, 433, 21);
+		lblIdentidad.setFont(new Font("Cambria", Font.BOLD, 15));
+		lblIdentidad.setBounds(0, 352, 474, 21);
 		contentPane.add(lblIdentidad);
 
 		lblModalidad = new JLabel("Dato");
 		lblModalidad.setForeground(new Color(0, 0, 128));
 		lblModalidad.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModalidad.setFont(new Font("Cambria", Font.BOLD, 16));
-		lblModalidad.setBounds(25, 403, 433, 21);
+		lblModalidad.setFont(new Font("Cambria", Font.BOLD, 15));
+		lblModalidad.setBounds(0, 403, 474, 21);
 		contentPane.add(lblModalidad);
 
 		lblCodigo = new JLabel("Dato");
 		lblCodigo.setForeground(new Color(0, 0, 128));
 		lblCodigo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCodigo.setFont(new Font("Cambria", Font.BOLD, 16));
-		lblCodigo.setBounds(25, 455, 433, 21);
+		lblCodigo.setFont(new Font("Cambria", Font.BOLD, 15));
+		lblCodigo.setBounds(0, 455, 474, 21);
 		contentPane.add(lblCodigo);
+		
+		JLabel lblDireccin = new JLabel("Direcci\u00F3n. \r\n");
+		lblDireccin.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDireccin.setForeground(Color.BLACK);
+		lblDireccin.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 16));
+		lblDireccin.setBounds(318, 588, 92, 32);
+		contentPane.add(lblDireccin);
+		
+		JLabel lblMatriculaIdo = new JLabel("\r\nMatricula IDO 2020.\r\n");
+		lblMatriculaIdo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMatriculaIdo.setForeground(Color.BLACK);
+		lblMatriculaIdo.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 18));
+		lblMatriculaIdo.setBounds(10, 589, 216, 28);
+		contentPane.add(lblMatriculaIdo);
+		
+		JLabel label = new JLabel("");
+		label.setBounds(224, 458, 250, 213);
+		contentPane.add(label);
+		final ImageIcon logoF = new ImageIcon(getClass().getResource("/iconos/firma.png"));
+		final ImageIcon iconoF = new ImageIcon(
+				logoF.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
+		label.setIcon(iconoF);
+		
+		JTextArea txtrlaEnseanzaQue = new JTextArea();
+		txtrlaEnseanzaQue.setFont(new Font("Cambria", Font.BOLD | Font.ITALIC, 11));
+		txtrlaEnseanzaQue.setText("         \"La ense\u00F1anza que deja huella\r\n no es la que se hace de cabeza a cabeza\r\n            sino de coraz\u00F3n a coraz\u00F3n.\"");
+		txtrlaEnseanzaQue.setBounds(22, 533, 249, 58);
+		contentPane.add(txtrlaEnseanzaQue);
 	}
 
 	@Override
@@ -213,5 +242,4 @@ public class detalle_comprobante extends JFrame implements Printable {
 			System.out.println("Error:" + ex);
 		}
 	}
-
 }
