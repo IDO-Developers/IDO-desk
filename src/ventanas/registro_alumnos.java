@@ -8,8 +8,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import clases.alumnos;
-import clases.alumnos2;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.DateFormat;
@@ -57,10 +55,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import javax.swing.ScrollPaneConstants;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
-public class principal extends JFrame {
+public class registro_alumnos extends JFrame {
 
 	private JPanel contentPane;
 	public static JTextField txtNombre_Alumno;
@@ -68,7 +64,6 @@ public class principal extends JFrame {
 	public static JTextField txtCodigo_Matricula;
 	public JButton btnBuscar;
 	public JPanel panelInformacion;
-	public static JComboBox comboBox;
 
 	public static String nombres = null;
 	public static String apellidos = null;
@@ -83,7 +78,6 @@ public class principal extends JFrame {
 	public static JTextField txtModalidad;
 	public static JTextField txtVerificacion;
 	public static JTextField txtRecibo;
-	public static JLabel lblHoraSistema;
 	public static JLabel lblFecha;
 
 	public JScrollPane barraAlumno;
@@ -99,7 +93,7 @@ public class principal extends JFrame {
 			@Override
 			public void run() {
 				try {
-					principal principal = new principal();
+					registro_alumnos principal = new registro_alumnos();
 					principal.setVisible(true);
 					principal.setLocationRelativeTo(null);
 					principal.setVisible(true);
@@ -116,8 +110,7 @@ public class principal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	@SuppressWarnings("unchecked")
-	public principal() {
+	public registro_alumnos() {
 		setType(Type.UTILITY);
 		setResizable(false);
 		setBounds(100, 100, 814, 700);
@@ -140,7 +133,7 @@ public class principal extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(10, 11, 674, 309);
+		panel.setBounds(10, 11, 788, 309);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -170,19 +163,19 @@ public class principal extends JFrame {
 		panel_3.setLayout(null);
 		panel_3.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
 		panel_3.setBackground(Color.WHITE);
-		panel_3.setBounds(10, 55, 654, 243);
+		panel_3.setBounds(10, 55, 768, 243);
 		panel.add(panel_3);
 
 		JLabel label_3 = new JLabel("Buscar Alumno :");
 		label_3.setFont(new Font("Cambria", Font.BOLD, 14));
-		label_3.setBounds(256, 0, 119, 22);
+		label_3.setBounds(10, 11, 119, 22);
 		panel_3.add(label_3);
 
 		txtBuscar = new JTextField();
 		txtBuscar.setHorizontalAlignment(SwingConstants.CENTER);
 		txtBuscar.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtBuscar.setColumns(10);
-		txtBuscar.setBounds(256, 20, 212, 19);
+		txtBuscar.setBounds(121, 14, 347, 19);
 		panel_3.add(txtBuscar);
 		InputMap map433 = txtBuscar.getInputMap(JComponent.WHEN_FOCUSED);
 		map433.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
@@ -218,7 +211,7 @@ public class principal extends JFrame {
 		barraAlumno = new JScrollPane(tablaAlumno, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		panel_3.add(barraAlumno);
-		barraAlumno.setBounds(10, 41, 634, 199);
+		barraAlumno.setBounds(10, 44, 748, 196);
 
 		tablaAlumno = new JTable();
 		barraAlumno.setViewportView(tablaAlumno);
@@ -227,88 +220,9 @@ public class principal extends JFrame {
 		label_4.setBounds(355, 41, 49, 44);
 		panel_3.add(label_4);
 
-		JButton button_3 = new JButton("Seleccionar Alumno");
-		button_3.setFont(new Font("Cambria", Font.BOLD, 13));
-		button_3.setBackground(new Color(60, 179, 113));
-		button_3.setBounds(478, 21, 166, 19);
-		panel_3.add(button_3);
-
-		JLabel lblElegirTabla = new JLabel("Elegir tabla:");
-		lblElegirTabla.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblElegirTabla.setBounds(10, 0, 119, 22);
-		panel_3.add(lblElegirTabla);
-
-		comboBox = new JComboBox<Object>();
-		comboBox.setFont(new Font("Cambria", Font.BOLD, 14));
-		comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "Matricula", "Prematricula" }));
-		comboBox.setBounds(10, 21, 212, 18);
-		panel_3.add(comboBox);
-		comboBox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if (comboBox.getSelectedItem().toString().equals("Matricula")) {
-					construirTabla();
-				} else {
-					construirTabla2();
-				}
-
-			}
-		});
-
-		button_3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				int filaseleccionada;
-				try {
-					filaseleccionada = tablaAlumno.getSelectedRow();
-					if (filaseleccionada == -1) {
-						JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
-					} else {
-						String nombres = tablaAlumno.getValueAt(filaseleccionada, 0).toString();
-						String apellidos = tablaAlumno.getValueAt(filaseleccionada, 1).toString();
-						String identidad = tablaAlumno.getValueAt(filaseleccionada, 2).toString();
-						String codigo = tablaAlumno.getValueAt(filaseleccionada, 3).toString();
-						String modalidad = tablaAlumno.getValueAt(filaseleccionada, 4).toString();
-						String grado = tablaAlumno.getValueAt(filaseleccionada, 5).toString();
-						String pago = tablaAlumno.getValueAt(filaseleccionada, 6).toString();
-						String recibo = tablaAlumno.getValueAt(filaseleccionada, 7).toString();
-
-						txtNombre_Alumno.setText(nombres + " " + apellidos);
-						txtIdentidad_Alumno.setText(identidad);
-						txtModalidad.setText(modalidad);
-						txtGrado.setText(grado);
-
-						if (codigo.equals("null") || codigo.toString().equals("null")) {
-							txtCodigo_Matricula.setText("Comprobar");
-						} else {
-							txtCodigo_Matricula.setText(codigo);
-						}
-
-						if (pago.equals("0") || pago.toString().equals("null")) {
-							txtVerificacion.setText("Comprobar");
-
-						} else {
-							txtVerificacion.setText(pago);
-						}
-
-						if (recibo.equals("0000") || recibo.toString().equals("null")) {
-							txtRecibo.setText("Comprobar");
-						} else {
-							txtRecibo.setText(recibo);
-						}
-
-					}
-
-				} catch (HeadlessException ex) {
-					JOptionPane.showMessageDialog(null, "Error: " + ex + "\nInténtelo nuevamente",
-							" .::Error En la Operacion::.", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-
 		panelInformacion = new JPanel();
 		panelInformacion.setBackground(new Color(255, 255, 255));
-		panelInformacion.setBounds(10, 331, 674, 329);
+		panelInformacion.setBounds(10, 331, 788, 329);
 		contentPane.add(panelInformacion);
 		panelInformacion.setLayout(null);
 
@@ -495,7 +409,6 @@ public class principal extends JFrame {
 					verificacion_recibo.lblIdentidad.setText(txtIdentidad_Alumno.getText().toString());
 					verificacion_recibo.lblNombre.setText(txtNombre_Alumno.getText().toString());
 					verificacion_recibo.lblGrado.setText(txtGrado.getText().toString());
-					verificacion_recibo.lbltabla.setText(comboBox.getSelectedItem().toString());
 					dispose();
 				}
 
@@ -536,162 +449,8 @@ public class principal extends JFrame {
 		final ImageIcon logo1 = new ImageIcon(getClass().getResource("/iconos/prueba.png"));
 		final ImageIcon logo221 = new ImageIcon(getClass().getResource("/iconos/estudiante.png"));
 		final ImageIcon logo222 = new ImageIcon(getClass().getResource("/iconos/escribir.png"));
-
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(694, 11, 105, 649);
-		contentPane.add(panel_2);
-		panel_2.setLayout(null);
-
-		JLabel lblRegistroDeUsuarios = new JLabel("Usuarios");
-		lblRegistroDeUsuarios.setBounds(10, 135, 85, 21);
-		panel_2.add(lblRegistroDeUsuarios);
-		lblRegistroDeUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRegistroDeUsuarios.setFont(new Font("Cambria", Font.BOLD, 14));
-
-		JButton btnUsuarios = new JButton("");
-		btnUsuarios.setBounds(10, 157, 85, 67);
-		panel_2.add(btnUsuarios);
-		btnUsuarios.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				registro_usuarios usuarios = new registro_usuarios();
-				usuarios.setVisible(true);
-				usuarios.setLocationRelativeTo(null);
-				usuarios.construirTabla();
-				usuarios.obtenerUltimoId();
-				usuarios.btnBorrar.setVisible(false);
-				usuarios.btnActualizar.setVisible(false);
-				registro_usuarios.llena_combo();
-				usuarios.cargarIdRol();
-				dispose();
-			}
-		});
-		btnUsuarios.setFont(new Font("Calibri", Font.BOLD, 14));
-		btnUsuarios.setBackground(Color.WHITE);
-		final ImageIcon icono1 = new ImageIcon(logo1.getImage().getScaledInstance(btnUsuarios.getWidth(),
-				btnUsuarios.getHeight(), Image.SCALE_DEFAULT));
-		btnUsuarios.setIcon(icono1);
-
-		JLabel lblAlumnos = new JLabel("Alumnos");
-		lblAlumnos.setBounds(10, 235, 85, 21);
-		panel_2.add(lblAlumnos);
-		lblAlumnos.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAlumnos.setFont(new Font("Cambria", Font.BOLD, 14));
-
-		JButton btnAlumnos = new JButton("");
-		btnAlumnos.setBounds(10, 259, 85, 67);
-		panel_2.add(btnAlumnos);
-		btnAlumnos.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				tabla_alumnos tabla = new tabla_alumnos();
-				tabla.setVisible(true);
-				tabla.setLocationRelativeTo(null);
-				tabla.construirTabla();
-				dispose();
-			}
-		});
-		btnAlumnos.setFont(new Font("Calibri", Font.BOLD, 14));
-		btnAlumnos.setBackground(Color.WHITE);
-		final ImageIcon icono221 = new ImageIcon(logo221.getImage().getScaledInstance(btnAlumnos.getWidth(),
-				btnAlumnos.getHeight(), Image.SCALE_DEFAULT));
-		btnAlumnos.setIcon(icono221);
-
-		JLabel lblAcercaDe = new JLabel("Acerca de.");
-		lblAcercaDe.setBounds(10, 539, 85, 21);
-		panel_2.add(lblAcercaDe);
-		lblAcercaDe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAcercaDe.setFont(new Font("Cambria", Font.BOLD, 14));
-
-		JButton button_2 = new JButton("");
-		button_2.setBounds(10, 561, 82, 67);
-		panel_2.add(button_2);
-		button_2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				acerca_de tabla = new acerca_de();
-				tabla.setVisible(true);
-				tabla.setLocationRelativeTo(null);
-			}
-		});
-		button_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		button_2.setBackground(Color.WHITE);
-		final ImageIcon icono222 = new ImageIcon(
-				logo222.getImage().getScaledInstance(button_2.getWidth(), button_2.getHeight(), Image.SCALE_DEFAULT));
-		button_2.setIcon(icono222);
-
-		JLabel lblHora = new JLabel("Hora");
-		lblHora.setBounds(10, 0, 85, 28);
-		panel_2.add(lblHora);
-		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHora.setForeground(Color.BLACK);
-		lblHora.setFont(new Font("Serif", Font.BOLD, 18));
-
-		JLabel lblMen = new JLabel("Men\u00FA ");
-		lblMen.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMen.setForeground(Color.BLACK);
-		lblMen.setFont(new Font("Serif", Font.BOLD, 18));
-		lblMen.setBounds(10, 64, 85, 28);
-		panel_2.add(lblMen);
-
-		JLabel lblDe = new JLabel("de");
-		lblDe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDe.setForeground(Color.BLACK);
-		lblDe.setFont(new Font("Serif", Font.BOLD, 18));
-		lblDe.setBounds(10, 87, 85, 21);
-		panel_2.add(lblDe);
-
-		JLabel lblOpciones = new JLabel("opciones :");
-		lblOpciones.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOpciones.setForeground(Color.BLACK);
-		lblOpciones.setFont(new Font("Serif", Font.BOLD, 18));
-		lblOpciones.setBounds(10, 97, 85, 34);
-		panel_2.add(lblOpciones);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_1.setBounds(10, 26, 85, 28);
-		panel_2.add(panel_1);
-		panel_1.setLayout(null);
-
-		lblHoraSistema = new JLabel("");
-		lblHoraSistema.setBounds(0, 0, 85, 28);
-		panel_1.add(lblHoraSistema);
-		lblHoraSistema.setForeground(new Color(0, 0, 128));
-		lblHoraSistema.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHoraSistema.setFont(new Font("Dialog", Font.BOLD, 15));
-
-		JLabel lblPre = new JLabel("Pre-Matricula");
-		lblPre.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPre.setFont(new Font("Cambria", Font.BOLD, 12));
-		lblPre.setBounds(10, 337, 85, 21);
-		panel_2.add(lblPre);
-
-		JButton btnPrematricula = new JButton("");
-		btnPrematricula.setFont(new Font("Calibri", Font.BOLD, 14));
-		btnPrematricula.setBackground(Color.WHITE);
-		btnPrematricula.setBounds(10, 359, 85, 67);
-		panel_2.add(btnPrematricula);
 		final ImageIcon logo2211 = new ImageIcon(getClass().getResource("/iconos/pre_matricula.png"));
-		final ImageIcon icono2211 = new ImageIcon(logo2211.getImage().getScaledInstance(btnPrematricula.getWidth(),
-				btnPrematricula.getHeight(), Image.SCALE_DEFAULT));
-		btnPrematricula.setIcon(icono2211);
-
-		JLabel lblMatricula_1 = new JLabel("Matricula");
-		lblMatricula_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMatricula_1.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblMatricula_1.setBounds(10, 437, 85, 21);
-		panel_2.add(lblMatricula_1);
-
-		JButton btnMatricula = new JButton("");
-		btnMatricula.setFont(new Font("Calibri", Font.BOLD, 14));
-		btnMatricula.setBackground(Color.WHITE);
-		btnMatricula.setBounds(10, 461, 85, 67);
-		panel_2.add(btnMatricula);
 		final ImageIcon logo22112 = new ImageIcon(getClass().getResource("/iconos/matricula.png"));
-		final ImageIcon icono22112 = new ImageIcon(logo22112.getImage().getScaledInstance(btnMatricula.getWidth(),
-				btnMatricula.getHeight(), Image.SCALE_DEFAULT));
-		btnMatricula.setIcon(icono22112);
 
 	}
 
@@ -818,67 +577,4 @@ public class principal extends JFrame {
 		trsfiltroCodigo
 				.setRowFilter(RowFilter.regexFilter("(?i)" + txtBuscar.getText().toString(), 0, 1, 2, 3, 4, 5, 6, 7));
 	}
-
-	public void construirTabla2() {
-		String titulos[] = { "Nombres", "Apellidos", "Identidad", "Codigo", "Modalidad", "Grado", "Estado del pago",
-				"Numero de recibo" };
-		String informacion[][] = obtenerMatriz2();
-		tablaAlumno = new JTable(informacion, titulos);
-		barraAlumno.setViewportView(tablaAlumno);
-		for (int c = 0; c < tablaAlumno.getColumnCount(); c++) {
-			Class<?> col_class = tablaAlumno.getColumnClass(c);
-			tablaAlumno.setDefaultEditor(col_class, null);
-			tablaAlumno.getTableHeader().setReorderingAllowed(false);
-
-		}
-	}
-
-	public static ArrayList<alumnos2> buscarUsuariosConMatriz2() {
-		conexion conex = new conexion();
-		ArrayList<alumnos2> miLista = new ArrayList<alumnos2>();
-		alumnos2 alumnos2;
-		try {
-			Statement estatuto = conex.getConexion().createStatement();
-			ResultSet rs = estatuto.executeQuery("select * from dbo.prematricula2019_2020");
-
-			while (rs.next()) {
-				alumnos2 = new alumnos2();
-				alumnos2.setNombres_alumnos(rs.getString("Nombres_alumnos"));
-				alumnos2.setApellidos_alumnos(rs.getString("Apellidos_alumnos"));
-				alumnos2.setIdentidad_alumnos(rs.getString("Identidad_alumnos"));
-				alumnos2.setCodigo(rs.getString("codigo"));
-				alumnos2.setModalidad(rs.getString("Modalidad"));
-				alumnos2.setGrado(rs.getString("Grado"));
-				alumnos2.setEstado_Pago(rs.getString("Estado_Pago"));
-				alumnos2.setNumero_Recibo(rs.getString("Numero_Recibo"));
-				miLista.add(alumnos2);
-			}
-			rs.close();
-			estatuto.close();
-			conex.desconectar();
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			JOptionPane.showMessageDialog(null, "Error al consultar", "Error", JOptionPane.ERROR_MESSAGE);
-
-		}
-		return miLista;
-	}
-
-	public static String[][] obtenerMatriz2() {
-		ArrayList<alumnos2> miLista = buscarUsuariosConMatriz2();
-		String matrizInfo[][] = new String[miLista.size()][8];
-		for (int i = 0; i < miLista.size(); i++) {
-			matrizInfo[i][0] = miLista.get(i).getNombres_alumnos() + "";
-			matrizInfo[i][1] = miLista.get(i).getApellidos_alumnos() + "";
-			matrizInfo[i][2] = miLista.get(i).getIdentidad_alumnos() + "";
-			matrizInfo[i][3] = miLista.get(i).getCodigo() + "";
-			matrizInfo[i][4] = miLista.get(i).getModalidad() + "";
-			matrizInfo[i][5] = miLista.get(i).getGrado() + "";
-			matrizInfo[i][6] = miLista.get(i).getEstado_Pago() + "";
-			matrizInfo[i][7] = miLista.get(i).getNumero_Recibo() + "";
-		}
-		return matrizInfo;
-	}
-
 }

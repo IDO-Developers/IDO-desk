@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import clases.alumnos;
+import clases.alumnos2;
 import conexion.conexion;
 import consultas.consultas_pago_alumnos;
 import java.awt.Color;
@@ -53,6 +54,8 @@ public class verificacion_recibo extends JFrame {
 	public static String recibo = null;
 	public static String grado = null;
 
+	public static JLabel lbltabla;
+
 	/**
 	 * Launch the application.
 	 */
@@ -75,7 +78,7 @@ public class verificacion_recibo extends JFrame {
 	 */
 	public verificacion_recibo() {
 		setType(Type.UTILITY);
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 339);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -154,7 +157,7 @@ public class verificacion_recibo extends JFrame {
 					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
 					txtRecibo.setText("");
 				}
-				
+
 				char c = ke.getKeyChar();
 				if ((c < '0' || c > '9'))
 					ke.consume();
@@ -166,7 +169,7 @@ public class verificacion_recibo extends JFrame {
 
 			@Override
 			public void keyReleased(KeyEvent ke) {
-				
+
 			}
 		});
 
@@ -180,39 +183,75 @@ public class verificacion_recibo extends JFrame {
 					alumnos clase = new alumnos();
 					consultas_pago_alumnos consulta = new consultas_pago_alumnos();
 
+					alumnos2 clase2_1 = new alumnos2();
+					consultas_pago_alumnos consulta2_1 = new consultas_pago_alumnos();
+
 					alumnos clase2 = new alumnos();
 					consultas_pago_alumnos consulta2 = new consultas_pago_alumnos();
 
-					obtenerDatosAlumno();
-					generarCodigo();
+					if (lbltabla.getText().toString().equals("Matricula")) {
+						obtenerDatosAlumno();
+						generarCodigo();
+						clase.setCodigo(cadena);
 
-					clase.setCodigo(cadena);
+						clase.setRNE_Alumno(lblIdentidad.getText().toString());
 
-					clase.setRNE_Alumno(lblIdentidad.getText().toString());
+						if (txtRecibo.getText().toString().equals("Sin Recibo")) {
+							clase2.setEstado_Pago("Pago Pendiente");
+						} else {
+							clase2.setEstado_Pago("Pago Realizado");
+						}
 
-					if (txtRecibo.getText().toString().equals("Sin Recibo")) {
-						clase2.setEstado_Pago("Pago Pendiente");
+						clase2.setNumero_Recibo(txtRecibo.getText().toString());
+						clase2.setRNE_Alumno(lblIdentidad.getText().toString());
+
+						principal principal = new principal();
+						principal.setLocationRelativeTo(null);
+						principal.setVisible(true);
+						Timer time = new Timer();
+						time.schedule(principal.tarea, 0, 1000);
+
+						if (consulta.actualizarCodigo(clase) && consulta2.actualizarPago_y_Recibo(clase2)) {
+							JOptionPane.showMessageDialog(null, "Datos comprobados!");
+							dispose();
+							principal.construirTabla();
+							establecerDatosAlumno();
+						} else {
+							JOptionPane.showMessageDialog(null, "Error! No Comprobado");
+						}
+
 					} else {
-						clase2.setEstado_Pago("Pago Realizado");
+						obtenerDatosAlumno2();
+						generarCodigo2();
+						clase2_1.setCodigo(cadena);
+						clase2_1.setIdentidad_alumnos(lblIdentidad.getText().toString());
+
+						if (txtRecibo.getText().toString().equals("Sin Recibo")) {
+							clase2_1.setEstado_Pago("Pago Pendiente");
+						} else {
+							clase2_1.setEstado_Pago("Pago Realizado");
+						}
+
+						clase2_1.setNumero_Recibo(txtRecibo.getText().toString());
+						clase2_1.setIdentidad_alumnos(lblIdentidad.getText().toString());
+
+						principal principal = new principal();
+						principal.setLocationRelativeTo(null);
+						principal.setVisible(true);
+						Timer time = new Timer();
+						time.schedule(principal.tarea, 0, 1000);
+
+						if (consulta.actualizarCodigo2(clase2_1)) {
+							JOptionPane.showMessageDialog(null, "Datos comprobados!");
+							dispose();
+							principal.construirTabla2();
+							establecerDatosAlumnos2();
+						} else {
+							JOptionPane.showMessageDialog(null, "Error! No Comprobado");
+						}
+
 					}
 
-					clase2.setNumero_Recibo(txtRecibo.getText().toString());
-					clase2.setRNE_Alumno(lblIdentidad.getText().toString());
-
-					principal principal = new principal();
-					principal.setLocationRelativeTo(null);
-					principal.setVisible(true);
-					Timer time = new Timer();
-					time.schedule(principal.tarea, 0, 1000);
-
-					if (consulta.actualizarCodigo(clase) && consulta2.actualizarPago_y_Recibo(clase2)) {
-						JOptionPane.showMessageDialog(null, "Datos comprobados!");
-						dispose();
-						principal.construirTabla();
-						establecerDatosAlumno();
-					} else {
-						JOptionPane.showMessageDialog(null, "Error! No Comprobado");
-					}
 				}
 			}
 
@@ -245,12 +284,17 @@ public class verificacion_recibo extends JFrame {
 		lblGrado.setFont(new Font("Cambria", Font.BOLD | Font.ITALIC, 14));
 		lblGrado.setBounds(276, 273, 157, 21);
 		contentPane.add(lblGrado);
+
+		lbltabla = new JLabel("");
+		lbltabla.setBounds(10, 277, 99, 14);
+		contentPane.add(lbltabla);
 		lblGrado.setVisible(false);
 
 	}
 
 	@SuppressWarnings("unlikely-arg-type")
 	public void generarCodigo() {
+
 		String valorGrado = null;
 		if (lblGrado.getText().toString().equals("Septimo Grado")) {
 			valorGrado = "SEP20-";
@@ -280,6 +324,21 @@ public class verificacion_recibo extends JFrame {
 				}
 
 			}
+
+		}
+
+		String NumGenerado = String.valueOf(genererNumero());
+		cadena = valorGrado + NumGenerado;
+	}
+
+	@SuppressWarnings("unlikely-arg-type")
+	public void generarCodigo2() {
+
+		String valorGrado = null;
+		if (lblGrado.getText().toString().equals("Septimo")) {
+			valorGrado = "SEP20-";
+		} else {
+			valorGrado = "DEC20-";
 
 		}
 
@@ -361,4 +420,75 @@ public class verificacion_recibo extends JFrame {
 		}
 	}
 
+	public void establecerDatosAlumnos2() {
+
+		String querty = "select * from dbo.prematricula2019_2020 where dbo.prematricula2019_2020.Identidad_alumnos = '"
+				+ lblIdentidad.getText().toString() + "'";
+		conexion objCon = new conexion();
+		Connection conn = objCon.getConexion();
+
+		try {
+			PreparedStatement stmtr = conn.prepareStatement(querty);
+
+			ResultSet rsr = stmtr.executeQuery();
+			if (rsr.next()) {
+				nombres = rsr.getString("Nombres_alumnos");
+				apellidos = rsr.getString("Apellidos_alumnos");
+				identidad = rsr.getString("Identidad_alumnos");
+				codigo = rsr.getString("codigo");
+				modalidad = rsr.getString("Modalidad");
+				pago = rsr.getString("Estado_Pago");
+				recibo = rsr.getString("Numero_Recibo");
+				grado = rsr.getString("Grado");
+
+				principal.txtNombre_Alumno.setText(nombres + " " + apellidos);
+				principal.txtIdentidad_Alumno.setText(identidad);
+				principal.txtCodigo_Matricula.setText(codigo);
+				principal.txtModalidad.setText(modalidad);
+				principal.txtVerificacion.setText(pago);
+				principal.txtRecibo.setText(recibo);
+				principal.txtGrado.setText(grado);
+
+			}
+
+			;
+			stmtr.close();
+			rsr.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void obtenerDatosAlumno2() {
+
+		String querty = "select * from dbo.prematricula2019_2020 where dbo.prematricula2019_2020.Identidad_alumnos = '"
+				+ lblIdentidad.getText().toString() + "'";
+		conexion objCon = new conexion();
+		Connection conn = objCon.getConexion();
+
+		try {
+			PreparedStatement stmtr = conn.prepareStatement(querty);
+
+			ResultSet rsr = stmtr.executeQuery();
+			if (rsr.next()) {
+				nombres = rsr.getString("Nombres_alumnos");
+				apellidos = rsr.getString("Apellidos_alumnos");
+				identidad = rsr.getString("Identidad_alumnos");
+				codigo = rsr.getString("codigo");
+				modalidad = rsr.getString("Modalidad");
+				pago = rsr.getString("Estado_Pago");
+				recibo = rsr.getString("Numero_Recibo");
+				grado = rsr.getString("Grado");
+
+			}
+
+			;
+			stmtr.close();
+			rsr.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
