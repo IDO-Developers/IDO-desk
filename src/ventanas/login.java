@@ -289,7 +289,15 @@ public class login extends JFrame {
 						Timer time = new Timer();
 						time.schedule(principal.tarea, 0, 1000);
 						if(consultas_usuario.rol.equals("1")) {
-							
+							principal.btnAlumnos.setEnabled(true);
+							principal.btnUsuarios.setEnabled(true);
+							principal.btnMatricula.setEnabled(true);
+							principal.btnPrematricula.setEnabled(true);
+						}else {
+							principal.btnAlumnos.setEnabled(false);
+							principal.btnUsuarios.setEnabled(false);
+							principal.btnMatricula.setEnabled(false);
+							principal.btnPrematricula.setEnabled(false);
 						}
 						dispose();
 					} else {

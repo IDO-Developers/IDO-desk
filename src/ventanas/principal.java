@@ -69,6 +69,10 @@ public class principal extends JFrame {
 	public JButton btnBuscar;
 	public JPanel panelInformacion;
 	public static JComboBox comboBox;
+	public JButton btnUsuarios;
+	public JButton btnAlumnos;
+	public JButton btnMatricula;
+	public JButton btnPrematricula;
 
 	public static String nombres = null;
 	public static String apellidos = null;
@@ -548,7 +552,7 @@ public class principal extends JFrame {
 		lblRegistroDeUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRegistroDeUsuarios.setFont(new Font("Cambria", Font.BOLD, 14));
 
-		JButton btnUsuarios = new JButton("");
+		btnUsuarios = new JButton("");
 		btnUsuarios.setBounds(10, 157, 85, 67);
 		panel_2.add(btnUsuarios);
 		btnUsuarios.addActionListener(new ActionListener() {
@@ -578,7 +582,7 @@ public class principal extends JFrame {
 		lblAlumnos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAlumnos.setFont(new Font("Cambria", Font.BOLD, 14));
 
-		JButton btnAlumnos = new JButton("");
+		btnAlumnos = new JButton("");
 		btnAlumnos.setBounds(10, 259, 85, 67);
 		panel_2.add(btnAlumnos);
 		btnAlumnos.addActionListener(new ActionListener() {
@@ -667,7 +671,7 @@ public class principal extends JFrame {
 		lblPre.setBounds(10, 337, 85, 21);
 		panel_2.add(lblPre);
 
-		JButton btnPrematricula = new JButton("");
+		btnPrematricula = new JButton("");
 		btnPrematricula.setFont(new Font("Calibri", Font.BOLD, 14));
 		btnPrematricula.setBackground(Color.WHITE);
 		btnPrematricula.setBounds(10, 359, 85, 67);
@@ -683,7 +687,7 @@ public class principal extends JFrame {
 		lblMatricula_1.setBounds(10, 437, 85, 21);
 		panel_2.add(lblMatricula_1);
 
-		JButton btnMatricula = new JButton("");
+		btnMatricula = new JButton("");
 		btnMatricula.setFont(new Font("Calibri", Font.BOLD, 14));
 		btnMatricula.setBackground(Color.WHITE);
 		btnMatricula.setBounds(10, 461, 85, 67);

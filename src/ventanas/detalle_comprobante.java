@@ -153,7 +153,7 @@ public class detalle_comprobante extends JFrame implements Printable {
 		lblFecha.setText("Dato");
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFecha.setFont(new Font("Cambria", Font.BOLD, 15));
-		lblFecha.setBounds(203, 487, 271, 21);
+		lblFecha.setBounds(203, 488, 271, 21);
 		contentPane.add(lblFecha);
 
 		JLabel lblComprobanteDePrematicula = new JLabel("Comprobante de Matricula IDO 2020.");
@@ -206,9 +206,9 @@ public class detalle_comprobante extends JFrame implements Printable {
 		contentPane.add(lblMatriculaIdo);
 		
 		JLabel label = new JLabel("");
-		label.setBounds(224, 458, 250, 213);
+		label.setBounds(249, 484, 203, 136);
 		contentPane.add(label);
-		final ImageIcon logoF = new ImageIcon(getClass().getResource("/iconos/firma.png"));
+		final ImageIcon logoF = new ImageIcon(getClass().getResource("/iconos/firma_1.png"));
 		final ImageIcon iconoF = new ImageIcon(
 				logoF.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
 		label.setIcon(iconoF);
