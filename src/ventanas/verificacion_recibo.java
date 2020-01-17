@@ -8,8 +8,11 @@ import javax.swing.border.EmptyBorder;
 
 import clases.alumnos;
 import clases.alumnos2;
+import clases.user_matricula;
 import conexion.conexion;
 import consultas.consultas_pago_alumnos;
+import consultas.consultas_user_matricula;
+
 import java.awt.Color;
 import java.awt.Event;
 
@@ -41,6 +44,7 @@ public class verificacion_recibo extends JFrame {
 	private JPanel contentPane;
 	public JTextField txtRecibo;
 	public static String cadena = null;
+	public static String userMatricula = null;
 	public static JLabel lblIdentidad;
 	public static JLabel lblNombre;
 	public static JLabel lblGrado;
@@ -180,78 +184,117 @@ public class verificacion_recibo extends JFrame {
 				if (txtRecibo.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Porfavor escriba el N° de recibo para continuar!");
 				} else {
+					// DECLARACION DE LAS CLASES A USAR Y CONSULTAS A REALIZAR
 					alumnos clase = new alumnos();
-					consultas_pago_alumnos consulta = new consultas_pago_alumnos();
-
-					alumnos2 clase2_1 = new alumnos2();
-					consultas_pago_alumnos consulta2_1 = new consultas_pago_alumnos();
-
 					alumnos clase2 = new alumnos();
+					alumnos2 clase2_1 = new alumnos2();
+					user_matricula clase3 = new user_matricula();
+					consultas_pago_alumnos consulta = new consultas_pago_alumnos();
 					consultas_pago_alumnos consulta2 = new consultas_pago_alumnos();
-
+					consultas_user_matricula consulta3 = new consultas_user_matricula();
+					principal principal = new principal();
+					Timer time = new Timer();
+					// CONDICION DE QUE TABLA VIENE EL ALUMNO, MATRICULA O PREMATRICULA
 					if (lbltabla.getText().toString().equals("Matricula")) {
 						obtenerDatosAlumno();
 						generarCodigo();
+						obtenerDatosUserMatricula();
 						clase.setCodigo(cadena);
-
 						clase.setRNE_Alumno(lblIdentidad.getText().toString());
-
 						if (txtRecibo.getText().toString().equals("Sin Recibo")) {
 							clase2.setEstado_Pago("Pago Pendiente");
 						} else {
 							clase2.setEstado_Pago("Pago Realizado");
 						}
-
 						clase2.setNumero_Recibo(txtRecibo.getText().toString());
 						clase2.setRNE_Alumno(lblIdentidad.getText().toString());
-
-						principal principal = new principal();
+						clase3.setId_Alumno(lblIdentidad.getText().toString());
+						clase3.setPassword(cadena);
+						clase3.setEstado(0);
 						principal.setLocationRelativeTo(null);
 						principal.setVisible(true);
-						Timer time = new Timer();
 						time.schedule(principal.tarea, 0, 1000);
+						// CONDICION QUE COMPRUEBA SI YA EXISTE UN USUARIO Y UNA CONTRASEÑA PARA EL
+						// ALUMNO.
+						if (lblIdentidad.getText().toString().equals(userMatricula)) {
+							// CONDICION QUE ACTUALIZA EL CODIGO,ACTUALIZA EL PAGO, Y ACTUALIZA EL USUARIO Y
+							// CONTRASEÑA DEL ALUMNO.
+							if (consulta.actualizarCodigo(clase) && consulta2.actualizarPago_y_Recibo(clase2)
+									&& consulta3.actualizar(clase3)) {
+								JOptionPane.showMessageDialog(null, "Datos comprobados!");
+								dispose();
+								principal.construirTabla();
+								establecerDatosAlumno();
+								principal.comboBox.setSelectedIndex(0);
+							} else {
+								JOptionPane.showMessageDialog(null, "Error! No Comprobado");
+							}
 
-						if (consulta.actualizarCodigo(clase) && consulta2.actualizarPago_y_Recibo(clase2)) {
-							JOptionPane.showMessageDialog(null, "Datos comprobados!");
-							dispose();
-							principal.construirTabla();
-							establecerDatosAlumno();
-							principal.comboBox.setSelectedIndex(0);
 						} else {
-							JOptionPane.showMessageDialog(null, "Error! No Comprobado");
+
+							// CONDICION QUE ACTUALIZA EL CODIGO,ACTUALIZA EL PAGO, Y INSERTA EL USUARIO Y
+							// CONTRASEÑA DEL ALUMNO.
+							if (consulta.actualizarCodigo(clase) && consulta2.actualizarPago_y_Recibo(clase2)
+									&& consulta3.insertar(clase3)) {
+								JOptionPane.showMessageDialog(null, "Datos comprobados!");
+								dispose();
+								principal.construirTabla();
+								establecerDatosAlumno();
+								principal.comboBox.setSelectedIndex(0);
+							} else {
+								JOptionPane.showMessageDialog(null, "Error! No Comprobado");
+							}
 						}
 
 					} else {
+						// -------------------------------------------------------------------------------------------------------------
+						// DESDE ESTE PUNTO LOS DATOS HAN SIDO COMPROBADOS QUE LOS DATOS DE EL ALUMNO
+						// PROVIENEN DE LA TABLA PREMATRICULA.
+
 						obtenerDatosAlumno2();
 						generarCodigo2();
+						obtenerDatosUserMatricula();
 						clase2_1.setCodigo(cadena);
 						clase2_1.setIdentidad_alumnos(lblIdentidad.getText().toString());
-
 						if (txtRecibo.getText().toString().equals("Sin Recibo")) {
 							clase2_1.setEstado_Pago("Pago Pendiente");
 						} else {
 							clase2_1.setEstado_Pago("Pago Realizado");
 						}
-
 						clase2_1.setNumero_Recibo(txtRecibo.getText().toString());
 						clase2_1.setIdentidad_alumnos(lblIdentidad.getText().toString());
-
-						principal principal = new principal();
+						clase3.setId_Alumno(lblIdentidad.getText().toString());
+						clase3.setPassword(cadena);
+						clase3.setEstado(1);
 						principal.setLocationRelativeTo(null);
 						principal.setVisible(true);
-						Timer time = new Timer();
 						time.schedule(principal.tarea, 0, 1000);
 
-						if (consulta.actualizarCodigo2(clase2_1)) {
-							JOptionPane.showMessageDialog(null, "Datos comprobados!");
-							dispose();
-							principal.construirTabla2();
-							establecerDatosAlumnos2();
-							principal.comboBox.setSelectedIndex(1);
-						} else {
-							JOptionPane.showMessageDialog(null, "Error! No Comprobado");
-						}
+						if (lblIdentidad.getText().toString().equals(userMatricula)) {
 
+							if (consulta.actualizarCodigo2(clase2_1) && consulta3.actualizar(clase3)) {
+								JOptionPane.showMessageDialog(null, "Datos comprobados!");
+								dispose();
+								principal.construirTabla2();
+								establecerDatosAlumnos2();
+								principal.comboBox.setSelectedIndex(1);
+							} else {
+								JOptionPane.showMessageDialog(null, "Error! No Comprobado");
+							}
+
+						} else {
+
+							if (consulta.actualizarCodigo2(clase2_1) && consulta3.insertar(clase3)) {
+								JOptionPane.showMessageDialog(null, "Datos comprobados!");
+								dispose();
+								principal.construirTabla2();
+								establecerDatosAlumnos2();
+								principal.comboBox.setSelectedIndex(1);
+							} else {
+								JOptionPane.showMessageDialog(null, "Error! No Comprobado");
+							}
+
+						}
 					}
 
 				}
@@ -485,6 +528,29 @@ public class verificacion_recibo extends JFrame {
 
 			}
 
+			;
+			stmtr.close();
+			rsr.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void obtenerDatosUserMatricula() {
+
+		String querty = "select Id_Alumno from dbo.User_Alumno where Id_Alumno = '" + lblIdentidad.getText().toString()
+				+ "'";
+		conexion objCon = new conexion();
+		Connection conn = objCon.getConexion();
+
+		try {
+			PreparedStatement stmtr = conn.prepareStatement(querty);
+
+			ResultSet rsr = stmtr.executeQuery();
+			if (rsr.next()) {
+				userMatricula = rsr.getString("Id_Alumno");
+			}
 			;
 			stmtr.close();
 			rsr.close();

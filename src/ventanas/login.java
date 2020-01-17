@@ -288,16 +288,37 @@ public class login extends JFrame {
 						principal.construirTabla();
 						Timer time = new Timer();
 						time.schedule(principal.tarea, 0, 1000);
-						if(consultas_usuario.rol.equals("1")) {
+						if (consultas_usuario.rol.equals("1")) {
 							principal.btnAlumnos.setEnabled(true);
 							principal.btnUsuarios.setEnabled(true);
 							principal.btnMatricula.setEnabled(true);
 							principal.btnPrematricula.setEnabled(true);
-						}else {
-							principal.btnAlumnos.setEnabled(false);
-							principal.btnUsuarios.setEnabled(false);
-							principal.btnMatricula.setEnabled(false);
-							principal.btnPrematricula.setEnabled(false);
+						} else {
+							if (consultas_usuario.rol.equals("2")) {
+								principal.btnAlumnos.setEnabled(true);
+								principal.btnUsuarios.setEnabled(false);
+								principal.btnMatricula.setEnabled(false);
+								principal.btnPrematricula.setEnabled(false);
+
+							} else {
+								if (consultas_usuario.rol.equals("3")) {
+									principal.btnAlumnos.setEnabled(true);
+									principal.btnUsuarios.setEnabled(true);
+									principal.btnMatricula.setEnabled(true);
+									principal.btnPrematricula.setEnabled(true);
+
+								} else {
+									principal.btnAlumnos.setEnabled(false);
+									principal.btnUsuarios.setEnabled(false);
+									principal.btnMatricula.setEnabled(false);
+									principal.btnPrematricula.setEnabled(false);
+									principal.btnComprobar.setEnabled(false);
+									principal.btnImprimir.setEnabled(false);
+
+								}
+
+							}
+
 						}
 						dispose();
 					} else {

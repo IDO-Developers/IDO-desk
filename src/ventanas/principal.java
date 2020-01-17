@@ -89,6 +89,8 @@ public class principal extends JFrame {
 	public static JTextField txtRecibo;
 	public static JLabel lblHoraSistema;
 	public static JLabel lblFecha;
+	public JButton btnComprobar;
+	public JButton btnImprimir;
 
 	public JScrollPane barraAlumno;
 	public JTable tablaAlumno;
@@ -390,7 +392,7 @@ public class principal extends JFrame {
 				lblNewLabel.getHeight(), Image.SCALE_DEFAULT));
 		lblNewLabel.setIcon(icono);
 
-		JButton btnImprimir = new JButton("Imprimir informaci\u00F3n");
+		btnImprimir = new JButton("Imprimir informaci\u00F3n");
 		btnImprimir.setBounds(451, 291, 171, 21);
 		panelInformacion.add(btnImprimir);
 		btnImprimir.setFont(new Font("Cambria", Font.BOLD, 13));
@@ -480,8 +482,8 @@ public class principal extends JFrame {
 				logo22.getImage().getScaledInstance(label_2.getWidth(), label_2.getHeight(), Image.SCALE_DEFAULT));
 		label_2.setIcon(icono22);
 
-		JButton btnComprobarInformacin = new JButton("Comprobar informaci\u00F3n");
-		btnComprobarInformacin.addActionListener(new ActionListener() {
+		btnComprobar = new JButton("Comprobar informaci\u00F3n");
+		btnComprobar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (txtNombre_Alumno.getText().toString().equals("")
@@ -505,10 +507,10 @@ public class principal extends JFrame {
 
 			}
 		});
-		btnComprobarInformacin.setFont(new Font("Cambria", Font.BOLD, 12));
-		btnComprobarInformacin.setBackground(new Color(60, 179, 113));
-		btnComprobarInformacin.setBounds(254, 291, 172, 21);
-		panelInformacion.add(btnComprobarInformacin);
+		btnComprobar.setFont(new Font("Cambria", Font.BOLD, 12));
+		btnComprobar.setBackground(new Color(60, 179, 113));
+		btnComprobar.setBounds(254, 291, 172, 21);
+		panelInformacion.add(btnComprobar);
 
 		JLabel lblMatricula = new JLabel("Matricula 2020.\r\n");
 		lblMatricula.setHorizontalAlignment(SwingConstants.CENTER);

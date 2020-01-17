@@ -61,7 +61,6 @@ public class registro_alumnos extends JFrame {
 	private JPanel contentPane;
 	public static JTextField txtNombre_Alumno;
 	public static JTextField txtIdentidad_Alumno;
-	public static JTextField txtCodigo_Matricula;
 	public JButton btnBuscar;
 	public JPanel panelInformacion;
 
@@ -76,9 +75,7 @@ public class registro_alumnos extends JFrame {
 	public static JTextField txtBuscar;
 	public static JTextField txtGrado;
 	public static JTextField txtModalidad;
-	public static JTextField txtVerificacion;
 	public static JTextField txtRecibo;
-	public static JLabel lblFecha;
 
 	public JScrollPane barraAlumno;
 	public JTable tablaAlumno;
@@ -113,7 +110,7 @@ public class registro_alumnos extends JFrame {
 	public registro_alumnos() {
 		setType(Type.UTILITY);
 		setResizable(false);
-		setBounds(100, 100, 814, 700);
+		setBounds(100, 100, 663, 700);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -133,15 +130,9 @@ public class registro_alumnos extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(10, 11, 788, 309);
+		panel.setBounds(10, 11, 636, 309);
 		contentPane.add(panel);
 		panel.setLayout(null);
-
-		JLabel lblBuscarInformacionDe = new JLabel("Buscar informaci\u00F3n de la matr\u00EDcula del alumno :");
-		lblBuscarInformacionDe.setHorizontalAlignment(SwingConstants.LEFT);
-		lblBuscarInformacionDe.setFont(new Font("Serif", Font.BOLD, 18));
-		lblBuscarInformacionDe.setBounds(10, 31, 654, 30);
-		panel.add(lblBuscarInformacionDe);
 
 		MaskFormatter formato1 = null;
 		try {
@@ -151,31 +142,31 @@ public class registro_alumnos extends JFrame {
 		}
 		final ImageIcon logo2 = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
 
-		JLabel label_1 = new JLabel(
-				"Bienvenido al sistema de b\u00FAsqueda de c\u00F3digos de matr\u00EDcula IDO 2020.");
-		label_1.setForeground(new Color(0, 0, 128));
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("Lucida Bright", Font.BOLD, 18));
-		label_1.setBounds(10, 0, 654, 44);
-		panel.add(label_1);
+		JLabel lblAlumnosIdo = new JLabel(
+				"Alumnos IDO");
+		lblAlumnosIdo.setForeground(new Color(0, 0, 128));
+		lblAlumnosIdo.setHorizontalAlignment(SwingConstants.LEFT);
+		lblAlumnosIdo.setFont(new Font("Lucida Bright", Font.BOLD, 18));
+		lblAlumnosIdo.setBounds(10, 0, 626, 22);
+		panel.add(lblAlumnosIdo);
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(null);
 		panel_3.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
 		panel_3.setBackground(Color.WHITE);
-		panel_3.setBounds(10, 55, 768, 243);
+		panel_3.setBounds(10, 23, 615, 275);
 		panel.add(panel_3);
 
 		JLabel label_3 = new JLabel("Buscar Alumno :");
 		label_3.setFont(new Font("Cambria", Font.BOLD, 14));
-		label_3.setBounds(10, 11, 119, 22);
+		label_3.setBounds(10, 5, 122, 19);
 		panel_3.add(label_3);
 
 		txtBuscar = new JTextField();
 		txtBuscar.setHorizontalAlignment(SwingConstants.CENTER);
 		txtBuscar.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtBuscar.setColumns(10);
-		txtBuscar.setBounds(121, 14, 347, 19);
+		txtBuscar.setBounds(120, 4, 347, 19);
 		panel_3.add(txtBuscar);
 		InputMap map433 = txtBuscar.getInputMap(JComponent.WHEN_FOCUSED);
 		map433.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
@@ -211,7 +202,7 @@ public class registro_alumnos extends JFrame {
 		barraAlumno = new JScrollPane(tablaAlumno, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		panel_3.add(barraAlumno);
-		barraAlumno.setBounds(10, 44, 748, 196);
+		barraAlumno.setBounds(10, 27, 593, 237);
 
 		tablaAlumno = new JTable();
 		barraAlumno.setViewportView(tablaAlumno);
@@ -222,37 +213,15 @@ public class registro_alumnos extends JFrame {
 
 		panelInformacion = new JPanel();
 		panelInformacion.setBackground(new Color(255, 255, 255));
-		panelInformacion.setBounds(10, 331, 788, 329);
+		panelInformacion.setBounds(10, 331, 636, 329);
 		contentPane.add(panelInformacion);
 		panelInformacion.setLayout(null);
-
-		JLabel lblNombreCompletoDel = new JLabel("Nombre completo del alumno :");
-		lblNombreCompletoDel.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblNombreCompletoDel.setBounds(46, 132, 225, 21);
-		panelInformacion.add(lblNombreCompletoDel);
-
-		JLabel lblIn = new JLabel("Informaci\u00F3n del alumno :");
-		lblIn.setForeground(Color.BLACK);
-		lblIn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIn.setFont(new Font("Serif", Font.BOLD, 14));
-		lblIn.setBounds(20, 100, 654, 21);
-		panelInformacion.add(lblIn);
-
-		JLabel lblIdentidadDelAlumno = new JLabel("Identidad del alumno :");
-		lblIdentidadDelAlumno.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblIdentidadDelAlumno.setBounds(46, 196, 225, 21);
-		panelInformacion.add(lblIdentidadDelAlumno);
-
-		JLabel lblCodigoDelAlumno = new JLabel("Codigo :");
-		lblCodigoDelAlumno.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblCodigoDelAlumno.setBounds(46, 228, 225, 21);
-		panelInformacion.add(lblCodigoDelAlumno);
 
 		txtNombre_Alumno = new JTextField();
 		txtNombre_Alumno.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtNombre_Alumno.setEditable(false);
 		txtNombre_Alumno.setHorizontalAlignment(SwingConstants.CENTER);
-		txtNombre_Alumno.setBounds(254, 133, 369, 20);
+		txtNombre_Alumno.setBounds(105, 74, 203, 20);
 		panelInformacion.add(txtNombre_Alumno);
 		txtNombre_Alumno.setColumns(10);
 
@@ -261,20 +230,12 @@ public class registro_alumnos extends JFrame {
 		txtIdentidad_Alumno.setEditable(false);
 		txtIdentidad_Alumno.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIdentidad_Alumno.setColumns(10);
-		txtIdentidad_Alumno.setBounds(254, 196, 172, 20);
+		txtIdentidad_Alumno.setBounds(105, 106, 203, 20);
 		panelInformacion.add(txtIdentidad_Alumno);
-
-		txtCodigo_Matricula = new JTextField();
-		txtCodigo_Matricula.setFont(new Font("Cambria", Font.BOLD, 14));
-		txtCodigo_Matricula.setEditable(false);
-		txtCodigo_Matricula.setHorizontalAlignment(SwingConstants.CENTER);
-		txtCodigo_Matricula.setColumns(10);
-		txtCodigo_Matricula.setBounds(254, 228, 172, 20);
-		panelInformacion.add(txtCodigo_Matricula);
 
 		JLabel lblCompro = new JLabel("Modalidad :");
 		lblCompro.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblCompro.setBounds(46, 164, 225, 21);
+		lblCompro.setBounds(20, 137, 225, 20);
 		panelInformacion.add(lblCompro);
 
 		txtModalidad = new JTextField();
@@ -282,29 +243,22 @@ public class registro_alumnos extends JFrame {
 		txtModalidad.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtModalidad.setEditable(false);
 		txtModalidad.setColumns(10);
-		txtModalidad.setBounds(254, 164, 369, 20);
+		txtModalidad.setBounds(105, 137, 517, 20);
 		panelInformacion.add(txtModalidad);
 
 		JLabel lblInstitutoDepartamentalDe = new JLabel("Instituto Departamental de Oriente\r\n");
 		lblInstitutoDepartamentalDe.setForeground(Color.BLACK);
 		lblInstitutoDepartamentalDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInstitutoDepartamentalDe.setFont(new Font("Serif", Font.BOLD, 18));
-		lblInstitutoDepartamentalDe.setBounds(10, 0, 654, 32);
+		lblInstitutoDepartamentalDe.setBounds(10, 0, 612, 32);
 		panelInformacion.add(lblInstitutoDepartamentalDe);
-
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(10, 11, 116, 110);
-		panelInformacion.add(lblNewLabel);
 		final ImageIcon logo = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
-		final ImageIcon icono = new ImageIcon(logo.getImage().getScaledInstance(lblNewLabel.getWidth(),
-				lblNewLabel.getHeight(), Image.SCALE_DEFAULT));
-		lblNewLabel.setIcon(icono);
 
 		JButton btnImprimir = new JButton("Imprimir informaci\u00F3n");
 		btnImprimir.setBounds(451, 291, 171, 21);
 		panelInformacion.add(btnImprimir);
 		btnImprimir.setFont(new Font("Cambria", Font.BOLD, 13));
-		btnImprimir.addActionListener(new ActionListener() {
+		/*btnImprimir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (txtNombre_Alumno.getText().toString().equals("")
@@ -338,41 +292,8 @@ public class registro_alumnos extends JFrame {
 
 			}
 		});
+		*/
 		btnImprimir.setBackground(new Color(255, 215, 0));
-
-		lblFecha = new JLabel("");
-		lblFecha.setForeground(new Color(0, 0, 128));
-		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFecha.setFont(new Font("Serif", Font.BOLD, 14));
-		lblFecha.setBounds(217, 52, 298, 21);
-		panelInformacion.add(lblFecha);
-		lblFecha.setText(getFecha());
-
-		JLabel lblFecha_1 = new JLabel("Fecha :");
-		lblFecha_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblFecha_1.setForeground(Color.BLACK);
-		lblFecha_1.setFont(new Font("Serif", Font.BOLD, 14));
-		lblFecha_1.setBounds(207, 52, 143, 21);
-		panelInformacion.add(lblFecha_1);
-
-		JLabel lblVerificacionDePago = new JLabel("Verificacion de pago :");
-		lblVerificacionDePago.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblVerificacionDePago.setBounds(46, 260, 225, 21);
-		panelInformacion.add(lblVerificacionDePago);
-
-		txtVerificacion = new JTextField();
-		txtVerificacion.setHorizontalAlignment(SwingConstants.CENTER);
-		txtVerificacion.setFont(new Font("Cambria", Font.BOLD, 14));
-		txtVerificacion.setEditable(false);
-		txtVerificacion.setColumns(10);
-		txtVerificacion.setBounds(254, 260, 172, 20);
-		panelInformacion.add(txtVerificacion);
-
-		JLabel lblNDeRecibo = new JLabel("N\u00B0 de recibo.");
-		lblNDeRecibo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNDeRecibo.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblNDeRecibo.setBounds(451, 240, 172, 21);
-		panelInformacion.add(lblNDeRecibo);
 
 		txtRecibo = new JTextField();
 		txtRecibo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -381,15 +302,9 @@ public class registro_alumnos extends JFrame {
 		txtRecibo.setColumns(10);
 		txtRecibo.setBounds(451, 260, 172, 20);
 		panelInformacion.add(txtRecibo);
-
-		JLabel label_2 = new JLabel("");
-		label_2.setBounds(548, 11, 116, 110);
-		panelInformacion.add(label_2);
 		final ImageIcon logo22 = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
-		final ImageIcon icono22 = new ImageIcon(
-				logo22.getImage().getScaledInstance(label_2.getWidth(), label_2.getHeight(), Image.SCALE_DEFAULT));
-		label_2.setIcon(icono22);
 
+		/*
 		JButton btnComprobarInformacin = new JButton("Comprobar informaci\u00F3n");
 		btnComprobarInformacin.addActionListener(new ActionListener() {
 			@Override
@@ -414,29 +329,24 @@ public class registro_alumnos extends JFrame {
 
 			}
 		});
+		
 		btnComprobarInformacin.setFont(new Font("Cambria", Font.BOLD, 12));
 		btnComprobarInformacin.setBackground(new Color(60, 179, 113));
 		btnComprobarInformacin.setBounds(254, 291, 172, 21);
 		panelInformacion.add(btnComprobarInformacin);
+		*/
 
-		JLabel lblMatricula = new JLabel("Matricula 2020.\r\n");
+		JLabel lblMatricula = new JLabel("Alumnos");
 		lblMatricula.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMatricula.setForeground(Color.BLACK);
 		lblMatricula.setFont(new Font("Serif", Font.BOLD, 18));
-		lblMatricula.setBounds(20, 28, 628, 21);
+		lblMatricula.setBounds(20, 28, 602, 21);
 		panelInformacion.add(lblMatricula);
 
-		JLabel lblComprobanteDeMatrcula = new JLabel("Comprobante de matr\u00EDcula IDO 2020. ");
-		lblComprobanteDeMatrcula.setHorizontalAlignment(SwingConstants.CENTER);
-		lblComprobanteDeMatrcula.setForeground(Color.BLACK);
-		lblComprobanteDeMatrcula.setFont(new Font("Serif", Font.BOLD, 14));
-		lblComprobanteDeMatrcula.setBounds(20, 78, 654, 21);
-		panelInformacion.add(lblComprobanteDeMatrcula);
-
-		JLabel lblGrado = new JLabel("Grado.");
-		lblGrado.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel lblGrado = new JLabel("Grado :");
+		lblGrado.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGrado.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblGrado.setBounds(451, 196, 172, 18);
+		lblGrado.setBounds(20, 169, 100, 20);
 		panelInformacion.add(lblGrado);
 
 		txtGrado = new JTextField();
@@ -444,8 +354,57 @@ public class registro_alumnos extends JFrame {
 		txtGrado.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtGrado.setEditable(false);
 		txtGrado.setColumns(10);
-		txtGrado.setBounds(451, 215, 172, 20);
+		txtGrado.setBounds(105, 169, 203, 20);
 		panelInformacion.add(txtGrado);
+		
+		JLabel lblDatosDelAlumno = new JLabel("Datos del alumno:");
+		lblDatosDelAlumno.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDatosDelAlumno.setForeground(new Color(0, 0, 128));
+		lblDatosDelAlumno.setFont(new Font("Serif", Font.BOLD, 18));
+		lblDatosDelAlumno.setBounds(20, 43, 758, 32);
+		panelInformacion.add(lblDatosDelAlumno);
+		
+		JLabel lblNombres = new JLabel("Nombres :");
+		lblNombres.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblNombres.setBounds(20, 74, 100, 20);
+		panelInformacion.add(lblNombres);
+		
+		JLabel lblApellidos = new JLabel("Apellidos :");
+		lblApellidos.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblApellidos.setBounds(318, 74, 100, 20);
+		panelInformacion.add(lblApellidos);
+		
+		textField = new JTextField();
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setFont(new Font("Cambria", Font.BOLD, 14));
+		textField.setEditable(false);
+		textField.setColumns(10);
+		textField.setBounds(405, 74, 217, 20);
+		panelInformacion.add(textField);
+		
+		JLabel lblFechaNac = new JLabel("Fecha Nac. :");
+		lblFechaNac.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblFechaNac.setBounds(318, 106, 100, 20);
+		panelInformacion.add(lblFechaNac);
+		
+		JLabel lblIdentidad = new JLabel("Identidad :");
+		lblIdentidad.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblIdentidad.setBounds(20, 106, 100, 20);
+		panelInformacion.add(lblIdentidad);
+		
+		JLabel lblEdad = new JLabel("Edad :");
+		lblEdad.setHorizontalAlignment(SwingConstants.LEFT);
+		lblEdad.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblEdad.setBounds(318, 168, 100, 20);
+		panelInformacion.add(lblEdad);
+		
+		textField_1 = new JTextField();
+		textField_1.setHorizontalAlignment(SwingConstants.CENTER);
+		textField_1.setFont(new Font("Cambria", Font.BOLD, 14));
+		textField_1.setEditable(false);
+		textField_1.setColumns(10);
+		textField_1.setBounds(405, 168, 217, 20);
+		panelInformacion.add(textField_1);
 		final ImageIcon logo1 = new ImageIcon(getClass().getResource("/iconos/prueba.png"));
 		final ImageIcon logo221 = new ImageIcon(getClass().getResource("/iconos/estudiante.png"));
 		final ImageIcon logo222 = new ImageIcon(getClass().getResource("/iconos/escribir.png"));
@@ -483,9 +442,11 @@ public class registro_alumnos extends JFrame {
 			segundos = calendario.get(Calendar.SECOND) > 9 ? "" + calendario.get(Calendar.SECOND)
 					: "0" + calendario.get(Calendar.SECOND);
 
-			lblHoraSistema.setText(horas + ":" + minutos + ":" + segundos + " " + ampm);
+			//lblHoraSistema.setText(horas + ":" + minutos + ":" + segundos + " " + ampm);
 		}
 	};
+	private JTextField textField;
+	private JTextField textField_1;
 
 	public static String getFecha() {
 		Date date = new Date();
