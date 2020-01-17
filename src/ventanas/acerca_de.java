@@ -90,13 +90,13 @@ public class acerca_de extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(10, 178, 351, 123);
+		panel.setBounds(15, 177, 340, 123);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
 		JLabel label_2 = new JLabel("");
 		label_2.setToolTipText("Lic. Abd\u00EDas Ismael Vel\u00E1squez Gonzalez");
-		label_2.setBounds(10, 11, 109, 101);
+		label_2.setBounds(10, 11, 84, 101);
 		panel.add(label_2);
 		label_2.setBackground(Color.WHITE);
 		final ImageIcon icono0 = new ImageIcon(
@@ -105,7 +105,7 @@ public class acerca_de extends JFrame {
 
 		JLabel label_3 = new JLabel("");
 		label_3.setToolTipText("Lic. Justin Mois\u00E9s Chac\u00F3n Ferrari");
-		label_3.setBounds(112, 11, 103, 101);
+		label_3.setBounds(104, 11, 101, 101);
 		panel.add(label_3);
 		final ImageIcon icono00 = new ImageIcon(
 				logo00.getImage().getScaledInstance(label_3.getWidth(), label_3.getHeight(), Image.SCALE_DEFAULT));
@@ -113,7 +113,7 @@ public class acerca_de extends JFrame {
 
 		JLabel label_4 = new JLabel("");
 		label_4.setToolTipText("Lic.  Cristian Emmanuel D\u00EDaz Rodr\u00EDguez");
-		label_4.setBounds(225, 11, 116, 101);
+		label_4.setBounds(215, 11, 115, 101);
 		panel.add(label_4);
 		final ImageIcon icono000 = new ImageIcon(
 				logo000.getImage().getScaledInstance(label_4.getWidth(), label_4.getHeight(), Image.SCALE_DEFAULT));
