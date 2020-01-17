@@ -86,7 +86,7 @@ public class acerca_de extends JFrame {
 		label_1.setIcon(icono3);
 		final ImageIcon logo0 = new ImageIcon(getClass().getResource("/iconos/abdias.jpeg"));
 		final ImageIcon logo00 = new ImageIcon(getClass().getResource("/iconos/justin.jpeg"));
-		final ImageIcon logo000 = new ImageIcon(getClass().getResource("/iconos/cris.jpeg"));
+		final ImageIcon logo000 = new ImageIcon(getClass().getResource("/iconos/cris.jpg"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -113,7 +113,7 @@ public class acerca_de extends JFrame {
 
 		JLabel label_4 = new JLabel("");
 		label_4.setToolTipText("Lic.  Cristian Emmanuel D\u00EDaz Rodr\u00EDguez");
-		label_4.setBounds(225, 11, 103, 101);
+		label_4.setBounds(225, 11, 116, 101);
 		panel.add(label_4);
 		final ImageIcon icono000 = new ImageIcon(
 				logo000.getImage().getScaledInstance(label_4.getWidth(), label_4.getHeight(), Image.SCALE_DEFAULT));

@@ -44,6 +44,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import clases.alumnos;
 import conexion.conexion;
+import consultas.consultas_usuario;
 
 import javax.swing.SwingConstants;
 
@@ -98,6 +99,38 @@ public class tabla_alumnos extends JFrame {
 				Timer time = new Timer();
 				time.schedule(principal.tarea, 0, 1000);
 				principal.construirTabla();
+				if (consultas_usuario.rol.equals("1")) {
+					principal.btnAlumnos.setEnabled(true);
+					principal.btnUsuarios.setEnabled(true);
+					principal.btnMatricula.setEnabled(true);
+					principal.btnPrematricula.setEnabled(true);
+				} else {
+					if (consultas_usuario.rol.equals("2")) {
+						principal.btnAlumnos.setEnabled(true);
+						principal.btnUsuarios.setEnabled(false);
+						principal.btnMatricula.setEnabled(false);
+						principal.btnPrematricula.setEnabled(false);
+
+					} else {
+						if (consultas_usuario.rol.equals("3")) {
+							principal.btnAlumnos.setEnabled(true);
+							principal.btnUsuarios.setEnabled(true);
+							principal.btnMatricula.setEnabled(true);
+							principal.btnPrematricula.setEnabled(true);
+
+						} else {
+							principal.btnAlumnos.setEnabled(false);
+							principal.btnUsuarios.setEnabled(false);
+							principal.btnMatricula.setEnabled(false);
+							principal.btnPrematricula.setEnabled(false);
+							principal.btnComprobar.setEnabled(false);
+							principal.btnImprimir.setEnabled(false);
+
+						}
+
+					}
+
+				}
 				dispose();
 			}
 		});
