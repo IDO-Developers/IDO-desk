@@ -549,13 +549,13 @@ public class principal extends JFrame {
 		panel_2.setLayout(null);
 
 		JLabel lblRegistroDeUsuarios = new JLabel("Usuarios");
-		lblRegistroDeUsuarios.setBounds(10, 135, 85, 21);
+		lblRegistroDeUsuarios.setBounds(10, 122, 85, 21);
 		panel_2.add(lblRegistroDeUsuarios);
 		lblRegistroDeUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRegistroDeUsuarios.setFont(new Font("Cambria", Font.BOLD, 14));
 
 		btnUsuarios = new JButton("");
-		btnUsuarios.setBounds(10, 157, 85, 67);
+		btnUsuarios.setBounds(10, 144, 85, 67);
 		panel_2.add(btnUsuarios);
 		btnUsuarios.addActionListener(new ActionListener() {
 			@Override
@@ -579,13 +579,13 @@ public class principal extends JFrame {
 		btnUsuarios.setIcon(icono1);
 
 		JLabel lblAlumnos = new JLabel("Alumnos");
-		lblAlumnos.setBounds(10, 235, 85, 21);
+		lblAlumnos.setBounds(10, 215, 85, 21);
 		panel_2.add(lblAlumnos);
 		lblAlumnos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAlumnos.setFont(new Font("Cambria", Font.BOLD, 14));
 
 		btnAlumnos = new JButton("");
-		btnAlumnos.setBounds(10, 259, 85, 67);
+		btnAlumnos.setBounds(10, 239, 85, 67);
 		panel_2.add(btnAlumnos);
 		btnAlumnos.addActionListener(new ActionListener() {
 			@Override
@@ -604,13 +604,13 @@ public class principal extends JFrame {
 		btnAlumnos.setIcon(icono221);
 
 		JLabel lblAcercaDe = new JLabel("Acerca de.");
-		lblAcercaDe.setBounds(10, 539, 85, 21);
+		lblAcercaDe.setBounds(10, 504, 85, 21);
 		panel_2.add(lblAcercaDe);
 		lblAcercaDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAcercaDe.setFont(new Font("Cambria", Font.BOLD, 14));
 
 		JButton button_2 = new JButton("");
-		button_2.setBounds(10, 561, 82, 67);
+		button_2.setBounds(10, 526, 82, 67);
 		panel_2.add(button_2);
 		button_2.addActionListener(new ActionListener() {
 			@Override
@@ -637,21 +637,21 @@ public class principal extends JFrame {
 		lblMen.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMen.setForeground(Color.BLACK);
 		lblMen.setFont(new Font("Serif", Font.BOLD, 18));
-		lblMen.setBounds(10, 64, 85, 28);
+		lblMen.setBounds(10, 57, 85, 28);
 		panel_2.add(lblMen);
 
 		JLabel lblDe = new JLabel("de");
 		lblDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDe.setForeground(Color.BLACK);
 		lblDe.setFont(new Font("Serif", Font.BOLD, 18));
-		lblDe.setBounds(10, 87, 85, 21);
+		lblDe.setBounds(10, 80, 85, 21);
 		panel_2.add(lblDe);
 
 		JLabel lblOpciones = new JLabel("opciones :");
 		lblOpciones.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOpciones.setForeground(Color.BLACK);
 		lblOpciones.setFont(new Font("Serif", Font.BOLD, 18));
-		lblOpciones.setBounds(10, 97, 85, 34);
+		lblOpciones.setBounds(10, 90, 85, 34);
 		panel_2.add(lblOpciones);
 
 		JPanel panel_1 = new JPanel();
@@ -670,13 +670,13 @@ public class principal extends JFrame {
 		JLabel lblPre = new JLabel("Pre-Matricula");
 		lblPre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPre.setFont(new Font("Cambria", Font.BOLD, 12));
-		lblPre.setBounds(10, 337, 85, 21);
+		lblPre.setBounds(10, 312, 85, 21);
 		panel_2.add(lblPre);
 
 		btnPrematricula = new JButton("");
 		btnPrematricula.setFont(new Font("Calibri", Font.BOLD, 14));
 		btnPrematricula.setBackground(Color.WHITE);
-		btnPrematricula.setBounds(10, 359, 85, 67);
+		btnPrematricula.setBounds(10, 334, 85, 67);
 		panel_2.add(btnPrematricula);
 		final ImageIcon logo2211 = new ImageIcon(getClass().getResource("/iconos/pre_matricula.png"));
 		final ImageIcon icono2211 = new ImageIcon(logo2211.getImage().getScaledInstance(btnPrematricula.getWidth(),
@@ -686,18 +686,28 @@ public class principal extends JFrame {
 		JLabel lblMatricula_1 = new JLabel("Matricula");
 		lblMatricula_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMatricula_1.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblMatricula_1.setBounds(10, 437, 85, 21);
+		lblMatricula_1.setBounds(10, 409, 85, 21);
 		panel_2.add(lblMatricula_1);
 
 		btnMatricula = new JButton("");
 		btnMatricula.setFont(new Font("Calibri", Font.BOLD, 14));
 		btnMatricula.setBackground(Color.WHITE);
-		btnMatricula.setBounds(10, 461, 85, 67);
+		btnMatricula.setBounds(10, 433, 85, 67);
 		panel_2.add(btnMatricula);
 		final ImageIcon logo22112 = new ImageIcon(getClass().getResource("/iconos/matricula.png"));
 		final ImageIcon icono22112 = new ImageIcon(logo22112.getImage().getScaledInstance(btnMatricula.getWidth(),
 				btnMatricula.getHeight(), Image.SCALE_DEFAULT));
 		btnMatricula.setIcon(icono22112);
+		
+		JButton btnSalir = new JButton("");
+		btnSalir.setFont(new Font("Calibri", Font.BOLD, 14));
+		btnSalir.setBackground(new Color(255, 69, 0));
+		btnSalir.setBounds(10, 604, 85, 34);
+		panel_2.add(btnSalir);
+		final ImageIcon logo01 = new ImageIcon(getClass().getResource("/iconos/salida.png"));
+		final ImageIcon icono01 = new ImageIcon(logo01.getImage().getScaledInstance(btnSalir.getWidth(),
+				btnSalir.getHeight(), Image.SCALE_DEFAULT));
+		btnSalir.setIcon(icono01);
 
 	}
 
@@ -886,5 +896,4 @@ public class principal extends JFrame {
 		}
 		return matrizInfo;
 	}
-
 }
