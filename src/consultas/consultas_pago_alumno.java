@@ -8,7 +8,7 @@ import clases.alumnos;
 import clases.alumnos2;
 import conexion.conexion;
 
-public class consultas_pago_alumnos extends conexion {
+public class consultas_pago_alumno extends conexion {
 	public boolean actualizarCodigo(alumnos alumnos) {
 		PreparedStatement ps = null;
 		Connection con = getConexion();

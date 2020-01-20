@@ -73,6 +73,7 @@ public class principal extends JFrame {
 	public JButton btnAlumnos;
 	public JButton btnMatricula;
 	public JButton btnPrematricula;
+	public JLabel lblRegistros;
 
 	public static String nombres = null;
 	public static String apellidos = null;
@@ -112,6 +113,7 @@ public class principal extends JFrame {
 					principal.construirTabla();
 					Timer time = new Timer();
 					time.schedule(principal.tarea, 0, 1000);
+					principal.contarDatos();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -224,7 +226,7 @@ public class principal extends JFrame {
 		barraAlumno = new JScrollPane(tablaAlumno, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		panel_3.add(barraAlumno);
-		barraAlumno.setBounds(10, 41, 634, 199);
+		barraAlumno.setBounds(10, 41, 634, 180);
 
 		tablaAlumno = new JTable();
 		barraAlumno.setViewportView(tablaAlumno);
@@ -249,13 +251,27 @@ public class principal extends JFrame {
 		comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "Matricula", "Prematricula" }));
 		comboBox.setBounds(10, 21, 212, 18);
 		panel_3.add(comboBox);
+
+		lblRegistros = new JLabel("");
+		lblRegistros.setForeground(new Color(0, 0, 128));
+		lblRegistros.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRegistros.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblRegistros.setBounds(184, 217, 119, 26);
+		panel_3.add(lblRegistros);
+
+		JLabel label_5 = new JLabel("Total alumnos registrados :");
+		label_5.setFont(new Font("Cambria", Font.BOLD, 14));
+		label_5.setBounds(10, 217, 188, 26);
+		panel_3.add(label_5);
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (comboBox.getSelectedItem().toString().equals("Matricula")) {
 					construirTabla();
+					contarDatos();
 				} else {
 					construirTabla2();
+					contarDatos();
 				}
 
 			}
@@ -590,10 +606,11 @@ public class principal extends JFrame {
 		btnAlumnos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				tabla_alumnos tabla = new tabla_alumnos();
-				tabla.setVisible(true);
-				tabla.setLocationRelativeTo(null);
-				tabla.construirTabla();
+				registro_alumnos alumnos = new registro_alumnos();
+				alumnos.setVisible(true);
+				alumnos.setLocationRelativeTo(null);
+				alumnos.construirTabla();
+				alumnos.contarDatos();
 				dispose();
 			}
 		});
@@ -684,7 +701,7 @@ public class principal extends JFrame {
 		final ImageIcon icono22112 = new ImageIcon(logo22112.getImage().getScaledInstance(btnMatricula.getWidth(),
 				btnMatricula.getHeight(), Image.SCALE_DEFAULT));
 		btnMatricula.setIcon(icono22112);
-		
+
 		JButton btnSalir = new JButton("");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -699,8 +716,8 @@ public class principal extends JFrame {
 		btnSalir.setBounds(10, 584, 85, 54);
 		panel_2.add(btnSalir);
 		final ImageIcon logo01 = new ImageIcon(getClass().getResource("/iconos/salida.png"));
-		final ImageIcon icono01 = new ImageIcon(logo01.getImage().getScaledInstance(btnSalir.getWidth(),
-				btnSalir.getHeight(), Image.SCALE_DEFAULT));
+		final ImageIcon icono01 = new ImageIcon(
+				logo01.getImage().getScaledInstance(btnSalir.getWidth(), btnSalir.getHeight(), Image.SCALE_DEFAULT));
 		btnSalir.setIcon(icono01);
 
 	}
@@ -889,5 +906,12 @@ public class principal extends JFrame {
 			matrizInfo[i][7] = miLista.get(i).getNumero_Recibo() + "";
 		}
 		return matrizInfo;
+	}
+
+	public void contarDatos() {
+		int registros = 0;
+		registros = tablaAlumno.getRowCount();
+		lblRegistros.setText(String.valueOf(registros));
+
 	}
 }

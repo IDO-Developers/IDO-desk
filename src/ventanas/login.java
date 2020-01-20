@@ -287,6 +287,7 @@ public class login extends JFrame {
 						principal.setVisible(true);
 						principal.construirTabla();
 						Timer time = new Timer();
+						principal.contarDatos();
 						time.schedule(principal.tarea, 0, 1000);
 						if (consultas_usuario.rol.equals("1")) {
 							principal.btnAlumnos.setEnabled(true);

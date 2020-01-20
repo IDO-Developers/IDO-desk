@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import clases.alumnos;
+import clases.alumnos2;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.DateFormat;
@@ -47,6 +49,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import conexion.conexion;
+import consultas.consultas_usuario;
+
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.TableModel;
@@ -55,14 +59,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class registro_alumnos extends JFrame {
 
 	private JPanel contentPane;
-	public static JTextField txtNombre_Alumno;
-	public static JTextField txtIdentidad_Alumno;
+	public static JTextField txtNombres;
 	public JButton btnBuscar;
 	public JPanel panelInformacion;
+	public static JComboBox comboBox;
+	public JLabel lblRegistros;
 
 	public static String nombres = null;
 	public static String apellidos = null;
@@ -73,14 +80,15 @@ public class registro_alumnos extends JFrame {
 	public static String recibo = null;
 
 	public static JTextField txtBuscar;
-	public static JTextField txtGrado;
-	public static JTextField txtModalidad;
-	public static JTextField txtRecibo;
+	public static JTextField txtIdentidad;
+	public JButton btnActualizar;
+	public JButton btnImprimir;
 
 	public JScrollPane barraAlumno;
 	public JTable tablaAlumno;
 	public TableRowSorter<TableModel> trsfiltroCodigo;
 	String filtroCodigo;
+	private JTextField txtApellidos;
 
 	/**
 	 * Launch the application.
@@ -95,8 +103,7 @@ public class registro_alumnos extends JFrame {
 					principal.setLocationRelativeTo(null);
 					principal.setVisible(true);
 					principal.construirTabla();
-					Timer time = new Timer();
-					time.schedule(principal.tarea, 0, 1000);
+					principal.contarDatos();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -107,10 +114,11 @@ public class registro_alumnos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("unchecked")
 	public registro_alumnos() {
 		setType(Type.UTILITY);
 		setResizable(false);
-		setBounds(100, 100, 663, 700);
+		setBounds(100, 100, 702, 516);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -130,9 +138,21 @@ public class registro_alumnos extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(10, 11, 636, 309);
+		panel.setBounds(10, 11, 674, 309);
 		contentPane.add(panel);
 		panel.setLayout(null);
+		final ImageIcon logo1 = new ImageIcon(getClass().getResource("/iconos/prueba.png"));
+		final ImageIcon logo_estudiante = new ImageIcon(getClass().getResource("/iconos/estudiante.png"));
+		final ImageIcon logo222 = new ImageIcon(getClass().getResource("/iconos/escribir.png"));
+		final ImageIcon logo2211 = new ImageIcon(getClass().getResource("/iconos/pre_matricula.png"));
+		final ImageIcon logo22112 = new ImageIcon(getClass().getResource("/iconos/matricula.png"));
+		final ImageIcon logo01 = new ImageIcon(getClass().getResource("/iconos/salida.png"));
+
+		JLabel lblBuscarInformacionDe = new JLabel("Buscar informaci\u00F3n del alumno :");
+		lblBuscarInformacionDe.setHorizontalAlignment(SwingConstants.LEFT);
+		lblBuscarInformacionDe.setFont(new Font("Serif", Font.BOLD, 18));
+		lblBuscarInformacionDe.setBounds(10, 31, 654, 30);
+		panel.add(lblBuscarInformacionDe);
 
 		MaskFormatter formato1 = null;
 		try {
@@ -142,31 +162,31 @@ public class registro_alumnos extends JFrame {
 		}
 		final ImageIcon logo2 = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
 
-		JLabel lblAlumnosIdo = new JLabel(
-				"Alumnos IDO");
-		lblAlumnosIdo.setForeground(new Color(0, 0, 128));
-		lblAlumnosIdo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblAlumnosIdo.setFont(new Font("Lucida Bright", Font.BOLD, 18));
-		lblAlumnosIdo.setBounds(10, 0, 626, 22);
-		panel.add(lblAlumnosIdo);
+		JLabel lblAdministracinYCorreccin = new JLabel(
+				"Administraci\u00F3n y correcci\u00F3n de datos de los alumnos. ");
+		lblAdministracinYCorreccin.setForeground(new Color(0, 0, 128));
+		lblAdministracinYCorreccin.setHorizontalAlignment(SwingConstants.LEFT);
+		lblAdministracinYCorreccin.setFont(new Font("Lucida Bright", Font.BOLD, 18));
+		lblAdministracinYCorreccin.setBounds(10, 0, 549, 44);
+		panel.add(lblAdministracinYCorreccin);
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(null);
 		panel_3.setBorder(new MatteBorder(1, 1, 1, 1, new Color(0, 0, 0)));
 		panel_3.setBackground(Color.WHITE);
-		panel_3.setBounds(10, 23, 615, 275);
+		panel_3.setBounds(10, 55, 654, 243);
 		panel.add(panel_3);
 
 		JLabel label_3 = new JLabel("Buscar Alumno :");
 		label_3.setFont(new Font("Cambria", Font.BOLD, 14));
-		label_3.setBounds(10, 5, 122, 19);
+		label_3.setBounds(245, 0, 119, 22);
 		panel_3.add(label_3);
 
 		txtBuscar = new JTextField();
 		txtBuscar.setHorizontalAlignment(SwingConstants.CENTER);
 		txtBuscar.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtBuscar.setColumns(10);
-		txtBuscar.setBounds(120, 4, 347, 19);
+		txtBuscar.setBounds(245, 20, 212, 19);
 		panel_3.add(txtBuscar);
 		InputMap map433 = txtBuscar.getInputMap(JComponent.WHEN_FOCUSED);
 		map433.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
@@ -202,7 +222,7 @@ public class registro_alumnos extends JFrame {
 		barraAlumno = new JScrollPane(tablaAlumno, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		panel_3.add(barraAlumno);
-		barraAlumno.setBounds(10, 27, 593, 237);
+		barraAlumno.setBounds(10, 41, 634, 180);
 
 		tablaAlumno = new JTable();
 		barraAlumno.setViewportView(tablaAlumno);
@@ -211,242 +231,209 @@ public class registro_alumnos extends JFrame {
 		label_4.setBounds(355, 41, 49, 44);
 		panel_3.add(label_4);
 
+		JButton button_3 = new JButton("Seleccionar Alumno");
+		button_3.setFont(new Font("Cambria", Font.BOLD, 13));
+		button_3.setBackground(new Color(60, 179, 113));
+		button_3.setBounds(478, 21, 166, 19);
+		panel_3.add(button_3);
+
+		JLabel lblElegirTabla = new JLabel("Elegir tabla:");
+		lblElegirTabla.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblElegirTabla.setBounds(10, 0, 119, 22);
+		panel_3.add(lblElegirTabla);
+
+		comboBox = new JComboBox<Object>();
+		comboBox.setFont(new Font("Cambria", Font.BOLD, 14));
+		comboBox.setModel(new DefaultComboBoxModel<Object>(new String[] { "Matricula", "Prematricula" }));
+		comboBox.setBounds(10, 21, 212, 18);
+		panel_3.add(comboBox);
+
+		lblRegistros = new JLabel("");
+		lblRegistros.setForeground(new Color(0, 0, 128));
+		lblRegistros.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRegistros.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblRegistros.setBounds(184, 217, 119, 26);
+		panel_3.add(lblRegistros);
+
+		JLabel label_5 = new JLabel("Total alumnos registrados :");
+		label_5.setFont(new Font("Cambria", Font.BOLD, 14));
+		label_5.setBounds(10, 217, 188, 26);
+		panel_3.add(label_5);
+
+		JButton button = new JButton("Regresar");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				principal principal = new principal();
+				principal.setLocationRelativeTo(null);
+				principal.setVisible(true);
+				principal.setTitle("Sistema de busqueda de codigos de matricula. IDO 2020");
+				Timer time = new Timer();
+				time.schedule(principal.tarea, 0, 1000);
+				principal.construirTabla();
+				if (consultas_usuario.rol.equals("1")) {
+					principal.btnAlumnos.setEnabled(true);
+					principal.btnUsuarios.setEnabled(true);
+					principal.btnMatricula.setEnabled(true);
+					principal.btnPrematricula.setEnabled(true);
+				} else {
+					if (consultas_usuario.rol.equals("2")) {
+						principal.btnAlumnos.setEnabled(true);
+						principal.btnUsuarios.setEnabled(false);
+						principal.btnMatricula.setEnabled(false);
+						principal.btnPrematricula.setEnabled(false);
+
+					} else {
+						if (consultas_usuario.rol.equals("3")) {
+							principal.btnAlumnos.setEnabled(true);
+							principal.btnUsuarios.setEnabled(true);
+							principal.btnMatricula.setEnabled(true);
+							principal.btnPrematricula.setEnabled(true);
+
+						} else {
+							principal.btnAlumnos.setEnabled(false);
+							principal.btnUsuarios.setEnabled(false);
+							principal.btnMatricula.setEnabled(false);
+							principal.btnPrematricula.setEnabled(false);
+							principal.btnComprobar.setEnabled(false);
+							principal.btnImprimir.setEnabled(false);
+
+						}
+
+					}
+
+				}
+				dispose();
+			}
+
+		});
+		button.setFont(new Font("Cambria", Font.BOLD, 12));
+		button.setBackground(new Color(255, 127, 80));
+		button.setBounds(562, 14, 102, 23);
+		panel.add(button);
+		comboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (comboBox.getSelectedItem().toString().equals("Matricula")) {
+					construirTabla();
+					contarDatos();
+				} else {
+					construirTabla2();
+					contarDatos();
+				}
+
+			}
+		});
+
+		button_3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int filaseleccionada;
+				try {
+					filaseleccionada = tablaAlumno.getSelectedRow();
+					if (filaseleccionada == -1) {
+						JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
+					} else {
+						String nombres = tablaAlumno.getValueAt(filaseleccionada, 0).toString();
+						String apellidos = tablaAlumno.getValueAt(filaseleccionada, 1).toString();
+						String identidad = tablaAlumno.getValueAt(filaseleccionada, 2).toString();
+						String codigo = tablaAlumno.getValueAt(filaseleccionada, 3).toString();
+						String modalidad = tablaAlumno.getValueAt(filaseleccionada, 4).toString();
+						String grado = tablaAlumno.getValueAt(filaseleccionada, 5).toString();
+						String pago = tablaAlumno.getValueAt(filaseleccionada, 6).toString();
+						String recibo = tablaAlumno.getValueAt(filaseleccionada, 7).toString();
+
+						txtNombres.setText(nombres);
+						txtApellidos.setText(apellidos);
+						txtIdentidad.setText(identidad);
+
+						txtNombres.setEditable(true);
+						txtApellidos.setEditable(true);
+						txtIdentidad.setEditable(true);
+
+					}
+
+				} catch (HeadlessException ex) {
+					JOptionPane.showMessageDialog(null, "Error: " + ex + "\nInténtelo nuevamente",
+							" .::Error En la Operacion::.", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
 		panelInformacion = new JPanel();
 		panelInformacion.setBackground(new Color(255, 255, 255));
-		panelInformacion.setBounds(10, 331, 636, 329);
+		panelInformacion.setBounds(10, 332, 674, 141);
 		contentPane.add(panelInformacion);
 		panelInformacion.setLayout(null);
 
-		txtNombre_Alumno = new JTextField();
-		txtNombre_Alumno.setFont(new Font("Cambria", Font.BOLD, 14));
-		txtNombre_Alumno.setEditable(false);
-		txtNombre_Alumno.setHorizontalAlignment(SwingConstants.CENTER);
-		txtNombre_Alumno.setBounds(105, 74, 203, 20);
-		panelInformacion.add(txtNombre_Alumno);
-		txtNombre_Alumno.setColumns(10);
+		JLabel lblNombreCompletoDel = new JLabel("Nombres :");
+		lblNombreCompletoDel.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblNombreCompletoDel.setBounds(10, 41, 106, 21);
+		panelInformacion.add(lblNombreCompletoDel);
 
-		txtIdentidad_Alumno = new JTextField();
-		txtIdentidad_Alumno.setFont(new Font("Cambria", Font.BOLD, 14));
-		txtIdentidad_Alumno.setEditable(false);
-		txtIdentidad_Alumno.setHorizontalAlignment(SwingConstants.CENTER);
-		txtIdentidad_Alumno.setColumns(10);
-		txtIdentidad_Alumno.setBounds(105, 106, 203, 20);
-		panelInformacion.add(txtIdentidad_Alumno);
+		JLabel lblIdentidadDelAlumno = new JLabel("Identidad :");
+		lblIdentidadDelAlumno.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblIdentidadDelAlumno.setBounds(10, 105, 225, 21);
+		panelInformacion.add(lblIdentidadDelAlumno);
 
-		JLabel lblCompro = new JLabel("Modalidad :");
-		lblCompro.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblCompro.setBounds(20, 137, 225, 20);
-		panelInformacion.add(lblCompro);
+		txtNombres = new JTextField();
+		txtNombres.setFont(new Font("Cambria", Font.BOLD, 14));
+		txtNombres.setEditable(false);
+		txtNombres.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNombres.setBounds(115, 41, 372, 20);
+		panelInformacion.add(txtNombres);
+		txtNombres.setColumns(10);
 
-		txtModalidad = new JTextField();
-		txtModalidad.setHorizontalAlignment(SwingConstants.CENTER);
-		txtModalidad.setFont(new Font("Cambria", Font.BOLD, 14));
-		txtModalidad.setEditable(false);
-		txtModalidad.setColumns(10);
-		txtModalidad.setBounds(105, 137, 517, 20);
-		panelInformacion.add(txtModalidad);
-
-		JLabel lblInstitutoDepartamentalDe = new JLabel("Instituto Departamental de Oriente\r\n");
-		lblInstitutoDepartamentalDe.setForeground(Color.BLACK);
-		lblInstitutoDepartamentalDe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInstitutoDepartamentalDe.setFont(new Font("Serif", Font.BOLD, 18));
-		lblInstitutoDepartamentalDe.setBounds(10, 0, 612, 32);
-		panelInformacion.add(lblInstitutoDepartamentalDe);
+		txtIdentidad = new JTextField();
+		txtIdentidad.setHorizontalAlignment(SwingConstants.CENTER);
+		txtIdentidad.setFont(new Font("Cambria", Font.BOLD, 14));
+		txtIdentidad.setEditable(false);
+		txtIdentidad.setColumns(10);
+		txtIdentidad.setBounds(115, 105, 372, 20);
+		panelInformacion.add(txtIdentidad);
 		final ImageIcon logo = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
-
-		JButton btnImprimir = new JButton("Imprimir informaci\u00F3n");
-		btnImprimir.setBounds(451, 291, 171, 21);
-		panelInformacion.add(btnImprimir);
-		btnImprimir.setFont(new Font("Cambria", Font.BOLD, 13));
-		/*btnImprimir.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (txtNombre_Alumno.getText().toString().equals("")
-						&& txtIdentidad_Alumno.getText().toString().equals("")
-						&& txtCodigo_Matricula.getText().toString().equals("")
-						&& txtModalidad.getText().toString().equals("") && txtRecibo.getText().toString().equals("")
-						&& txtVerificacion.getText().toString().equals("")) {
-					JOptionPane.showMessageDialog(null, "No hay datos que imprimir, haga la busqueda antes.");
-
-				} else {
-					if (txtCodigo_Matricula.getText().toString().equals("Comprobar")
-							&& txtRecibo.getText().toString().equals("Comprobar")
-							&& txtVerificacion.getText().toString().equals("Comprobar")) {
-						JOptionPane.showMessageDialog(null,
-								"Antes imprimir, Compruebe el Pago de Matricula.\nPresione : Comprobar información de pago del estudiante");
-
-					} else {
-
-						detalle_comprobante detalle = new detalle_comprobante();
-						detalle.setVisible(true);
-						detalle.setLocationRelativeTo(null);
-						detalle_comprobante.lblNombre.setText(txtNombre_Alumno.getText().toString());
-						detalle_comprobante.lblIdentidad.setText(txtIdentidad_Alumno.getText().toString());
-						detalle_comprobante.lblModalidad.setText(txtModalidad.getText().toString());
-						detalle_comprobante.lblCodigo.setText(txtCodigo_Matricula.getText().toString());
-						detalle_comprobante.lblFecha.setText(lblFecha.getText().toString());
-						detalle_comprobante.lblHora.setText(lblHoraSistema.getText().toString());
-
-					}
-				}
-
-			}
-		});
-		*/
-		btnImprimir.setBackground(new Color(255, 215, 0));
-
-		txtRecibo = new JTextField();
-		txtRecibo.setHorizontalAlignment(SwingConstants.CENTER);
-		txtRecibo.setFont(new Font("Cambria", Font.BOLD, 14));
-		txtRecibo.setEditable(false);
-		txtRecibo.setColumns(10);
-		txtRecibo.setBounds(451, 260, 172, 20);
-		panelInformacion.add(txtRecibo);
 		final ImageIcon logo22 = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
 
-		/*
-		JButton btnComprobarInformacin = new JButton("Comprobar informaci\u00F3n");
-		btnComprobarInformacin.addActionListener(new ActionListener() {
+		btnActualizar = new JButton("Actualizar");
+		btnActualizar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (txtNombre_Alumno.getText().toString().equals("")
-						&& txtIdentidad_Alumno.getText().toString().equals("")
-						&& txtCodigo_Matricula.getText().toString().equals("")
-						&& txtModalidad.getText().toString().equals("") && txtRecibo.getText().toString().equals("")
-						&& txtVerificacion.getText().toString().equals("")
-						&& txtGrado.getText().toString().equals("")) {
-					JOptionPane.showMessageDialog(null, "No hay datos que comprobar, haga la busqueda antes.");
-
-				} else {
-					verificacion_recibo recibo = new verificacion_recibo();
-					recibo.setVisible(true);
-					recibo.setLocationRelativeTo(null);
-					verificacion_recibo.lblIdentidad.setText(txtIdentidad_Alumno.getText().toString());
-					verificacion_recibo.lblNombre.setText(txtNombre_Alumno.getText().toString());
-					verificacion_recibo.lblGrado.setText(txtGrado.getText().toString());
-					dispose();
-				}
-
 			}
 		});
-		
-		btnComprobarInformacin.setFont(new Font("Cambria", Font.BOLD, 12));
-		btnComprobarInformacin.setBackground(new Color(60, 179, 113));
-		btnComprobarInformacin.setBounds(254, 291, 172, 21);
-		panelInformacion.add(btnComprobarInformacin);
-		*/
+		btnActualizar.setFont(new Font("Cambria", Font.BOLD, 12));
+		btnActualizar.setBackground(new Color(60, 179, 113));
+		btnActualizar.setBounds(499, 105, 167, 21);
+		panelInformacion.add(btnActualizar);
 
-		JLabel lblMatricula = new JLabel("Alumnos");
-		lblMatricula.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMatricula.setForeground(Color.BLACK);
-		lblMatricula.setFont(new Font("Serif", Font.BOLD, 18));
-		lblMatricula.setBounds(20, 28, 602, 21);
-		panelInformacion.add(lblMatricula);
-
-		JLabel lblGrado = new JLabel("Grado :");
-		lblGrado.setHorizontalAlignment(SwingConstants.LEFT);
-		lblGrado.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblGrado.setBounds(20, 169, 100, 20);
-		panelInformacion.add(lblGrado);
-
-		txtGrado = new JTextField();
-		txtGrado.setHorizontalAlignment(SwingConstants.CENTER);
-		txtGrado.setFont(new Font("Cambria", Font.BOLD, 14));
-		txtGrado.setEditable(false);
-		txtGrado.setColumns(10);
-		txtGrado.setBounds(105, 169, 203, 20);
-		panelInformacion.add(txtGrado);
-		
-		JLabel lblDatosDelAlumno = new JLabel("Datos del alumno:");
+		JLabel lblDatosDelAlumno = new JLabel("Datos del alumno :");
 		lblDatosDelAlumno.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDatosDelAlumno.setForeground(new Color(0, 0, 128));
 		lblDatosDelAlumno.setFont(new Font("Serif", Font.BOLD, 18));
-		lblDatosDelAlumno.setBounds(20, 43, 758, 32);
+		lblDatosDelAlumno.setBounds(10, 0, 654, 41);
 		panelInformacion.add(lblDatosDelAlumno);
-		
-		JLabel lblNombres = new JLabel("Nombres :");
-		lblNombres.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblNombres.setBounds(20, 74, 100, 20);
-		panelInformacion.add(lblNombres);
-		
+
 		JLabel lblApellidos = new JLabel("Apellidos :");
 		lblApellidos.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblApellidos.setBounds(318, 74, 100, 20);
+		lblApellidos.setBounds(10, 73, 106, 21);
 		panelInformacion.add(lblApellidos);
+
+		txtApellidos = new JTextField();
+		txtApellidos.setHorizontalAlignment(SwingConstants.CENTER);
+		txtApellidos.setFont(new Font("Cambria", Font.BOLD, 14));
+		txtApellidos.setEditable(false);
+		txtApellidos.setColumns(10);
+		txtApellidos.setBounds(115, 73, 372, 20);
+		panelInformacion.add(txtApellidos);
 		
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setFont(new Font("Cambria", Font.BOLD, 14));
-		textField.setEditable(false);
-		textField.setColumns(10);
-		textField.setBounds(405, 74, 217, 20);
-		panelInformacion.add(textField);
-		
-		JLabel lblFechaNac = new JLabel("Fecha Nac. :");
-		lblFechaNac.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblFechaNac.setBounds(318, 106, 100, 20);
-		panelInformacion.add(lblFechaNac);
-		
-		JLabel lblIdentidad = new JLabel("Identidad :");
-		lblIdentidad.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblIdentidad.setBounds(20, 106, 100, 20);
-		panelInformacion.add(lblIdentidad);
-		
-		JLabel lblEdad = new JLabel("Edad :");
-		lblEdad.setHorizontalAlignment(SwingConstants.LEFT);
-		lblEdad.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblEdad.setBounds(318, 168, 100, 20);
-		panelInformacion.add(lblEdad);
-		
-		textField_1 = new JTextField();
-		textField_1.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_1.setFont(new Font("Cambria", Font.BOLD, 14));
-		textField_1.setEditable(false);
-		textField_1.setColumns(10);
-		textField_1.setBounds(405, 168, 217, 20);
-		panelInformacion.add(textField_1);
-		final ImageIcon logo1 = new ImageIcon(getClass().getResource("/iconos/prueba.png"));
-		final ImageIcon logo221 = new ImageIcon(getClass().getResource("/iconos/estudiante.png"));
-		final ImageIcon logo222 = new ImageIcon(getClass().getResource("/iconos/escribir.png"));
-		final ImageIcon logo2211 = new ImageIcon(getClass().getResource("/iconos/pre_matricula.png"));
-		final ImageIcon logo22112 = new ImageIcon(getClass().getResource("/iconos/matricula.png"));
+		JLabel label = new JLabel("");
+		label.setFont(new Font("Cambria", Font.BOLD, 14));
+		label.setBounds(538, 12, 89, 84);
+		panelInformacion.add(label);
+		final ImageIcon iconouser = new ImageIcon(
+				logo_estudiante.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
+		label.setIcon(iconouser);
+
 
 	}
-
-	Timer time = new Timer();
-	public TimerTask tarea = new TimerTask() {
-		@Override
-		public void run() {
-			Calendar calendario = new GregorianCalendar();
-			Date fechaHoraActual = new Date();
-			calendario.setTime(fechaHoraActual);
-			String horas;
-			String minutos;
-			String segundos;
-			String ampm;
-			Thread hilo = null;
-			Thread hilo2;
-			hilo2 = Thread.currentThread();
-			hilo = new Thread();
-			hilo.start();
-			ampm = calendario.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
-			if (ampm.equals("PM")) {
-				int h = calendario.get(Calendar.HOUR_OF_DAY) - 12;
-				horas = h > 9 ? "" + h : "0" + h;
-			} else {
-				horas = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY)
-						: "0" + calendario.get(Calendar.HOUR_OF_DAY);
-			}
-			minutos = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE)
-					: "0" + calendario.get(Calendar.MINUTE);
-			segundos = calendario.get(Calendar.SECOND) > 9 ? "" + calendario.get(Calendar.SECOND)
-					: "0" + calendario.get(Calendar.SECOND);
-
-			//lblHoraSistema.setText(horas + ":" + minutos + ":" + segundos + " " + ampm);
-		}
-	};
-	private JTextField textField;
-	private JTextField textField_1;
 
 	public static String getFecha() {
 		Date date = new Date();
@@ -537,5 +524,74 @@ public class registro_alumnos extends JFrame {
 		filtroCodigo = txtBuscar.getText().toString();
 		trsfiltroCodigo
 				.setRowFilter(RowFilter.regexFilter("(?i)" + txtBuscar.getText().toString(), 0, 1, 2, 3, 4, 5, 6, 7));
+	}
+
+	public void construirTabla2() {
+		String titulos[] = { "Nombres", "Apellidos", "Identidad", "Codigo", "Modalidad", "Grado", "Estado del pago",
+				"Numero de recibo" };
+		String informacion[][] = obtenerMatriz2();
+		tablaAlumno = new JTable(informacion, titulos);
+		barraAlumno.setViewportView(tablaAlumno);
+		for (int c = 0; c < tablaAlumno.getColumnCount(); c++) {
+			Class<?> col_class = tablaAlumno.getColumnClass(c);
+			tablaAlumno.setDefaultEditor(col_class, null);
+			tablaAlumno.getTableHeader().setReorderingAllowed(false);
+
+		}
+	}
+
+	public static ArrayList<alumnos2> buscarUsuariosConMatriz2() {
+		conexion conex = new conexion();
+		ArrayList<alumnos2> miLista = new ArrayList<alumnos2>();
+		alumnos2 alumnos2;
+		try {
+			Statement estatuto = conex.getConexion().createStatement();
+			ResultSet rs = estatuto.executeQuery("select * from dbo.prematricula2019_2020");
+
+			while (rs.next()) {
+				alumnos2 = new alumnos2();
+				alumnos2.setNombres_alumnos(rs.getString("Nombres_alumnos"));
+				alumnos2.setApellidos_alumnos(rs.getString("Apellidos_alumnos"));
+				alumnos2.setIdentidad_alumnos(rs.getString("Identidad_alumnos"));
+				alumnos2.setCodigo(rs.getString("codigo"));
+				alumnos2.setModalidad(rs.getString("Modalidad"));
+				alumnos2.setGrado(rs.getString("Grado"));
+				alumnos2.setEstado_Pago(rs.getString("Estado_Pago"));
+				alumnos2.setNumero_Recibo(rs.getString("Numero_Recibo"));
+				miLista.add(alumnos2);
+			}
+			rs.close();
+			estatuto.close();
+			conex.desconectar();
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			JOptionPane.showMessageDialog(null, "Error al consultar", "Error", JOptionPane.ERROR_MESSAGE);
+
+		}
+		return miLista;
+	}
+
+	public static String[][] obtenerMatriz2() {
+		ArrayList<alumnos2> miLista = buscarUsuariosConMatriz2();
+		String matrizInfo[][] = new String[miLista.size()][8];
+		for (int i = 0; i < miLista.size(); i++) {
+			matrizInfo[i][0] = miLista.get(i).getNombres_alumnos() + "";
+			matrizInfo[i][1] = miLista.get(i).getApellidos_alumnos() + "";
+			matrizInfo[i][2] = miLista.get(i).getIdentidad_alumnos() + "";
+			matrizInfo[i][3] = miLista.get(i).getCodigo() + "";
+			matrizInfo[i][4] = miLista.get(i).getModalidad() + "";
+			matrizInfo[i][5] = miLista.get(i).getGrado() + "";
+			matrizInfo[i][6] = miLista.get(i).getEstado_Pago() + "";
+			matrizInfo[i][7] = miLista.get(i).getNumero_Recibo() + "";
+		}
+		return matrizInfo;
+	}
+
+	public void contarDatos() {
+		int registros = 0;
+		registros = tablaAlumno.getRowCount();
+		lblRegistros.setText(String.valueOf(registros));
+
 	}
 }

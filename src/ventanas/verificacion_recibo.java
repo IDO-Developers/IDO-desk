@@ -10,7 +10,7 @@ import clases.alumnos;
 import clases.alumnos2;
 import clases.user_matricula;
 import conexion.conexion;
-import consultas.consultas_pago_alumnos;
+import consultas.consultas_pago_alumno;
 import consultas.consultas_user_matricula;
 
 import java.awt.Color;
@@ -189,8 +189,8 @@ public class verificacion_recibo extends JFrame {
 					alumnos clase2 = new alumnos();
 					alumnos2 clase2_1 = new alumnos2();
 					user_matricula clase3 = new user_matricula();
-					consultas_pago_alumnos consulta = new consultas_pago_alumnos();
-					consultas_pago_alumnos consulta2 = new consultas_pago_alumnos();
+					consultas_pago_alumno consulta = new consultas_pago_alumno();
+					consultas_pago_alumno consulta2 = new consultas_pago_alumno();
 					consultas_user_matricula consulta3 = new consultas_user_matricula();
 					principal principal = new principal();
 					Timer time = new Timer();
