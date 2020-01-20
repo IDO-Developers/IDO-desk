@@ -10,6 +10,7 @@ public class alumnos2 {
 	String Estado_Pago;
 	String Numero_Recibo;
 	String Grado;
+	String identidad;
 
 	public String getIdentidad_alumnos() {
 		return Identidad_alumnos;
@@ -73,6 +74,14 @@ public class alumnos2 {
 
 	public void setGrado(String grado) {
 		Grado = grado;
+	}
+
+	public String getIdentidad() {
+		return identidad;
+	}
+
+	public void setIdentidad(String identidad) {
+		this.identidad = identidad;
 	}
 
 }

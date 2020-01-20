@@ -142,6 +142,7 @@ public class registro_usuarios extends JFrame {
 				Timer time = new Timer();
 				time.schedule(principal.tarea, 0, 1000);
 				principal.construirTabla();
+				principal.contarDatos();
 				if (consultas_usuario.rol.equals("1")) {
 					principal.btnAlumnos.setEnabled(true);
 					principal.btnUsuarios.setEnabled(true);
@@ -373,7 +374,7 @@ public class registro_usuarios extends JFrame {
 		txtIdentidad.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent ke) {
-				if (txtIdentidad.getText().length() == 15)
+				if (txtIdentidad.getText().length() == 13)
 					ke.consume();
 
 				if (txtIdentidad.getText().toString().equals(" ")) {

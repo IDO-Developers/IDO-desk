@@ -10,6 +10,7 @@ public class alumnos {
 	String Estado_Pago;
 	String Numero_Recibo;
 	String Grado;
+	String identidad;
 
 	public String getRNE_Alumno() {
 		return RNE_Alumno;
@@ -73,6 +74,14 @@ public class alumnos {
 
 	public void setGrado(String grado) {
 		Grado = grado;
+	}
+
+	public String getIdentidad() {
+		return identidad;
+	}
+
+	public void setIdentidad(String identidad) {
+		this.identidad = identidad;
 	}
 
 }

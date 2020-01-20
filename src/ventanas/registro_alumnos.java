@@ -9,6 +9,7 @@ import javax.swing.text.MaskFormatter;
 
 import clases.alumnos;
 import clases.alumnos2;
+import clases.usuarios;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -38,6 +39,7 @@ import javax.swing.KeyStroke;
 import javax.swing.RowFilter;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 
@@ -49,6 +51,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import conexion.conexion;
+import consultas.consultas_alumno;
 import consultas.consultas_usuario;
 
 import javax.swing.border.LineBorder;
@@ -70,6 +73,7 @@ public class registro_alumnos extends JFrame {
 	public JPanel panelInformacion;
 	public static JComboBox comboBox;
 	public JLabel lblRegistros;
+	public JLabel lblIden;
 
 	public static String nombres = null;
 	public static String apellidos = null;
@@ -78,9 +82,10 @@ public class registro_alumnos extends JFrame {
 	public static String modalidad = null;
 	public static String pago = null;
 	public static String recibo = null;
+	public static String IDENTIDADALUMNO = null;
 
 	public static JTextField txtBuscar;
-	public static JTextField txtIdentidad;
+	public static JFormattedTextField txtIdentidad;
 	public JButton btnActualizar;
 	public JButton btnImprimir;
 
@@ -270,6 +275,7 @@ public class registro_alumnos extends JFrame {
 				Timer time = new Timer();
 				time.schedule(principal.tarea, 0, 1000);
 				principal.construirTabla();
+				principal.contarDatos();
 				if (consultas_usuario.rol.equals("1")) {
 					principal.btnAlumnos.setEnabled(true);
 					principal.btnUsuarios.setEnabled(true);
@@ -337,15 +343,12 @@ public class registro_alumnos extends JFrame {
 						String nombres = tablaAlumno.getValueAt(filaseleccionada, 0).toString();
 						String apellidos = tablaAlumno.getValueAt(filaseleccionada, 1).toString();
 						String identidad = tablaAlumno.getValueAt(filaseleccionada, 2).toString();
-						String codigo = tablaAlumno.getValueAt(filaseleccionada, 3).toString();
-						String modalidad = tablaAlumno.getValueAt(filaseleccionada, 4).toString();
-						String grado = tablaAlumno.getValueAt(filaseleccionada, 5).toString();
-						String pago = tablaAlumno.getValueAt(filaseleccionada, 6).toString();
-						String recibo = tablaAlumno.getValueAt(filaseleccionada, 7).toString();
+						lblIden.setText(identidad);
 
 						txtNombres.setText(nombres);
 						txtApellidos.setText(apellidos);
 						txtIdentidad.setText(identidad);
+						
 
 						txtNombres.setEditable(true);
 						txtApellidos.setEditable(true);
@@ -383,14 +386,72 @@ public class registro_alumnos extends JFrame {
 		txtNombres.setBounds(115, 41, 372, 20);
 		panelInformacion.add(txtNombres);
 		txtNombres.setColumns(10);
+		InputMap map5 = txtNombres.getInputMap(JComponent.WHEN_FOCUSED);
+		map5.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
+		txtNombres.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNombres.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent ke) {
+				char c = ke.getKeyChar();
+				if (Character.isDigit(c)) {
+					Toolkit.getDefaultToolkit().beep();
+					ke.consume();
+				}
+				
+				if (txtNombres.getText().length() == 30)
+					ke.consume();
 
-		txtIdentidad = new JTextField();
+				if (txtNombres.getText().toString().equals(" ")) {
+					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
+					txtNombres.setText("");
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent ke) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent ke) {
+			}
+		});
+
+		MaskFormatter formato = null;
+		try {
+			formato = new MaskFormatter("#############");
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		txtIdentidad = new JFormattedTextField(formato);
 		txtIdentidad.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIdentidad.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtIdentidad.setEditable(false);
 		txtIdentidad.setColumns(10);
 		txtIdentidad.setBounds(115, 105, 372, 20);
 		panelInformacion.add(txtIdentidad);
+		InputMap map4 = txtIdentidad.getInputMap(JComponent.WHEN_FOCUSED);
+		map4.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
+		txtIdentidad.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent ke) {
+				if (txtIdentidad.getText().length() == 13)
+					ke.consume();
+
+				if (txtIdentidad.getText().toString().equals(" ")) {
+					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
+					txtIdentidad.setText("");
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent ke) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent ke) {
+			}
+		});
+		
 		final ImageIcon logo = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
 		final ImageIcon logo22 = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
 
@@ -398,6 +459,79 @@ public class registro_alumnos extends JFrame {
 		btnActualizar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (txtIdentidad.getText().isEmpty() || txtNombres.getText().isEmpty()
+						|| txtApellidos.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Porfavor llene los campos para actualizar el alumno!");
+				} else {
+					alumnos clase = new alumnos();
+					alumnos2 clase2 = new alumnos2();
+					consultas_alumno consulta = new consultas_alumno();
+
+					if (comboBox.getSelectedItem().toString().equals("Matricula")) {
+						
+						clase.setNombres(txtNombres.getText().toString());
+						clase.setApellidos(txtApellidos.getText().toString());
+						clase.setRNE_Alumno(txtIdentidad.getText().toString());
+						clase.setIdentidad(lblIden.getText().toString());
+
+						if (consulta.actualizarAlumnmo(clase)) {
+							JOptionPane.showMessageDialog(null, "Datos del Alumno actualizados!");
+							txtIdentidad.setText("");
+							txtNombres.setText("");
+							txtApellidos.setText("");
+							txtIdentidad.setEditable(false);
+							txtNombres.setEditable(false);
+							txtApellidos.setEditable(false);
+							construirTabla();
+							comboBox.setSelectedIndex(0);
+							lblIden.setText("");
+						} else {
+							JOptionPane.showMessageDialog(null, "Error! Alumno no actualizado");
+							txtIdentidad.setText("");
+							txtNombres.setText("");
+							txtApellidos.setText("");
+							txtIdentidad.setEditable(false);
+							txtNombres.setEditable(false);
+							txtApellidos.setEditable(false);
+							construirTabla();
+							comboBox.setSelectedIndex(0);
+							lblIden.setText("");
+						}
+
+					} else {
+						
+						clase2.setNombres_alumnos(txtNombres.getText().toString());
+						clase2.setApellidos_alumnos(txtApellidos.getText().toString());
+						clase2.setIdentidad_alumnos(txtIdentidad.getText().toString());
+						clase2.setIdentidad(lblIden.getText().toString());
+
+						if (consulta.actualizarAlumno2(clase2)) {
+							JOptionPane.showMessageDialog(null, "Datos del Alumno actualizados!");
+							txtIdentidad.setText("");
+							txtNombres.setText("");
+							txtApellidos.setText("");
+							txtIdentidad.setEditable(false);
+							txtNombres.setEditable(false);
+							txtApellidos.setEditable(false);
+							construirTabla2();
+							comboBox.setSelectedIndex(1);
+							lblIden.setText("");
+						} else {
+							JOptionPane.showMessageDialog(null, "Error! Alumno no actualizado");
+							txtIdentidad.setText("");
+							txtNombres.setText("");
+							txtApellidos.setText("");
+							txtIdentidad.setEditable(false);
+							txtNombres.setEditable(false);
+							txtApellidos.setEditable(false);
+							construirTabla2();
+							comboBox.setSelectedIndex(1);
+							lblIden.setText("");
+						}
+					}
+
+				}
+
 			}
 		});
 		btnActualizar.setFont(new Font("Cambria", Font.BOLD, 12));
@@ -408,7 +542,7 @@ public class registro_alumnos extends JFrame {
 		JLabel lblDatosDelAlumno = new JLabel("Datos del alumno :");
 		lblDatosDelAlumno.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDatosDelAlumno.setFont(new Font("Serif", Font.BOLD, 18));
-		lblDatosDelAlumno.setBounds(10, 0, 654, 41);
+		lblDatosDelAlumno.setBounds(10, 0, 263, 41);
 		panelInformacion.add(lblDatosDelAlumno);
 
 		JLabel lblApellidos = new JLabel("Apellidos :");
@@ -423,7 +557,36 @@ public class registro_alumnos extends JFrame {
 		txtApellidos.setColumns(10);
 		txtApellidos.setBounds(115, 73, 372, 20);
 		panelInformacion.add(txtApellidos);
-		
+		InputMap map11 = txtApellidos.getInputMap(JComponent.WHEN_FOCUSED);
+		map11.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
+		txtApellidos.setHorizontalAlignment(SwingConstants.CENTER);
+		txtApellidos.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent ke) {
+				char c = ke.getKeyChar();
+				if (Character.isDigit(c)) {
+					Toolkit.getDefaultToolkit().beep();
+					ke.consume();
+				}
+				
+				if (txtApellidos.getText().length() == 40)
+					ke.consume();
+
+				if (txtApellidos.getText().toString().equals(" ")) {
+					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
+					txtApellidos.setText("");
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent ke) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent ke) {
+			}
+		});
+
 		JLabel label = new JLabel("");
 		label.setFont(new Font("Cambria", Font.BOLD, 14));
 		label.setBounds(538, 12, 89, 84);
@@ -431,7 +594,13 @@ public class registro_alumnos extends JFrame {
 		final ImageIcon iconouser = new ImageIcon(
 				logo_estudiante.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
 		label.setIcon(iconouser);
-
+		
+		lblIden = new JLabel("");
+		lblIden.setForeground(new Color(0, 0, 128));
+		lblIden.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIden.setFont(new Font("Serif", Font.BOLD, 18));
+		lblIden.setBounds(173, 0, 263, 41);
+		panelInformacion.add(lblIden);
 
 	}
 

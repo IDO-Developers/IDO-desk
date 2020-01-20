@@ -69,6 +69,7 @@ public class principal extends JFrame {
 	public JButton btnBuscar;
 	public JPanel panelInformacion;
 	public static JComboBox comboBox;
+	public static JComboBox comboBox_1;
 	public JButton btnUsuarios;
 	public JButton btnAlumnos;
 	public JButton btnMatricula;
@@ -253,25 +254,49 @@ public class principal extends JFrame {
 		panel_3.add(comboBox);
 
 		lblRegistros = new JLabel("");
-		lblRegistros.setForeground(new Color(0, 0, 128));
+		lblRegistros.setForeground(new Color(0, 128, 0));
 		lblRegistros.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRegistros.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblRegistros.setBounds(184, 217, 119, 26);
+		lblRegistros.setBounds(184, 217, 102, 26);
 		panel_3.add(lblRegistros);
 
 		JLabel label_5 = new JLabel("Total alumnos registrados :");
 		label_5.setFont(new Font("Cambria", Font.BOLD, 14));
 		label_5.setBounds(10, 217, 188, 26);
 		panel_3.add(label_5);
+
+		JLabel lblTotalAlumnosDe = new JLabel("Total alumnos de :");
+		lblTotalAlumnosDe.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblTotalAlumnosDe.setBounds(307, 217, 127, 26);
+		panel_3.add(lblTotalAlumnosDe);
+
+		JLabel label_6 = new JLabel("");
+		label_6.setHorizontalAlignment(SwingConstants.CENTER);
+		label_6.setForeground(new Color(0, 128, 0));
+		label_6.setFont(new Font("Cambria", Font.BOLD, 14));
+		label_6.setBounds(542, 217, 102, 26);
+		panel_3.add(label_6);
+
+		comboBox_1 = new JComboBox<Object>();
+		comboBox_1.setFont(new Font("Cambria", Font.BOLD, 14));
+		comboBox_1.setBounds(430, 222, 102, 18);
+		panel_3.add(comboBox_1);
+		comboBox_1.setModel(new DefaultComboBoxModel(
+				new String[] { "8\u00B0 Grado", "9\u00B0 Grado", "11\u00B0 Grado", "12\u00B0 Grado" }));
+
 		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (comboBox.getSelectedItem().toString().equals("Matricula")) {
 					construirTabla();
 					contarDatos();
+					comboBox_1.setModel(new DefaultComboBoxModel(
+							new String[] { "8\u00B0 Grado", "9\u00B0 Grado", "11\u00B0 Grado", "12\u00B0 Grado" }));
+
 				} else {
 					construirTabla2();
 					contarDatos();
+					comboBox_1.setModel(new DefaultComboBoxModel(new String[] { "7\u00B0 Grado", "10\u00B0 Grado" }));
 				}
 
 			}
@@ -914,4 +939,12 @@ public class principal extends JFrame {
 		lblRegistros.setText(String.valueOf(registros));
 
 	}
+
+	public void contarDatosPorGrado() {
+		int registros = 0;
+		registros = tablaAlumno.getRowCount();
+		lblRegistros.setText(String.valueOf(registros));
+
+	}
+
 }
