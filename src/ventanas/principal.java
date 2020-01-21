@@ -75,6 +75,8 @@ public class principal extends JFrame {
 	public JButton btnMatricula;
 	public JButton btnPrematricula;
 	public JLabel lblRegistros;
+	public JLabel lblTotalAlumnosDe;
+	public JLabel lblContGrados;
 
 	public static String nombres = null;
 	public static String apellidos = null;
@@ -265,24 +267,66 @@ public class principal extends JFrame {
 		label_5.setBounds(10, 217, 188, 26);
 		panel_3.add(label_5);
 
-		JLabel lblTotalAlumnosDe = new JLabel("Total alumnos de :");
+		lblTotalAlumnosDe = new JLabel("Total alumnos de :");
 		lblTotalAlumnosDe.setFont(new Font("Cambria", Font.BOLD, 14));
 		lblTotalAlumnosDe.setBounds(307, 217, 127, 26);
 		panel_3.add(lblTotalAlumnosDe);
 
-		JLabel label_6 = new JLabel("");
-		label_6.setHorizontalAlignment(SwingConstants.CENTER);
-		label_6.setForeground(new Color(0, 128, 0));
-		label_6.setFont(new Font("Cambria", Font.BOLD, 14));
-		label_6.setBounds(542, 217, 102, 26);
-		panel_3.add(label_6);
+		lblContGrados = new JLabel("");
+		lblContGrados.setHorizontalAlignment(SwingConstants.CENTER);
+		lblContGrados.setForeground(new Color(0, 128, 0));
+		lblContGrados.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblContGrados.setBounds(542, 217, 102, 26);
+		panel_3.add(lblContGrados);
 
 		comboBox_1 = new JComboBox<Object>();
 		comboBox_1.setFont(new Font("Cambria", Font.BOLD, 14));
 		comboBox_1.setBounds(430, 222, 102, 18);
-		panel_3.add(comboBox_1);
 		comboBox_1.setModel(new DefaultComboBoxModel(
 				new String[] { "8\u00B0 Grado", "9\u00B0 Grado", "11\u00B0 Grado", "12\u00B0 Grado" }));
+		panel_3.add(comboBox_1);
+		
+		comboBox_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (comboBox_1.getSelectedItem().toString().equals("7° Grado")) {
+					txtBuscar.setText("Septimo");
+					contarDatosPorGrado();
+				} else {
+					if (comboBox_1.getSelectedItem().toString().equals("8° Grado")) {
+						txtBuscar.setText("Octavo Grado");
+						contarDatosPorGrado();
+					} else {
+						if (comboBox_1.getSelectedItem().toString().equals("9° Grado")) {
+							txtBuscar.setText("Noveno Grado");
+							contarDatosPorGrado();
+						} else {
+							if (comboBox_1.getSelectedItem().toString().equals("10° Grado")) {
+								txtBuscar.setText("Decimo");
+								contarDatosPorGrado();
+							} else {
+								if (comboBox_1.getSelectedItem().toString().equals("11° Grado")) {
+									txtBuscar.setText("Undecimo Grado");
+									contarDatosPorGrado();
+								} else {
+									if (comboBox_1.getSelectedItem().toString().equals("12° Grado")) {
+										txtBuscar.setText("Duodecimo Grado");
+										contarDatosPorGrado();
+									} else {
+										
+									}
+									
+								}
+							}
+							
+						}
+						
+					}
+					
+				}
+
+			}
+		});
 
 		comboBox.addActionListener(new ActionListener() {
 			@Override
@@ -943,7 +987,7 @@ public class principal extends JFrame {
 	public void contarDatosPorGrado() {
 		int registros = 0;
 		registros = tablaAlumno.getRowCount();
-		lblRegistros.setText(String.valueOf(registros));
+		lblContGrados.setText(String.valueOf(registros));
 
 	}
 

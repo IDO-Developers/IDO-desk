@@ -195,7 +195,7 @@ public class detalle_comprobante extends JFrame implements Printable {
 		lblDireccin.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDireccin.setForeground(Color.BLACK);
 		lblDireccin.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 16));
-		lblDireccin.setBounds(318, 588, 92, 32);
+		lblDireccin.setBounds(236, 588, 92, 32);
 		contentPane.add(lblDireccin);
 		
 		JLabel lblMatriculaIdo = new JLabel("\r\nMatricula IDO 2020.\r\n");
@@ -204,20 +204,42 @@ public class detalle_comprobante extends JFrame implements Printable {
 		lblMatriculaIdo.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 18));
 		lblMatriculaIdo.setBounds(10, 589, 216, 28);
 		contentPane.add(lblMatriculaIdo);
-		
-		JLabel label = new JLabel("");
-		label.setBounds(249, 484, 203, 136);
-		contentPane.add(label);
 		final ImageIcon logoF = new ImageIcon(getClass().getResource("/iconos/firma_1.png"));
-		final ImageIcon iconoF = new ImageIcon(
-				logoF.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
-		label.setIcon(iconoF);
 		
 		JTextArea txtrlaEnseanzaQue = new JTextArea();
 		txtrlaEnseanzaQue.setFont(new Font("Cambria", Font.BOLD | Font.ITALIC, 11));
 		txtrlaEnseanzaQue.setText("         \"La ense\u00F1anza que deja huella\r\n no es la que se hace de cabeza a cabeza\r\n            sino de coraz\u00F3n a coraz\u00F3n.\"");
-		txtrlaEnseanzaQue.setBounds(22, 533, 249, 58);
+		txtrlaEnseanzaQue.setBounds(22, 533, 203, 58);
 		contentPane.add(txtrlaEnseanzaQue);
+		
+		JLabel lblSecretaria = new JLabel("Secretaria. ");
+		lblSecretaria.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSecretaria.setForeground(Color.BLACK);
+		lblSecretaria.setFont(new Font("PMingLiU-ExtB", Font.BOLD, 16));
+		lblSecretaria.setBounds(356, 588, 92, 32);
+		contentPane.add(lblSecretaria);
+		
+		JLabel lblDirector = new JLabel();
+		lblDirector.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDirector.setForeground(new Color(0, 0, 128));
+		lblDirector.setFont(new Font("Cambria", Font.BOLD, 15));
+		lblDirector.setBounds(213, 520, 122, 71);
+		contentPane.add(lblDirector);
+		final ImageIcon logod = new ImageIcon(getClass().getResource("/iconos/director.png"));
+		final ImageIcon iconod = new ImageIcon(
+				logod.getImage().getScaledInstance(lblDirector.getWidth(), lblDirector.getHeight(), Image.SCALE_DEFAULT));
+		lblDirector.setIcon(iconod);
+		
+		JLabel lblSecre = new JLabel();
+		lblSecre.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSecre.setForeground(new Color(0, 0, 128));
+		lblSecre.setFont(new Font("Cambria", Font.BOLD, 15));
+		lblSecre.setBounds(338, 520, 122, 71);
+		contentPane.add(lblSecre);
+		final ImageIcon logos = new ImageIcon(getClass().getResource("/iconos/secretaria.png"));
+		final ImageIcon iconos = new ImageIcon(
+				logos.getImage().getScaledInstance(lblSecre.getWidth(), lblSecre.getHeight(), Image.SCALE_DEFAULT));
+		lblSecre.setIcon(iconos);
 	}
 
 	@Override
