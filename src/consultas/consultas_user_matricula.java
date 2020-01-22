@@ -2,11 +2,9 @@ package consultas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import clases.user_matricula;
-import clases.usuarios;
 import conexion.conexion;
 
 public class consultas_user_matricula extends conexion {

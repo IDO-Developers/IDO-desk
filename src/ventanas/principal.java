@@ -773,6 +773,7 @@ public class principal extends JFrame {
 
 		JButton btnSalir = new JButton("");
 		btnSalir.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				login login = new login();
 				login.setVisible(true);

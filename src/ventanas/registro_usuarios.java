@@ -335,6 +335,7 @@ public class registro_usuarios extends JFrame {
 
 		cbxTipoUsuario = new JComboBox();
 		cbxTipoUsuario.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				cargarIdRol();
 			}
@@ -371,26 +372,7 @@ public class registro_usuarios extends JFrame {
 		panelRegistro.add(txtIdentidad);
 		InputMap map4 = txtIdentidad.getInputMap(JComponent.WHEN_FOCUSED);
 		map4.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
-		txtIdentidad.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent ke) {
-				if (txtIdentidad.getText().length() == 13)
-					ke.consume();
-
-				if (txtIdentidad.getText().toString().equals(" ")) {
-					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
-					txtIdentidad.setText("");
-				}
-			}
-
-			@Override
-			public void keyPressed(KeyEvent ke) {
-			}
-
-			@Override
-			public void keyReleased(KeyEvent ke) {
-			}
-		});
+		
 
 		lblUsuario = new JLabel("2. Usuario :");
 		lblUsuario.setFont(new Font("Cambria", Font.BOLD, 12));

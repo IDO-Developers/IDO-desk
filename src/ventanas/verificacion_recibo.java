@@ -31,7 +31,6 @@ import java.awt.event.KeyListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Random;
 import java.util.Timer;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -82,7 +81,7 @@ public class verificacion_recibo extends JFrame {
 	 */
 	public verificacion_recibo() {
 		setType(Type.UTILITY);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 339);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -225,7 +224,7 @@ public class verificacion_recibo extends JFrame {
 								dispose();
 								principal.construirTabla();
 								establecerDatosAlumno();
-								principal.comboBox.setSelectedIndex(0);
+								ventanas.principal.comboBox.setSelectedIndex(0);
 							} else {
 								JOptionPane.showMessageDialog(null, "Error! No Comprobado");
 							}
@@ -240,7 +239,7 @@ public class verificacion_recibo extends JFrame {
 								dispose();
 								principal.construirTabla();
 								establecerDatosAlumno();
-								principal.comboBox.setSelectedIndex(0);
+								ventanas.principal.comboBox.setSelectedIndex(0);
 							} else {
 								JOptionPane.showMessageDialog(null, "Error! No Comprobado");
 							}
@@ -277,7 +276,7 @@ public class verificacion_recibo extends JFrame {
 								dispose();
 								principal.construirTabla2();
 								establecerDatosAlumnos2();
-								principal.comboBox.setSelectedIndex(1);
+								ventanas.principal.comboBox.setSelectedIndex(1);
 							} else {
 								JOptionPane.showMessageDialog(null, "Error! No Comprobado");
 							}
@@ -289,7 +288,7 @@ public class verificacion_recibo extends JFrame {
 								dispose();
 								principal.construirTabla2();
 								establecerDatosAlumnos2();
-								principal.comboBox.setSelectedIndex(1);
+								ventanas.principal.comboBox.setSelectedIndex(1);
 							} else {
 								JOptionPane.showMessageDialog(null, "Error! No Comprobado");
 							}

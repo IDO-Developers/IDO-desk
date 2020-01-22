@@ -9,8 +9,6 @@ import javax.swing.text.MaskFormatter;
 
 import clases.alumnos;
 import clases.alumnos2;
-import clases.usuarios;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.DateFormat;
@@ -19,9 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.awt.Color;
 import java.awt.Event;
 
@@ -54,7 +50,6 @@ import conexion.conexion;
 import consultas.consultas_alumno;
 import consultas.consultas_usuario;
 
-import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -267,6 +262,7 @@ public class registro_alumnos extends JFrame {
 
 		JButton button = new JButton("Regresar");
 		button.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				principal principal = new principal();
 				principal.setLocationRelativeTo(null);
