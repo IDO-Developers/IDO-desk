@@ -302,7 +302,7 @@ public class principal extends JFrame {
 							contarDatosPorGrado();
 						} else {
 							if (comboBox_1.getSelectedItem().toString().equals("10° Grado")) {
-								txtBuscar.setText("Decimo");
+								txtBuscar.setText("Décimo");
 								contarDatosPorGrado();
 							} else {
 								if (comboBox_1.getSelectedItem().toString().equals("11° Grado")) {
@@ -987,7 +987,7 @@ public class principal extends JFrame {
 	public void contarDatosPorGrado() {
 		int registros = 0;
 		registros = tablaAlumno.getRowCount();
-		lblContGrados.setText(String.valueOf(registros));
+		lblContGrados.setText(String.valueOf(registros+" "));
 
 	}
 

@@ -229,7 +229,7 @@ public class detalle_comprobante extends JFrame implements Printable {
 		lblSecre.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSecre.setForeground(new Color(0, 0, 128));
 		lblSecre.setFont(new Font("Cambria", Font.BOLD, 15));
-		lblSecre.setBounds(183, 506, 148, 87);
+		lblSecre.setBounds(164, 523, 167, 70);
 		contentPane.add(lblSecre);
 		final ImageIcon logos = new ImageIcon(getClass().getResource("/iconos/secretaria.png"));
 		final ImageIcon iconos = new ImageIcon(

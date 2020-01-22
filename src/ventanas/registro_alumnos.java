@@ -348,7 +348,6 @@ public class registro_alumnos extends JFrame {
 						txtNombres.setText(nombres);
 						txtApellidos.setText(apellidos);
 						txtIdentidad.setText(identidad);
-						
 
 						txtNombres.setEditable(true);
 						txtApellidos.setEditable(true);
@@ -397,7 +396,7 @@ public class registro_alumnos extends JFrame {
 					Toolkit.getDefaultToolkit().beep();
 					ke.consume();
 				}
-				
+
 				if (txtNombres.getText().length() == 30)
 					ke.consume();
 
@@ -431,27 +430,8 @@ public class registro_alumnos extends JFrame {
 		panelInformacion.add(txtIdentidad);
 		InputMap map4 = txtIdentidad.getInputMap(JComponent.WHEN_FOCUSED);
 		map4.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
-		txtIdentidad.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent ke) {
-				if (txtIdentidad.getText().length() == 13)
-					ke.consume();
+	
 
-				if (txtIdentidad.getText().toString().equals(" ")) {
-					JOptionPane.showMessageDialog(null, "No esta permitido escribir espacios vacios!");
-					txtIdentidad.setText("");
-				}
-			}
-
-			@Override
-			public void keyPressed(KeyEvent ke) {
-			}
-
-			@Override
-			public void keyReleased(KeyEvent ke) {
-			}
-		});
-		
 		final ImageIcon logo = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
 		final ImageIcon logo22 = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
 
@@ -468,7 +448,7 @@ public class registro_alumnos extends JFrame {
 					consultas_alumno consulta = new consultas_alumno();
 
 					if (comboBox.getSelectedItem().toString().equals("Matricula")) {
-						
+
 						clase.setNombres(txtNombres.getText().toString());
 						clase.setApellidos(txtApellidos.getText().toString());
 						clase.setRNE_Alumno(txtIdentidad.getText().toString());
@@ -499,7 +479,7 @@ public class registro_alumnos extends JFrame {
 						}
 
 					} else {
-						
+
 						clase2.setNombres_alumnos(txtNombres.getText().toString());
 						clase2.setApellidos_alumnos(txtApellidos.getText().toString());
 						clase2.setIdentidad_alumnos(txtIdentidad.getText().toString());
@@ -568,7 +548,7 @@ public class registro_alumnos extends JFrame {
 					Toolkit.getDefaultToolkit().beep();
 					ke.consume();
 				}
-				
+
 				if (txtApellidos.getText().length() == 40)
 					ke.consume();
 
@@ -594,7 +574,7 @@ public class registro_alumnos extends JFrame {
 		final ImageIcon iconouser = new ImageIcon(
 				logo_estudiante.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
 		label.setIcon(iconouser);
-		
+
 		lblIden = new JLabel("");
 		lblIden.setForeground(new Color(0, 0, 128));
 		lblIden.setHorizontalAlignment(SwingConstants.CENTER);
