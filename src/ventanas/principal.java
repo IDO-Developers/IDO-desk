@@ -675,11 +675,15 @@ public class principal extends JFrame {
 		btnAlumnos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				registro_alumnos alumnos = new registro_alumnos();
-				alumnos.setVisible(true);
-				alumnos.setLocationRelativeTo(null);
-				alumnos.construirTabla();
-				alumnos.contarDatos();
+				registro_alumnos principal = new registro_alumnos();
+				principal.setVisible(true);
+				principal.setLocationRelativeTo(null);
+				principal.setVisible(true);
+				principal.construirTabla();
+				principal.obtenerUltimoId();
+				principal.btnActualizar.setVisible(false);
+				principal.btnNuevo.setVisible(true);
+				principal.btnGuardar.setVisible(true);
 				dispose();
 			}
 		});
@@ -690,13 +694,13 @@ public class principal extends JFrame {
 		btnAlumnos.setIcon(icono221);
 
 		JLabel lblAcercaDe = new JLabel("Acerca de.");
-		lblAcercaDe.setBounds(10, 484, 85, 21);
+		lblAcercaDe.setBounds(10, 499, 85, 21);
 		panel_2.add(lblAcercaDe);
 		lblAcercaDe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAcercaDe.setFont(new Font("Cambria", Font.BOLD, 14));
 
 		JButton button_2 = new JButton("");
-		button_2.setBounds(10, 506, 82, 67);
+		button_2.setBounds(10, 518, 82, 67);
 		panel_2.add(button_2);
 		button_2.addActionListener(new ActionListener() {
 			@Override
@@ -739,16 +743,23 @@ public class principal extends JFrame {
 		lblHoraSistema.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHoraSistema.setFont(new Font("Dialog", Font.BOLD, 15));
 
-		JLabel lblPre = new JLabel("Pre-Matricula");
+		JLabel lblPre = new JLabel("Verificar ");
 		lblPre.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPre.setFont(new Font("Cambria", Font.BOLD, 12));
+		lblPre.setFont(new Font("Cambria", Font.BOLD, 14));
 		lblPre.setBounds(10, 282, 85, 21);
 		panel_2.add(lblPre);
 
 		btnPrematricula = new JButton("");
+		btnPrematricula.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				verificar_matricula frame = new verificar_matricula();
+				frame.setVisible(true);
+				frame.setLocationRelativeTo(null);
+			}
+		});
 		btnPrematricula.setFont(new Font("Calibri", Font.BOLD, 14));
 		btnPrematricula.setBackground(Color.WHITE);
-		btnPrematricula.setBounds(10, 304, 85, 67);
+		btnPrematricula.setBounds(10, 319, 85, 67);
 		panel_2.add(btnPrematricula);
 		final ImageIcon logo2211 = new ImageIcon(getClass().getResource("/iconos/pre_matricula.png"));
 		final ImageIcon icono2211 = new ImageIcon(logo2211.getImage().getScaledInstance(btnPrematricula.getWidth(),
@@ -758,13 +769,13 @@ public class principal extends JFrame {
 		JLabel lblMatricula_1 = new JLabel("Matricula");
 		lblMatricula_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMatricula_1.setFont(new Font("Cambria", Font.BOLD, 14));
-		lblMatricula_1.setBounds(10, 382, 85, 21);
+		lblMatricula_1.setBounds(10, 397, 85, 21);
 		panel_2.add(lblMatricula_1);
 
 		btnMatricula = new JButton("");
 		btnMatricula.setFont(new Font("Calibri", Font.BOLD, 14));
 		btnMatricula.setBackground(Color.WHITE);
-		btnMatricula.setBounds(10, 406, 85, 67);
+		btnMatricula.setBounds(10, 421, 85, 67);
 		panel_2.add(btnMatricula);
 		final ImageIcon logo22112 = new ImageIcon(getClass().getResource("/iconos/matricula.png"));
 		final ImageIcon icono22112 = new ImageIcon(logo22112.getImage().getScaledInstance(btnMatricula.getWidth(),
@@ -783,12 +794,18 @@ public class principal extends JFrame {
 		});
 		btnSalir.setFont(new Font("Calibri", Font.BOLD, 14));
 		btnSalir.setBackground(new Color(255, 69, 0));
-		btnSalir.setBounds(10, 584, 85, 54);
+		btnSalir.setBounds(10, 594, 85, 44);
 		panel_2.add(btnSalir);
 		final ImageIcon logo01 = new ImageIcon(getClass().getResource("/iconos/salida.png"));
 		final ImageIcon icono01 = new ImageIcon(
 				logo01.getImage().getScaledInstance(btnSalir.getWidth(), btnSalir.getHeight(), Image.SCALE_DEFAULT));
 		btnSalir.setIcon(icono01);
+		
+		JLabel lblMatricula_2 = new JLabel("Matricula");
+		lblMatricula_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMatricula_2.setFont(new Font("Cambria", Font.BOLD, 14));
+		lblMatricula_2.setBounds(10, 300, 85, 21);
+		panel_2.add(lblMatricula_2);
 
 	}
 
@@ -991,5 +1008,4 @@ public class principal extends JFrame {
 		lblContGrados.setText(String.valueOf(registros+" "));
 
 	}
-
 }
