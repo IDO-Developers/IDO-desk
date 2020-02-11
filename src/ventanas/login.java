@@ -41,7 +41,6 @@ public class login extends JFrame {
 	public JLabel lblAlerta;
 	public JButton btnIngresar;
 	public static JLabel lblNombreEmpresa;
-	public static JLabel lblFotoEmpresa;
 	public static String nombre = null;
 	public static String frase = null;
 	public static String ipServidor = null;
@@ -49,50 +48,20 @@ public class login extends JFrame {
 	public static JRadioButton rdbtnPass;
 	public static JLabel lblestadocontraseña;
 	public JButton btnActualizarBase;
-
-	public static String todo;
-	public static String empleado;
-	public static String cargoe;
-	public static String horario;
-	public static String contrato_e;
-	public static String cliente;
-	public static String contrato_c;
-	public static String compra;
-	public static String proveedor;
-	public static String inventario;
-	public static String factura_c;
-	public static String factura_e;
-	public static String sar;
-	public static String ingreso;
-	public static String producto;
-	public static String servicio;
-	public static String venta;
-	public static String egreso;
-	public static String bonificacion;
-	public static String deduccion;
-	public static String planilla;
-	public static String empresa;
-	public static String opciones;
-	public static String usuarios;
-	public static String acercade;
-
-	public static String nombreCompletoUsuario;
-	public static String cargoUsuario;
-	public static String tipoUsuario;
-	public static String direccionFotoUsuario;
-	public static String nombreUsuario;
+	private JLabel label;
 
 	public login() {
 		setType(Type.UTILITY);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 396, 382);
+		setBounds(100, 100, 503, 388);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(72, 61, 139));
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		final ImageIcon logo = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
+		final ImageIcon logo = new ImageIcon(getClass().getResource("/iconos/ido.png"));
+		final ImageIcon fondo = new ImageIcon(getClass().getResource("/iconos/ido_foto.jpg"));
 		final ImageIcon ver = new ImageIcon(getClass().getResource("/iconos/ver.png"));
 		final ImageIcon ocultar = new ImageIcon(getClass().getResource("/iconos/ocultar.png"));
 
@@ -100,21 +69,29 @@ public class login extends JFrame {
 		btnSalir.setBounds(586, 426, 98, 34);
 		contentPane.add(btnSalir);
 
+		JLabel lblLoginSistemaAdministrativo = new JLabel("Sistema de  administraci\u00F3n IDO");
+		lblLoginSistemaAdministrativo.setBounds(79, 0, 333, 34);
+		contentPane.add(lblLoginSistemaAdministrativo);
+		lblLoginSistemaAdministrativo.setForeground(Color.BLACK);
+		lblLoginSistemaAdministrativo.setBackground(Color.WHITE);
+		lblLoginSistemaAdministrativo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLoginSistemaAdministrativo.setFont(new Font("Cambria", Font.BOLD, 18));
+
 		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(31, 27, 327, 307);
+		panel.setBounds(79, 35, 333, 286);
 		contentPane.add(panel);
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBackground(new Color(0, 0, 0, 100));
 		panel.setLayout(null);
 
 		JLabel lblUsuario = new JLabel("Usuario :");
-		lblUsuario.setForeground(new Color(0, 0, 0));
+		lblUsuario.setForeground(Color.WHITE);
 		lblUsuario.setFont(new Font("Cambria", Font.BOLD, 15));
 		lblUsuario.setBounds(136, 165, 108, 20);
 		panel.add(lblUsuario);
 
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a :");
-		lblContrasea.setForeground(new Color(0, 0, 0));
+		lblContrasea.setForeground(Color.WHITE);
 		lblContrasea.setFont(new Font("Cambria", Font.BOLD, 15));
 		lblContrasea.setBounds(125, 204, 98, 20);
 		panel.add(lblContrasea);
@@ -135,7 +112,6 @@ public class login extends JFrame {
 		panel.add(txtUsuario);
 		txtUsuario.setColumns(10);
 		InputMap map4 = txtUsuario.getInputMap(JComponent.WHEN_FOCUSED);
-		map4.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
 		txtUsuario.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent ke) {
@@ -167,7 +143,7 @@ public class login extends JFrame {
 		btnIngresar.setForeground(new Color(0, 0, 0));
 		btnIngresar.setFont(new Font("Cambria", Font.BOLD, 15));
 		btnIngresar.setBackground(new Color(60, 179, 113));
-		btnIngresar.setBounds(110, 257, 113, 25);
+		btnIngresar.setBounds(110, 249, 113, 27);
 		panel.add(btnIngresar);
 
 		txtContraseña = new JPasswordField();
@@ -176,7 +152,6 @@ public class login extends JFrame {
 		txtContraseña.setBounds(74, 225, 181, 20);
 		panel.add(txtContraseña);
 		InputMap map5 = txtContraseña.getInputMap(JComponent.WHEN_FOCUSED);
-		map5.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK), "null");
 		txtContraseña.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -202,13 +177,8 @@ public class login extends JFrame {
 			}
 		});
 
-		lblAlerta = new JLabel("");
-		lblAlerta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAlerta.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
-		lblAlerta.setBounds(10, 281, 307, 20);
-		panel.add(lblAlerta);
-
 		lblNombreEmpresa = new JLabel("Instituto Departamental de Oriente.");
+		lblNombreEmpresa.setForeground(Color.WHITE);
 		lblNombreEmpresa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreEmpresa.setFont(new Font("Cambria", Font.BOLD, 15));
 		lblNombreEmpresa.setBounds(10, 0, 303, 33);
@@ -219,6 +189,29 @@ public class login extends JFrame {
 		rdbtnPass.setBackground(Color.WHITE);
 		rdbtnPass.setBounds(256, 225, 21, 20);
 		panel.add(rdbtnPass);
+
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setBounds(83, 29, 161, 137);
+		panel.add(lblLogo);
+		final ImageIcon iconouser = new ImageIcon(
+				logo.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
+		lblLogo.setIcon(iconouser);
+		
+		lblAlerta = new JLabel("");
+		lblAlerta.setForeground(Color.BLACK);
+		lblAlerta.setBounds(79, 321, 333, 27);
+		contentPane.add(lblAlerta);
+		lblAlerta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAlerta.setFont(new Font("Cambria", Font.BOLD, 14));
+		
+
+		label = new JLabel("");
+		label.setBounds(-15, -12, 528, 388);
+		contentPane.add(label);
+		final ImageIcon icon = new ImageIcon(
+				fondo.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
+		label.setIcon(icon);
+
 		rdbtnPass.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -237,28 +230,6 @@ public class login extends JFrame {
 			}
 		});
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(88, 27, 152, 135);
-		panel.add(panel_1);
-		panel_1.setLayout(null);
-
-		lblFotoEmpresa = new JLabel("");
-		lblFotoEmpresa.setBounds(-11, -13, 176, 160);
-		panel_1.add(lblFotoEmpresa);
-		final ImageIcon icono = new ImageIcon(logo.getImage().getScaledInstance(lblFotoEmpresa.getWidth(),
-				lblFotoEmpresa.getHeight(), Image.SCALE_DEFAULT));
-		lblFotoEmpresa.setIcon(icono);
-
-		JLabel lblLoginSistemaAdministrativo = new JLabel("Sistema de pago y c\u00F3digo de matr\u00EDcula IDO 2020.");
-		lblLoginSistemaAdministrativo.setForeground(Color.WHITE);
-		lblLoginSistemaAdministrativo.setBackground(Color.WHITE);
-		lblLoginSistemaAdministrativo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLoginSistemaAdministrativo.setFont(new Font("Cambria", Font.BOLD, 15));
-		lblLoginSistemaAdministrativo.setBounds(10, 0, 370, 30);
-		contentPane.add(lblLoginSistemaAdministrativo);
-
 	}
 
 	@SuppressWarnings("unlikely-arg-type")
@@ -268,15 +239,15 @@ public class login extends JFrame {
 		String pass = String.valueOf(txtContraseña.getText().toString());
 		if (user.equals("") && pass.equals("")) {
 			lblAlerta.setText("Los campos (Usuario) y (Contraseña) estan vacios.");
-			lblAlerta.setForeground(Color.RED);
+			lblAlerta.setForeground(Color.WHITE);
 		} else {
 			if (user.equals("")) {
 				lblAlerta.setText("El campo de (Usuario) esta vacio.");
-				lblAlerta.setForeground(Color.RED);
+				lblAlerta.setForeground(Color.WHITE);
 			} else {
 				if (pass.equals("")) {
 					lblAlerta.setText("El campo de (Contraseña) esta vacio.");
-					lblAlerta.setForeground(Color.RED);
+					lblAlerta.setForeground(Color.WHITE);
 				} else {
 					consultas_usuario consulta = new consultas_usuario();
 					clases.usuarios clase = new clases.usuarios();
@@ -324,7 +295,7 @@ public class login extends JFrame {
 						dispose();
 					} else {
 						lblAlerta.setText("El usuario y contraseña son incorrectas");
-						lblAlerta.setForeground(Color.RED);
+						lblAlerta.setForeground(Color.WHITE);
 					}
 				}
 			}
