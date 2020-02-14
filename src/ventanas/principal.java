@@ -133,7 +133,7 @@ public class principal extends JFrame {
 		setResizable(false);
 		setBounds(100, 100, 814, 700);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 0, 128));
+		contentPane.setBackground(new Color(0, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setTitle("Sistema de busqueda de codigos de matricula. IDO 2020");
