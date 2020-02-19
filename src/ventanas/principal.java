@@ -154,6 +154,7 @@ public class principal extends JFrame {
 		panel.setBounds(10, 11, 674, 309);
 		contentPane.add(panel);
 		panel.setLayout(null);
+	
 
 		JLabel lblBuscarInformacionDe = new JLabel("Buscar informaci\u00F3n de la matr\u00EDcula del alumno :");
 		lblBuscarInformacionDe.setHorizontalAlignment(SwingConstants.LEFT);
