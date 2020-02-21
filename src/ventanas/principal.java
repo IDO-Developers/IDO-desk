@@ -59,6 +59,7 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.UIManager;
 
 public class principal extends JFrame {
 
@@ -133,7 +134,7 @@ public class principal extends JFrame {
 		setResizable(false);
 		setBounds(100, 100, 814, 700);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 0, 0));
+		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setTitle("Sistema de busqueda de codigos de matricula. IDO 2020");
