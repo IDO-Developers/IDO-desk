@@ -12,8 +12,12 @@ import javax.swing.JOptionPane;
 import consultas.consultas_usuario;
 
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
@@ -26,12 +30,14 @@ import java.awt.event.KeyListener;
 import java.util.Timer;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
+import java.awt.SystemColor;
 
 public class login extends JFrame {
 
@@ -70,7 +76,7 @@ public class login extends JFrame {
 		contentPane.add(btnSalir);
 
 		JLabel lblLoginSistemaAdministrativo = new JLabel("Sistema de  administraci\u00F3n IDO");
-		lblLoginSistemaAdministrativo.setBounds(79, 0, 333, 34);
+		lblLoginSistemaAdministrativo.setBounds(79, 0, 333, 27);
 		contentPane.add(lblLoginSistemaAdministrativo);
 		lblLoginSistemaAdministrativo.setForeground(Color.BLACK);
 		lblLoginSistemaAdministrativo.setBackground(Color.WHITE);
@@ -78,19 +84,19 @@ public class login extends JFrame {
 		lblLoginSistemaAdministrativo.setFont(new Font("Cambria", Font.BOLD, 18));
 
 		JPanel panel = new JPanel();
-		panel.setBounds(79, 35, 333, 286);
+		panel.setBounds(79, 24, 333, 298);
 		contentPane.add(panel);
 		panel.setBackground(new Color(0, 0, 0, 100));
 		panel.setLayout(null);
 
 		JLabel lblUsuario = new JLabel("Usuario :");
-		lblUsuario.setForeground(Color.WHITE);
+		lblUsuario.setForeground(SystemColor.window);
 		lblUsuario.setFont(new Font("Cambria", Font.BOLD, 15));
 		lblUsuario.setBounds(136, 165, 108, 20);
 		panel.add(lblUsuario);
 
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a :");
-		lblContrasea.setForeground(Color.WHITE);
+		lblContrasea.setForeground(SystemColor.window);
 		lblContrasea.setFont(new Font("Cambria", Font.BOLD, 15));
 		lblContrasea.setBounds(125, 204, 98, 20);
 		panel.add(lblContrasea);
@@ -98,13 +104,34 @@ public class login extends JFrame {
 		lblestadocontraseña = new JLabel("");
 		lblestadocontraseña.setBackground(Color.WHITE);
 		lblestadocontraseña.setHorizontalAlignment(SwingConstants.CENTER);
-		lblestadocontraseña.setBounds(277, 225, 21, 20);
+		lblestadocontraseña.setBounds(278, 225, 21, 20);
 		panel.add(lblestadocontraseña);
 		final ImageIcon iconoocultar = new ImageIcon(ocultar.getImage().getScaledInstance(
 				lblestadocontraseña.getWidth(), lblestadocontraseña.getHeight(), Image.SCALE_DEFAULT));
 		lblestadocontraseña.setIcon(iconoocultar);
 
-		txtUsuario = new JTextField();
+		txtUsuario = new JTextField(){
+			protected void paintComponent(Graphics g) {
+				if (!isOpaque()) {
+					int w = getWidth() - 1;
+					int h = getHeight() - 1;
+					Graphics2D g2 = (Graphics2D) g.create();
+					g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+					g2.setPaint(UIManager.getColor("TextField.background"));
+					g2.fillRoundRect(0, 0, w, h, h, h);
+					g2.setPaint(Color.GRAY);
+					g2.drawRoundRect(0, 0, w, h, h, h);
+					g2.dispose();
+				}
+				super.paintComponent(g);
+			}
+
+			public void updateUI() {
+				super.updateUI();
+				setOpaque(false);
+				setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+			}
+		};
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUsuario.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtUsuario.setBounds(74, 185, 181, 20);
@@ -132,7 +159,28 @@ public class login extends JFrame {
 			}
 		});
 
-		btnIngresar = new JButton("Ingresar");
+		btnIngresar = new JButton("Ingresar"){
+			protected void paintComponent(Graphics g) {
+				if (!isOpaque()) {
+					int w = getWidth() - 1;
+					int h = getHeight() - 1;
+					Graphics2D g2 = (Graphics2D) g.create();
+					g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+					g2.setPaint(UIManager.getColor("Button.background"));
+					g2.fillRoundRect(0, 0, w, h, h, h);
+					g2.setPaint(Color.GRAY);
+					g2.drawRoundRect(0, 0, w, h, h, h);
+					g2.dispose();
+				}
+				super.paintComponent(g);
+			}
+
+			public void updateUI() {
+				super.updateUI();
+				setOpaque(false);
+				setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+			}
+		};
 		btnIngresar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -141,11 +189,32 @@ public class login extends JFrame {
 		});
 		btnIngresar.setForeground(new Color(0, 0, 0));
 		btnIngresar.setFont(new Font("Cambria", Font.BOLD, 15));
-		btnIngresar.setBackground(new Color(60, 179, 113));
-		btnIngresar.setBounds(110, 249, 113, 27);
+		btnIngresar.setBackground(new Color(0, 100, 0));
+		btnIngresar.setBounds(74, 265, 181, 22);
 		panel.add(btnIngresar);
 
-		txtContraseña = new JPasswordField();
+		txtContraseña = new JPasswordField(){
+			protected void paintComponent(Graphics g) {
+				if (!isOpaque()) {
+					int w = getWidth() - 1;
+					int h = getHeight() - 1;
+					Graphics2D g2 = (Graphics2D) g.create();
+					g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+					g2.setPaint(UIManager.getColor("TextField.background"));
+					g2.fillRoundRect(0, 0, w, h, h, h);
+					g2.setPaint(Color.GRAY);
+					g2.drawRoundRect(0, 0, w, h, h, h);
+					g2.dispose();
+				}
+				super.paintComponent(g);
+			}
+
+			public void updateUI() {
+				super.updateUI();
+				setOpaque(false);
+				setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+			}
+		};
 		txtContraseña.setHorizontalAlignment(SwingConstants.CENTER);
 		txtContraseña.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtContraseña.setBounds(74, 225, 181, 20);
@@ -177,7 +246,7 @@ public class login extends JFrame {
 		});
 
 		lblNombreEmpresa = new JLabel("Instituto Departamental de Oriente.");
-		lblNombreEmpresa.setForeground(Color.WHITE);
+		lblNombreEmpresa.setForeground(SystemColor.window);
 		lblNombreEmpresa.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNombreEmpresa.setFont(new Font("Cambria", Font.BOLD, 15));
 		lblNombreEmpresa.setBounds(10, 0, 303, 33);
@@ -186,7 +255,7 @@ public class login extends JFrame {
 		rdbtnPass = new JRadioButton("");
 		rdbtnPass.setHorizontalAlignment(SwingConstants.CENTER);
 		rdbtnPass.setBackground(Color.WHITE);
-		rdbtnPass.setBounds(256, 225, 21, 20);
+		rdbtnPass.setBounds(257, 225, 21, 20);
 		panel.add(rdbtnPass);
 
 		JLabel lblLogo = new JLabel("");
@@ -197,7 +266,7 @@ public class login extends JFrame {
 		lblLogo.setIcon(iconouser);
 		
 		lblAlerta = new JLabel("");
-		lblAlerta.setForeground(Color.BLACK);
+		lblAlerta.setForeground(SystemColor.window);
 		lblAlerta.setBounds(79, 321, 333, 27);
 		contentPane.add(lblAlerta);
 		lblAlerta.setHorizontalAlignment(SwingConstants.CENTER);
