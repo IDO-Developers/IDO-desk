@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
+import java.awt.Window.Type;
 
 public class acerca_de extends JFrame {
 
@@ -41,7 +42,7 @@ public class acerca_de extends JFrame {
 	 */
 	public acerca_de() {
 		setType(Type.UTILITY);
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 387, 490);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -55,9 +56,9 @@ public class acerca_de extends JFrame {
 		lblAcercaDe.setBounds(0, 0, 371, 28);
 		contentPane.add(lblAcercaDe);
 
-		JLabel lblSistemaAdministrativoBy = new JLabel("Sistema de pago y c\u00F3digo de matr\u00EDcula IDO 2020.");
+		JLabel lblSistemaAdministrativoBy = new JLabel("Sistema de Administraci\u00F3n IDO.");
 		lblSistemaAdministrativoBy.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSistemaAdministrativoBy.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		lblSistemaAdministrativoBy.setFont(new Font("SansSerif", Font.BOLD, 15));
 		lblSistemaAdministrativoBy.setBounds(10, 22, 371, 32);
 		contentPane.add(lblSistemaAdministrativoBy);
 
@@ -65,12 +66,12 @@ public class acerca_de extends JFrame {
 		txtrTodosLosDerechos.setText(
 				"          Todos los derechos reservados a.\r\n            Programadores y Dise\u00F1adores:\r\n   Licenciados en Inform\u00E1tica Administrativa.\r\n        Abd\u00EDas Ismael Vel\u00E1squez Gonzalez\r\n        Justin Mois\u00E9s Chac\u00F3n Ferrari\r\n        Cristian Emmanuel D\u00EDaz Rodr\u00EDguez\r\n      Contacto: krizemandiaz11@gmail.com\r\n UNAH-Tec Danl\u00ED, El Para\u00EDso Honduras 2020\r\n");
 		txtrTodosLosDerechos.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
-		txtrTodosLosDerechos.setBounds(59, 311, 291, 129);
+		txtrTodosLosDerechos.setBounds(43, 298, 291, 129);
 		txtrTodosLosDerechos.setEditable(false);
 		contentPane.add(txtrTodosLosDerechos);
 
 		JLabel label = new JLabel("");
-		label.setBounds(53, 39, 145, 141);
+		label.setBounds(43, 34, 178, 165);
 		contentPane.add(label);
 		final ImageIcon logo2 = new ImageIcon(getClass().getResource("/iconos/logo_ido.png"));
 		final ImageIcon icono2 = new ImageIcon(
@@ -78,7 +79,7 @@ public class acerca_de extends JFrame {
 		label.setIcon(icono2);
 
 		JLabel label_1 = new JLabel("");
-		label_1.setBounds(198, 40, 85, 127);
+		label_1.setBounds(207, 41, 83, 143);
 		contentPane.add(label_1);
 		final ImageIcon logo3 = new ImageIcon(getClass().getResource("/iconos/UNAH_logo.jpg"));
 		final ImageIcon icono3 = new ImageIcon(

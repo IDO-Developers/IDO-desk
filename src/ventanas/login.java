@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.Event;
+import java.awt.EventQueue;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,6 +39,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
+import java.awt.Window.Type;
 
 public class login extends JFrame {
 
@@ -56,16 +59,18 @@ public class login extends JFrame {
 	public JButton btnActualizarBase;
 	private JLabel label;
 
+	
 	public login() {
-		setType(Type.UTILITY);
+		setType(Type.POPUP);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 503, 388);
+		setBounds(100, 100, 503, 407);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/iconos/logo_ido.png")));
 		final ImageIcon logo = new ImageIcon(getClass().getResource("/iconos/ido.png"));
 		final ImageIcon fondo = new ImageIcon(getClass().getResource("/iconos/ido_foto.jpg"));
 		final ImageIcon ver = new ImageIcon(getClass().getResource("/iconos/ver.png"));
@@ -76,7 +81,7 @@ public class login extends JFrame {
 		contentPane.add(btnSalir);
 
 		JLabel lblLoginSistemaAdministrativo = new JLabel("Sistema de  administraci\u00F3n IDO");
-		lblLoginSistemaAdministrativo.setBounds(79, 0, 333, 27);
+		lblLoginSistemaAdministrativo.setBounds(79, 11, 333, 27);
 		contentPane.add(lblLoginSistemaAdministrativo);
 		lblLoginSistemaAdministrativo.setForeground(Color.BLACK);
 		lblLoginSistemaAdministrativo.setBackground(Color.WHITE);
@@ -84,7 +89,7 @@ public class login extends JFrame {
 		lblLoginSistemaAdministrativo.setFont(new Font("Cambria", Font.BOLD, 18));
 
 		JPanel panel = new JPanel();
-		panel.setBounds(79, 24, 333, 298);
+		panel.setBounds(79, 38, 333, 298);
 		contentPane.add(panel);
 		panel.setBackground(new Color(0, 0, 0, 100));
 		panel.setLayout(null);
@@ -132,6 +137,7 @@ public class login extends JFrame {
 				setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 			}
 		};
+		txtUsuario.setForeground(new Color(0, 0, 0));
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUsuario.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtUsuario.setBounds(74, 185, 181, 20);
@@ -159,28 +165,7 @@ public class login extends JFrame {
 			}
 		});
 
-		btnIngresar = new JButton("Ingresar"){
-			protected void paintComponent(Graphics g) {
-				if (!isOpaque()) {
-					int w = getWidth() - 1;
-					int h = getHeight() - 1;
-					Graphics2D g2 = (Graphics2D) g.create();
-					g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-					g2.setPaint(UIManager.getColor("Button.background"));
-					g2.fillRoundRect(0, 0, w, h, h, h);
-					g2.setPaint(Color.GRAY);
-					g2.drawRoundRect(0, 0, w, h, h, h);
-					g2.dispose();
-				}
-				super.paintComponent(g);
-			}
-
-			public void updateUI() {
-				super.updateUI();
-				setOpaque(false);
-				setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
-			}
-		};
+		btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -215,6 +200,7 @@ public class login extends JFrame {
 				setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
 			}
 		};
+		txtContraseña.setForeground(new Color(0, 0, 0));
 		txtContraseña.setHorizontalAlignment(SwingConstants.CENTER);
 		txtContraseña.setFont(new Font("Cambria", Font.BOLD, 14));
 		txtContraseña.setBounds(74, 225, 181, 20);
@@ -266,15 +252,22 @@ public class login extends JFrame {
 		lblLogo.setIcon(iconouser);
 		
 		lblAlerta = new JLabel("");
-		lblAlerta.setForeground(SystemColor.window);
-		lblAlerta.setBounds(79, 321, 333, 27);
+		lblAlerta.setForeground(new Color(0, 0, 128));
+		lblAlerta.setBounds(79, 333, 333, 27);
 		contentPane.add(lblAlerta);
 		lblAlerta.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAlerta.setFont(new Font("Cambria", Font.BOLD, 14));
 		
+		JLabel lblTodosLos = new JLabel("\u00A9 Todos los derechos reservados IDO 2020.");
+		lblTodosLos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTodosLos.setForeground(new Color(255, 255, 255));
+		lblTodosLos.setFont(new Font("Cambria", Font.BOLD, 13));
+		lblTodosLos.setBounds(79, 359, 333, 19);
+		contentPane.add(lblTodosLos);
+		
 
 		label = new JLabel("");
-		label.setBounds(-15, -12, 528, 388);
+		label.setBounds(-15, -12, 562, 415);
 		contentPane.add(label);
 		final ImageIcon icon = new ImageIcon(
 				fondo.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
